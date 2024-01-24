@@ -12,12 +12,7 @@ import './process';
 import { MongoClient } from "mongodb";
 import { router } from "../routes";
 import path from "path";
-import { GetQrCodeComposer } from "../composers/baileys/get-QrCode.composer";
-import { InitBailesInstanceUseCase } from "../../application/features/commands/baileys/init-baileys-instance/init-baileys-instance.usecase";
-import { BaileysInMemoryRepository } from "../../infrastructure/persistence/repositories/baileys-in-memory.repository";
-import { HttpRequest } from "../../presentation/http-types/http-request";
-import { getQrCodeUseCase } from "../../application/features/queries/baileys/get-qrCode/get-qrCode.usecase";
-import { GetQrCodeController } from "../../presentation/controllers/baileys/queries/get-QrCode.controller";
+
 
 const app = express();
 
