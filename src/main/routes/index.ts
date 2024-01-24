@@ -6,6 +6,6 @@ import { GetQrCodeComposer } from "../composers/baileys/get-QrCode.composer";
 const router = Router();
 
 router.post("/api/v1/baileys", (request, response) => requestAdapter(request, response,  initBaileysInstanceComposer()));
-// router.get("/api/v1/baileys/:key/QRCode", (request, response) => requestAdapter(request, response,  GetQrCodeComposer()));
+router.get("/api/v1/baileys/:key/QRCode", (request, response) => requestAdapter(request, response,  GetQrCodeComposer()));
 
 export { router };
