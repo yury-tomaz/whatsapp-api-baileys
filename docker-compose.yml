@@ -1,0 +1,22 @@
+version: '3.4'
+
+services:
+  mongo:
+    image: mongo:6.0.8
+    restart: always
+    ports:
+      - "27017:27017"
+    volumes:
+      - ./data/db:/data/db 
+  
+  api:
+    build: .
+    restart: always
+    environment:
+      - MONGO_URL=mongodb://mongo:27017
+      - MONGO_DB=instance
+    ports:
+      - "3000:3000"
+    
+    depends_on:
+      - mongo
