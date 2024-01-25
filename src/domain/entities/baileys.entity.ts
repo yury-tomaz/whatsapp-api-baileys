@@ -41,7 +41,6 @@ export class Baileys extends BaseEntity {
     private _messages: any[] = [];
     private _qrRetry: number = 0;
     private _waSocket: ReturnType<typeof makeWASocket> | undefined;
-    private ws: ReturnType<typeof makeWASocket> | undefined;
     private _qrCode: string | null = null;
     private _isOn: boolean = false;
     private _apiKey: string | undefined;
