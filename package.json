@@ -1,5 +1,5 @@
 {
-  "name": "whatsapp-api-nodejs",
+  "name": "whatsapp-api-baileys",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
@@ -9,9 +9,9 @@
     "start": "node dist/main/server/server.js",
     "test": "jest --runInBand --detectOpenHandles --forceExit"
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
+  "repository": "git@github.com:yury-tomaz/whatsapp-api-baileys.git",
+  "author": "Yury Tomaz <yurytomaz@gmail.com>",
+  "license": "MIT",
   "devDependencies": {
     "@faker-js/faker": "^8.3.1",
     "@types/compression": "^1.7.5",
