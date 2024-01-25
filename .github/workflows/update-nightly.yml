@@ -1,0 +1,48 @@
+name: Publish Release
+
+on:
+  push:
+    branches:
+      - main
+
+permissions: write-all
+
+jobs:
+  publish-release:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+
+      - name: Fetching tags
+        run: git fetch --tags -f || true
+
+      - name: Doker login
+        uses: docker/login-action@v2.1.0
+        with:
+          Username: ${{ secrets.DOCKER_HUB_USERNAME }}
+          Password : ${{ secrets.DOCKER_HUB_PASS }}
+
+      - name: Build and push Docker image
+        uses: docker/build-push-action@v4.0.0
+        with:
+          context: .
+          file: ./Dockerfile
+          push: true
+          tags: |
+            your-docker-username/your-api-image:nightly
+
+      - name: Create Release
+        uses: meeDamian/github-release@2.0
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          tag: nightly
+          commitish: ${{ github.sha }}
+          name: ${{ github.ref_name }}
+          body: "Release notes or changelog here"
+          draft: false
+          prerelease: true
