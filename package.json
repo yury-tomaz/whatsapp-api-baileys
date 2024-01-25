@@ -1,7 +1,7 @@
 {
   "name": "whatsapp-api-nodejs",
   "version": "1.0.0",
-  "description": "",
+  "description": "WhatsApp API with Multi-Device Support - RESTful Approach",
   "main": "index.js",
   "scripts": {
     "dev": "ts-node-dev --transpile-only --respawn --ignore-watch node_modules -r tsconfig-paths/register src/main/server/server.ts",
