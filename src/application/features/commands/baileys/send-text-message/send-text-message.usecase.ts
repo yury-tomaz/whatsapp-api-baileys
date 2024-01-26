@@ -20,7 +20,7 @@ export class SendTextMessageUseCase implements SendTextMessageUseCaseInterface {
         const result = await this.baileysInstanceRepository.find(input.key);
 
         if (!result) {
-            throw new Error('Baileys instance not found');
+            throw new AppError({
         }
 
         if (!result.waSocket) {
