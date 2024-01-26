@@ -27,8 +27,8 @@ export class GetQrCodeController {
             message: 'QR Code generated successfully',
             content: execute.qrCode,
             _links: {
-                self: `${baseUrl}/api/v1/baileys/instances/${key}/QRCode`,
-                baileys_instance: `${baseUrl}/api/v1/baileys/instances/${key}`
+                self: `${baseUrl}/api/baileys/instances/${key}/QRCode`,
+                baileys_instance: `${baseUrl}/api/baileys/instances/${key}`
             }
         }
 

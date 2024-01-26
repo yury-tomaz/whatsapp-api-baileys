@@ -25,8 +25,8 @@ export class InitBaileysInstanceController {
         const data = {
             message: "Baileys instance initialized successfully",
             _links: {
-                self: `${baseUrl}/api/v1/baileys/instances/${execute.key}`,
-                baileys_instance_QRCode: `${baseUrl}/api/v1/baileys/instances/${execute.key}/QRCode`,
+                self: `${baseUrl}/api/baileys/instances/${execute.key}`,
+                baileys_instance_QRCode: `${baseUrl}/api/baileys/instances/${execute.key}/QRCode`,
             }
         }
 
