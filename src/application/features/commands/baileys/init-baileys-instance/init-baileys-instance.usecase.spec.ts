@@ -1,5 +1,6 @@
 
 import { InitBaileysInstanceUseCaseInputDTO } from "../../../../../application/contracts/usecase.interface";
+import EventDispatcher from "../../../../../domain/events/event-dispatcher";
 import { InitBailesInstanceUseCase } from "./init-baileys-instance.usecase";
 
 const mockRepository = jest.fn(() => ({
@@ -10,14 +11,13 @@ const mockRepository = jest.fn(() => ({
     delete: jest.fn(),
 }));
 
-// TODO: implement validate heardEvents
-// TODO: implement validate webhook
-
 describe('Init baileys instance unit test',  () => {
     let useCase: InitBailesInstanceUseCase;
+    let eventDispatcher = 
 
     beforeAll(() => {
-        useCase = new InitBailesInstanceUseCase(mockRepository());
+        eventDispatcher = new EventDispatcher();
+        useCase = new InitBailesInstanceUseCase(mockRepository(), eventDispatcher);
     });
 
     it('should be able to start an instance of baileys', async () => {
