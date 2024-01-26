@@ -1,18 +1,21 @@
 import { AppError } from "../../../../../domain/exceptions/app-error";
 import { BaileysInstanceRepositoryInterface } from "../../../../../domain/repositories/baileys-instance.repository.interface";
+import { SendTextMessageUseCaseInterface } from "../../../../contracts/send-text-message-usecase.interface";
 
-interface SendTextMessageUseCaseInputDTO {
+export interface SendTextMessageUseCaseInputDTO {
     key: string;
     to: string;
     message: string;
 }
 
-export class SendTextMessageUseCase {
+type input = SendTextMessageUseCaseInputDTO;
+
+export class SendTextMessageUseCase implements SendTextMessageUseCaseInterface {
     constructor(
         private readonly baileysInstanceRepository: BaileysInstanceRepositoryInterface
     ) { }
 
-    async execute(input: SendTextMessageUseCaseInputDTO): Promise<void> {
+    async execute(input: input): Promise<void> {
 
         const result = await this.baileysInstanceRepository.find(input.key);
 
@@ -32,7 +35,7 @@ export class SendTextMessageUseCase {
 
         await result.verifyId(this.getWhatsAppId(input.to));
 
-        sock.sendMessage(input.to, {
+        await sock.sendMessage(input.to, {
             text: input.message
         });
     }
