@@ -9,7 +9,6 @@ describe('init Baileys instance e2e test', () => {
     let server: Server<typeof IncomingMessage, typeof ServerResponse>;
     let api: TestAgent;
 
-
     beforeAll(async () => {
         server = app.listen(() => logger.info('Server is running on port'));
         api = request(server);
@@ -32,7 +31,9 @@ describe('init Baileys instance e2e test', () => {
             apiKey: faker.string.uuid()
         }
 
-        const response = await api.post('/api/v1/baileys').send(data);
+        const response = await api.post('/api/baileys')
+        .send(data)
+        .set('Accept-Version', '1.0.0');
 
         expect(response.status).toBe(200);
     });
