@@ -21,6 +21,10 @@ export class SendTextMessageUseCase implements SendTextMessageUseCaseInterface {
 
         if (!result) {
             throw new AppError({
+                message: 'Baileys instance not found',
+                statusCode: 204,
+                isOperational: true
+            });
         }
 
         if (!result.waSocket) {
