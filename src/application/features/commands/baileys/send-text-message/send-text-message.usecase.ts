@@ -35,7 +35,7 @@ export class SendTextMessageUseCase implements SendTextMessageUseCaseInterface {
 
         await result.verifyId(this.getWhatsAppId(input.to));
 
-        await sock.sendMessage(input.to, {
+        await sock.sendMessage( this.getWhatsAppId(input.to), {
             text: input.message
         });
     }
