@@ -5,7 +5,7 @@ import { sendAudioMessageUseCaseInputDTO } from "./send-audio-message.dto";
 
 type input = sendAudioMessageUseCaseInputDTO;
 
-export class sendAudioMessageUseCase implements sendAudioMessageUseCaseInterface {
+export class SendAudioMessageUseCase implements sendAudioMessageUseCaseInterface {
     constructor(
         private readonly baileysInstanceRepository: BaileysInstanceRepositoryInterface
     ) { }
