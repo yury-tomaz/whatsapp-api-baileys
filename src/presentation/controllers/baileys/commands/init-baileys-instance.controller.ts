@@ -1,4 +1,5 @@
 import { InitBailesInstanceUseCaseInterface } from "../../../../application/contracts/usecase.interface";
+import environment from "../../../../infrastructure/environment";
 import { HttpRequest } from "../../../../presentation/http-types/http-request";
 import { HttpResponse } from "../../../../presentation/http-types/http-response";
 import { initBaileysValidator } from "../../../validators/init-baileys.validator";
@@ -27,6 +28,7 @@ export class InitBaileysInstanceController {
             _links: {
                 self: `${baseUrl}/api/baileys/instances/${execute.key}`,
                 baileys_instance_QRCode: `${baseUrl}/api/baileys/instances/${execute.key}/QRCode`,
+                render_qr_code: environment.NODE_ENV === 'development'? `${baseUrl}/api/baileys/instances/${execute.key}/QRCode/render` : undefined,
             }
         }
 
