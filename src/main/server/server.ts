@@ -1,6 +1,7 @@
+import environment from "../../infrastructure/environment";
 import { logger } from "../../infrastructure/logger";
 import { app } from "./app";
 
-app.listen(3000, () => {
-    logger.info('Server is running on port 3000');
+app.listen(environment.PORT , () => {
+    logger.info(`Server is running on port ${environment.PORT}`);
 });
