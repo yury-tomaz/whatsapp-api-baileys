@@ -3,7 +3,6 @@ import { BaileysInstanceRepositoryInterface } from "../../../../../domain/reposi
 import { SendVideoMessageUseCaseInterface } from "../../../../contracts/send-video-message-usecase.interface";
 import { SendVideoMessageUseCaseInputDTO } from "./send-video-message.dto";
 
-
 type input = SendVideoMessageUseCaseInputDTO;
 
 export class SendVideoMessageUseCase implements SendVideoMessageUseCaseInterface{
