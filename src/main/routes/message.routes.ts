@@ -6,8 +6,8 @@ import { sendImageMessageComposer } from "../composers/baileys/send-image-messag
 import { sendVideoMessageComposer } from "../composers/baileys/send-video-message.composer";
 import { sendContactMessageComposer } from "../composers/baileys/send-contact-message.composer";
 import { sendDocumentMessageComposer } from "../composers/baileys/sen-document-message.composer";
-import multer from 'multer';
 import { sendMediaUrlMessageComposer } from "../composers/baileys/send-media-url-message.composer";
+import multer from 'multer';
 
 const messageRouter = Router();
 
