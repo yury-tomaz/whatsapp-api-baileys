@@ -37,7 +37,7 @@
   },
   "dependencies": {
     "@whiskeysockets/baileys": "^6.5.0",
-    "axios": "^1.6.5",
+    "axios": "^1.6.7",
     "compression": "^1.7.4",
     "cors": "^2.8.5",
     "dotenv": "^16.4.1",
