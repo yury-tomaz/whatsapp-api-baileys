@@ -6,7 +6,7 @@
 
 ## About this project
 
-This project is a simple restfull API to send messages to whatsapp using the [baileys]() library as a base for the API service with multi device support.
+This project is a simple restfull API to send messages to whatsapp using the [baileys](https://github.com/WhiskeySockets/Baileys) library as a base for the API service with multi device support.
 
 ## Requirements
 - [NodeJS](https://nodejs.org/en/)
