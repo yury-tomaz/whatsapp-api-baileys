@@ -19,7 +19,7 @@ export async function requestAdapter(request: ExpressRequest, response: ExpressR
         params: request.params,
         url: request.originalUrl,
         protocol: request.protocol,
-        
+        file: request.file,
     });
 
     const http_response = await controller.handle(http_request);

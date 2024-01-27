@@ -1,42 +1,36 @@
 import { AppError } from "../../../../../domain/exceptions/app-error";
 import { BaileysInstanceRepositoryInterface } from "../../../../../domain/repositories/baileys-instance.repository.interface";
-import { SendTextMessageUseCaseInterface } from "../../../../contracts/send-text-message-usecase.interface";
-import { SendTextMessageUseCaseInputDTO } from "./send-text-message.dto";
+import { SendDocumentMessageUseCaseInterface } from "../../../../contracts/send-document-message.interface";
+import { SendDocumentMessageUseCaseInputDTO } from "./send-document-message.dto";
 
-type input = SendTextMessageUseCaseInputDTO;
+type input = SendDocumentMessageUseCaseInputDTO;
 
-export class SendTextMessageUseCase implements SendTextMessageUseCaseInterface {
+export class SendDocumentMessageUseCase implements SendDocumentMessageUseCaseInterface {
     constructor(
         private readonly baileysInstanceRepository: BaileysInstanceRepositoryInterface
     ) { }
 
     async execute(input: input): Promise<void> {
-
         const result = await this.baileysInstanceRepository.find(input.key);
 
-        if (!result) {
+        if (!result || !result.waSocket) {
             throw new AppError({
-                message: 'Baileys instance not found',
-                statusCode: 204,
-                isOperational: true
-            });
-        }
-
-        if (!result.waSocket) {
-            throw new AppError({
-                message: 'Baileys instance not initialized',
+                message: "Baileys instance not found or not initialized",
                 statusCode: 204,
                 isOperational: true
             });
         }
 
         const sock = result.waSocket;
-
         await result.verifyId(this.getWhatsAppId(input.to));
 
-        await sock.sendMessage( this.getWhatsAppId(input.to), {
-            text: input.message
+        await sock.sendMessage(this.getWhatsAppId(input.to), {
+            mimetype: input.file.mimetype,
+            document: input.file.buffer,
+            caption: input.caption ?? '',
+            fileName: input.file.originalname
         });
+
     }
 
     private getWhatsAppId(id: string) {

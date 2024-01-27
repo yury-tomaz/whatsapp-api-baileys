@@ -1,11 +1,11 @@
 import { AppError } from "../../../../../domain/exceptions/app-error";
 import { BaileysInstanceRepositoryInterface } from "../../../../../domain/repositories/baileys-instance.repository.interface";
-import { SendTextMessageUseCaseInterface } from "../../../../contracts/send-text-message-usecase.interface";
-import { SendTextMessageUseCaseInputDTO } from "./send-text-message.dto";
+import { sendAudioMessageUseCaseInterface } from "../../../../contracts/send-audio-message-usecase.Interface";
+import { sendAudioMessageUseCaseInputDTO } from "./send-audio-message.dto";
 
-type input = SendTextMessageUseCaseInputDTO;
+type input = sendAudioMessageUseCaseInputDTO;
 
-export class SendTextMessageUseCase implements SendTextMessageUseCaseInterface {
+export class SendAudioMessageUseCase implements sendAudioMessageUseCaseInterface {
     constructor(
         private readonly baileysInstanceRepository: BaileysInstanceRepositoryInterface
     ) { }
@@ -14,17 +14,9 @@ export class SendTextMessageUseCase implements SendTextMessageUseCaseInterface {
 
         const result = await this.baileysInstanceRepository.find(input.key);
 
-        if (!result) {
+        if (!result || !result.waSocket) {
             throw new AppError({
-                message: 'Baileys instance not found',
-                statusCode: 204,
-                isOperational: true
-            });
-        }
-
-        if (!result.waSocket) {
-            throw new AppError({
-                message: 'Baileys instance not initialized',
+                message: 'Baileys instance not found or not connected',
                 statusCode: 204,
                 isOperational: true
             });
@@ -34,9 +26,16 @@ export class SendTextMessageUseCase implements SendTextMessageUseCaseInterface {
 
         await result.verifyId(this.getWhatsAppId(input.to));
 
-        await sock.sendMessage( this.getWhatsAppId(input.to), {
-            text: input.message
-        });
+        await sock.sendMessage(
+            this.getWhatsAppId(input.to),
+            {
+                mimetype: input.file.mimetype,
+                audio: input.file.buffer,
+                caption: input.caption?? '',
+                ptt: true,
+                fileName: input.file.originalname
+            }
+        );
     }
 
     private getWhatsAppId(id: string) {

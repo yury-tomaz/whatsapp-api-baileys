@@ -1,11 +1,13 @@
 import { AppError } from "../../../../../domain/exceptions/app-error";
 import { BaileysInstanceRepositoryInterface } from "../../../../../domain/repositories/baileys-instance.repository.interface";
-import { SendTextMessageUseCaseInterface } from "../../../../contracts/send-text-message-usecase.interface";
-import { SendTextMessageUseCaseInputDTO } from "./send-text-message.dto";
+import { SendContactMessageUseCaseInterface } from "../../../../contracts/send-contact-message-usecase.Interface";
+import { generateVC } from "../../../../helper/genCv";
+import { SendContactMessageUseCaseInputDTO } from "./send-contact-message.dto";
 
-type input = SendTextMessageUseCaseInputDTO;
+type input = SendContactMessageUseCaseInputDTO;
 
-export class SendTextMessageUseCase implements SendTextMessageUseCaseInterface {
+
+export class SendContactMessageUseCase implements SendContactMessageUseCaseInterface {
     constructor(
         private readonly baileysInstanceRepository: BaileysInstanceRepositoryInterface
     ) { }
@@ -14,32 +16,27 @@ export class SendTextMessageUseCase implements SendTextMessageUseCaseInterface {
 
         const result = await this.baileysInstanceRepository.find(input.key);
 
-        if (!result) {
+        if (!result || !result.waSocket) {
             throw new AppError({
-                message: 'Baileys instance not found',
-                statusCode: 204,
-                isOperational: true
-            });
-        }
-
-        if (!result.waSocket) {
-            throw new AppError({
-                message: 'Baileys instance not initialized',
+                message: "Baileys instance not found or not initialized",
                 statusCode: 204,
                 isOperational: true
             });
         }
 
         const sock = result.waSocket;
-
         await result.verifyId(this.getWhatsAppId(input.to));
+        const vcard = generateVC(input.vcard);
 
-        await sock.sendMessage( this.getWhatsAppId(input.to), {
-            text: input.message
+        await sock.sendMessage(this.getWhatsAppId(input.to), {
+            contacts: {
+                displayName: input.vcard.fullName,
+                contacts: [{ displayName: input.vcard.fullName, vcard: vcard }]
+            }
         });
     }
 
-    private getWhatsAppId(id: string) {
+    private getWhatsAppId(id: string): string {
         if (id.includes('@g.us') || id.includes('@s.whatsapp.net')) return id
         return id.includes('-') ? `${id}@g.us` : `${id}@s.whatsapp.net`
     }

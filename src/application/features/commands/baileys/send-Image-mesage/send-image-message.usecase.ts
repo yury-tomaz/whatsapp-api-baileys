@@ -1,17 +1,16 @@
 import { AppError } from "../../../../../domain/exceptions/app-error";
 import { BaileysInstanceRepositoryInterface } from "../../../../../domain/repositories/baileys-instance.repository.interface";
-import { SendTextMessageUseCaseInterface } from "../../../../contracts/send-text-message-usecase.interface";
-import { SendTextMessageUseCaseInputDTO } from "./send-text-message.dto";
+import { SendImageMessageUseCaseInterface } from "../../../../contracts/send-image-message-usecase.interface";
+import { SendImageMessageUseCaseInputDTO } from "./send-image-message.dto";
 
-type input = SendTextMessageUseCaseInputDTO;
+type input = SendImageMessageUseCaseInputDTO;
 
-export class SendTextMessageUseCase implements SendTextMessageUseCaseInterface {
+export class SendImageMessageUseCase implements SendImageMessageUseCaseInterface {
     constructor(
         private readonly baileysInstanceRepository: BaileysInstanceRepositoryInterface
     ) { }
 
     async execute(input: input): Promise<void> {
-
         const result = await this.baileysInstanceRepository.find(input.key);
 
         if (!result) {
@@ -31,11 +30,13 @@ export class SendTextMessageUseCase implements SendTextMessageUseCaseInterface {
         }
 
         const sock = result.waSocket;
-
         await result.verifyId(this.getWhatsAppId(input.to));
 
         await sock.sendMessage( this.getWhatsAppId(input.to), {
-            text: input.message
+            mimetype: input.file.mimetype,
+            image: input.file.buffer,
+            caption: input.caption?? '',
+            fileName: input.file.originalname
         });
     }
 

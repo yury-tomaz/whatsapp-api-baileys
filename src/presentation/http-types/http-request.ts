@@ -4,6 +4,7 @@ export class HttpRequest {
     public headers: any;
     public params: any;
     public query: any;
+    public file: any;
     public protocol: string;
     
 
@@ -14,5 +15,6 @@ export class HttpRequest {
         this.params = props.params;
         this.query = props.query;
         this.protocol = props.protocol;
+        this.file = props.file;
     }
 }

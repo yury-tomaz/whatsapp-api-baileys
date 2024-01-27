@@ -1,15 +1,12 @@
 import { Baileys } from '../../../../../domain/entities/baileys.entity';
 import { BaileysInstanceRepositoryInterface } from '../../../../../domain/repositories/baileys-instance.repository.interface';
-
-import {
-    InitBailesInstanceUseCaseInterface,
-    InitBailesInstanceUseCaseOutputDTO,
-    InitBaileysInstanceUseCaseInputDTO
-} from '../../../../../application/contracts/usecase.interface';
+import {InitBailesInstanceUseCaseInterface} from '../../../../../application/contracts/usecase.interface';
 import EventDispatcher from '../../../../../domain/events/event-dispatcher';
+import { InitBailesInstanceUseCaseOutputDTO, InitBaileysInstanceUseCaseInputDTO } from './init-baileys-instance.dto';
 
 type input = InitBaileysInstanceUseCaseInputDTO;
 type output = InitBailesInstanceUseCaseOutputDTO;
+
 
 export class InitBailesInstanceUseCase implements InitBailesInstanceUseCaseInterface {
     constructor(

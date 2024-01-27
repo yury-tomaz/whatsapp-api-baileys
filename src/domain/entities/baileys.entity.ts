@@ -60,7 +60,7 @@ export class Baileys extends BaseEntity {
     }
 
     async init() {
-        const { state, saveCreds } = await useMultiFileAuthState(this._key);
+        const { state, saveCreds } = await useMultiFileAuthState(`instances/${this._key}`);
 
         const socketConfig: CustomSocketConfig = {
             defaultQueryTimeoutMs: 60000,

@@ -1,5 +1,5 @@
 {
-  "name": "whatsapp-api-nodejs",
+  "name": "whatsapp-api-baileys",
   "version": "1.0.0",
   "description": "WhatsApp API with Multi-Device Support - RESTful Approach",
   "main": "index.js",
@@ -7,11 +7,13 @@
     "dev": "ts-node-dev --transpile-only --respawn --ignore-watch node_modules -r tsconfig-paths/register src/main/server/server.ts",
     "build": "tsc",
     "start": "node dist/main/server/server.js",
-    "test": "jest --runInBand --detectOpenHandles --forceExit"
+    "test": "jest --runInBand --detectOpenHandles --forceExit",
+    "test:e2e": "jest --runInBand --detectOpenHandles --forceExit --testMatch **/*.e2e-spec.ts",
+    "test:watch": "jest --watch  --runInBand --detectOpenHandles --forceExit --testMatch **/*.spec.ts"
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
+  "repository": "git@github.com:yury-tomaz/whatsapp-api-baileys.git",
+  "author": "Yury Tomaz <yurytomaz@gmail.com>",
+  "license": "MIT",
   "devDependencies": {
     "@faker-js/faker": "^8.3.1",
     "@types/compression": "^1.7.5",
@@ -19,6 +21,7 @@
     "@types/express": "^4.17.21",
     "@types/jest": "^29.5.11",
     "@types/mongodb": "^4.0.7",
+    "@types/multer": "^1.4.11",
     "@types/node": "^20.11.0",
     "@types/qrcode": "^1.5.5",
     "@types/semaphore": "^1.1.4",
@@ -42,6 +45,7 @@
     "express-async-errors": "^3.1.1",
     "helmet": "^7.1.0",
     "mongodb": "^6.3.0",
+    "multer": "^1.4.5-lts.1",
     "pino": "^8.17.2",
     "pino-http": "^9.0.0",
     "pino-pretty": "^10.3.1",
