@@ -31,7 +31,7 @@ describe('init Baileys instance e2e test', () => {
             apiKey: faker.string.uuid()
         }
 
-        const response = await api.post('/api/baileys')
+        const response = await api.post('/api/baileys/instances')
         .send(data)
         .set('Accept-Version', '1.0.0');
 
