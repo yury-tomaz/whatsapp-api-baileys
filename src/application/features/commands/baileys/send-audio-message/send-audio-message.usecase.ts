@@ -14,17 +14,9 @@ export class sendAudioMessageUseCase implements sendAudioMessageUseCaseInterface
 
         const result = await this.baileysInstanceRepository.find(input.key);
 
-        if (!result) {
+        if (!result || !result.waSocket) {
             throw new AppError({
-                message: 'Baileys instance not found',
-                statusCode: 204,
-                isOperational: true
-            });
-        }
-
-        if (!result.waSocket) {
-            throw new AppError({
-                message: 'Baileys instance not initialized',
+                message: 'Baileys instance not found or not connected',
                 statusCode: 204,
                 isOperational: true
             });
