@@ -28,7 +28,7 @@ export class GetQrCodeController {
             content: execute.qrCode,
             _links: {
                 self: `${baseUrl}/api/baileys/instances/${key}/QRCode`,
-                baileys_instance: `${baseUrl}/api/baileys/instances/${key}`
+                baileys_instance: `${baseUrl}/api/baileys/instances/${key}`,
             }
         }
 
