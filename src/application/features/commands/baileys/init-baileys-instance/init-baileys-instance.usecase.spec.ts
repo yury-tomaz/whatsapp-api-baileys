@@ -1,6 +1,5 @@
-
-import { InitBaileysInstanceUseCaseInputDTO } from "../../../../../application/contracts/usecase.interface";
 import EventDispatcher from "../../../../../domain/events/event-dispatcher";
+import { InitBaileysInstanceUseCaseInputDTO } from "./init-baileys-instance.dto";
 import { InitBailesInstanceUseCase } from "./init-baileys-instance.usecase";
 
 const mockRepository = jest.fn(() => ({
