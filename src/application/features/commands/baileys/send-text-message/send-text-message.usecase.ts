@@ -1,12 +1,7 @@
 import { AppError } from "../../../../../domain/exceptions/app-error";
 import { BaileysInstanceRepositoryInterface } from "../../../../../domain/repositories/baileys-instance.repository.interface";
 import { SendTextMessageUseCaseInterface } from "../../../../contracts/send-text-message-usecase.interface";
-
-export interface SendTextMessageUseCaseInputDTO {
-    key: string;
-    to: string;
-    message: string;
-}
+import { SendTextMessageUseCaseInputDTO } from "./send-text-message.dto";
 
 type input = SendTextMessageUseCaseInputDTO;
 
