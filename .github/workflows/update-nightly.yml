@@ -32,7 +32,7 @@ jobs:
           file: ./Dockerfile
           push: true
           tags: |
-            your-docker-username/your-api-image:nightly
+            yurytomaz/whatsapp-api-baileys:nightly
 
       - name: Create Release
         uses: meeDamian/github-release@2.0
