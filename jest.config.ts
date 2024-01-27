@@ -5,7 +5,7 @@ const jestConfig: JestConfigWithTsJest = {
   testEnvironment: 'node',
   roots: ['<rootDir>'],
   setupFiles: ['<rootDir>/.jest/setEnvVars.js'],
-  testMatch: ['**/*.unit-spec.ts', '**/*.integration-spec.ts', '**/*.e2e-spec.ts'],
+  testMatch: ['**/*.spec.ts', '**/*.integration-spec.ts', '**/*.e2e-spec.ts'],
 }
 
 export default jestConfig;
