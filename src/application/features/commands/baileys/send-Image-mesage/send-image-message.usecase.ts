@@ -3,12 +3,14 @@ import { BaileysInstanceRepositoryInterface } from "../../../../../domain/reposi
 import { SendImageMessageUseCaseInterface } from "../../../../contracts/send-image-message-usecase.interface";
 import { SendImageMessageUseCaseInputDTO } from "./send-image-message.dto";
 
+type input = SendImageMessageUseCaseInputDTO;
+
 export class SendImageMessageUseCase implements SendImageMessageUseCaseInterface {
     constructor(
         private readonly baileysInstanceRepository: BaileysInstanceRepositoryInterface
     ) { }
 
-    async execute(input: SendImageMessageUseCaseInputDTO) {
+    async execute(input: input): Promise<void> {
         const result = await this.baileysInstanceRepository.find(input.key);
 
         if (!result) {
