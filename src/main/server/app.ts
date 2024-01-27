@@ -12,7 +12,8 @@ import './process';
 import { MongoClient } from "mongodb";
 import { router } from "../routes/routes";
 import path from "path";
-
+import { config } from "dotenv";
+config();
 
 const app = express();
 
@@ -30,10 +31,9 @@ let client: MongoClient;
 
 app.use(router);
 
-
-app.use(express.static(path.join(__dirname, "..", "public")))
+app.use(express.static(path.join(__dirname, '..', '..', 'public')))
 app.set('view engine', 'ejs');
-app.set('views', path.join(__dirname, '..', 'public'));
+app.set('views', path.join(__dirname, '..', '..', 'public'));
 
 
 app.use((err: AppError, req: Request, res: Response, next: NextFunction) => {
