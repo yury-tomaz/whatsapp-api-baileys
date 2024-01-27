@@ -10,7 +10,7 @@ import { AppError } from '../../domain/exceptions/app-error';
 import { errorHandler } from '../../domain/exceptions/error-handler';
 import './process';
 import { MongoClient } from "mongodb";
-import { router } from "../routes";
+import { router } from "../routes/routes";
 import path from "path";
 
 
