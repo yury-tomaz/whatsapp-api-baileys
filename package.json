@@ -7,7 +7,9 @@
     "dev": "ts-node-dev --transpile-only --respawn --ignore-watch node_modules -r tsconfig-paths/register src/main/server/server.ts",
     "build": "tsc",
     "start": "node dist/main/server/server.js",
-    "test": "jest --runInBand --detectOpenHandles --forceExit"
+    "test": "jest --runInBand --detectOpenHandles --forceExit",
+    "test:e2e": "jest --runInBand --detectOpenHandles --forceExit --testMatch **/*.e2e-spec.ts",
+    "test:watch": "jest --watch  --runInBand --detectOpenHandles --forceExit --testMatch **/*.spec.ts"
   },
   "repository": "git@github.com:yury-tomaz/whatsapp-api-baileys.git",
   "author": "Yury Tomaz <yurytomaz@gmail.com>",
