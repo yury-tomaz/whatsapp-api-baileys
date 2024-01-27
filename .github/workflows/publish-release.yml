@@ -46,5 +46,4 @@ jobs:
           name: ${{ github.ref_name }}
           body: "Release notes or changelog here"
           draft: false
-          allow_override: true
           prerelease: false
