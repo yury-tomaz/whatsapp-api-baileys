@@ -18,18 +18,22 @@ jobs:
         run: git fetch --tags -f || true
 
       - name: Setup Node
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v3.6.0
         with:
           node-version: 18.x
 
-      - name: Cache dependencies
-        uses: actions/cache@v2
+      - name: Get yarn cache directory path
+        id: yarn-cache-dir-path
+        run: echo "dir=$(yarn cache dir)" >> $GITHUB_OUTPUT
+
+      - uses: actions/cache@v3
+        id: yarn-cache # use this to check for `cache-hit` (`steps.yarn-cache.outputs.cache-hit != 'true'`)
         with:
-          path: |
-            node_modules
-          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+          path: ${{ steps.yarn-cache-dir-path.outputs.dir }}
+          key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
           restore-keys: |
-            ${{ runner.os }}-node-
+            ${{ runner.os }}-yarn-
+
 
       - name: Doker login
         uses: docker/login-action@v3
@@ -49,8 +53,11 @@ jobs:
       - name: Generate Changelog
         id: generate_changelog
         run: |
-          changelog=$(npm run changelog:preview --silent)
-          echo "${changelog}" > $GITHUB_WORKSPACE/changelog.txt
+          changelog=$(yarn run --silent changelog:preview)
+          echo "changelog<<EOF" >> $GITHUB_OUTPUT
+          echo "${changelog}" >> $GITHUB_OUTPUT
+          echo "EOF" >> $GITHUB_OUTPUT
+    
 
       - name: Create Release
         uses: meeDamian/github-release@2.0
@@ -61,7 +68,7 @@ jobs:
           tag: nightly
           commitish: ${{ github.sha }}
           name: ${{ github.ref_name }}
-          body: $GITHUB_WORKSPACE/changelog.txt
+          body: ${{ steps.generate_changelog.outputs.changelog }}
           draft: false
           allow_override: true
           prerelease: true
