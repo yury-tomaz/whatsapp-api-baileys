@@ -33,6 +33,9 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-npm-
 
+      - name: Install Dependencies
+        run: npm ci
+
       - name: Docker login
         uses: docker/login-action@v3
         with:
