@@ -62,9 +62,9 @@ jobs:
       - name: Create Release
         uses: meeDamian/github-release@2.0
         env:
-          GITHUB_TOKEN: ${{ github.token }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          token: ${{ github.token }}
+          token: ${{ secrets.GITHUB_TOKEN }}
           tag: nightly
           commitish: ${{ github.sha }}
           name: ${{ github.ref_name }}
