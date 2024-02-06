@@ -42,7 +42,7 @@ docker-compose up -d
 ```
 
 ## API Documentation
-All routes are documented in [Postman](https://documenter.getpostman.com/view/12962977/Tz5qZK8z)
+`under development`
 
 ## Contributing
 Check the [contributing](CONTRIBUTING.md) file for more details.
