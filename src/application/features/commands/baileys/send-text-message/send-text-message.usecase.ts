@@ -1,4 +1,4 @@
-import { AppError } from "../../../../../domain/exceptions/app-error";
+import {AppError, HttpCode} from "../../../../../domain/exceptions/app-error";
 import { BaileysInstanceRepositoryInterface } from "../../../../../domain/repositories/baileys-instance.repository.interface";
 import { SendTextMessageUseCaseInterface } from "../../../../contracts/send-text-message-usecase.interface";
 import { SendTextMessageUseCaseInputDTO } from "./send-text-message.dto";
@@ -17,7 +17,7 @@ export class SendTextMessageUseCase implements SendTextMessageUseCaseInterface {
         if (!result) {
             throw new AppError({
                 message: 'Baileys instance not found',
-                statusCode: 204,
+                statusCode: HttpCode['NOT_FOUND'],
                 isOperational: true
             });
         }
