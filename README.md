@@ -1,8 +1,8 @@
 # Whatsapp api baileys multi device support
 
-```
-🚧 this project is under construction 🚧
-```
+
+🚧 This project is under construction and not ready for use yet.  🚧
+
 
 ## About this project
 
