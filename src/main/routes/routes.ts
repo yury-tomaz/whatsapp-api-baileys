@@ -4,6 +4,6 @@ import baileysRoute from "./baileys.routes";
 const router = Router();
 
 router.use('/api/baileys/instances', baileysRoute);
-router.use('/api/baileys/:key/message', messageRouter);
+router.use('/api/baileys/message', messageRouter);
 
 export { router };

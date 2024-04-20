@@ -14,43 +14,43 @@ const messageRouter = Router();
 const storage = multer.memoryStorage();
 const upload = multer({ storage: storage }).single('file');
 
-messageRouter.post("/text", (request, response) =>
+messageRouter.post("/:key/text", (request, response) =>
     routesVersioning(request, response, {
         '1.0.0': sendTextMessageCompose()
     })
 );
 
-messageRouter.post("/audio", upload, (request, response) =>
+messageRouter.post("/:key/audio", upload, (request, response) =>
     routesVersioning(request, response, {
         '1.0.0': sendAudioMessageCompose()
     })
 );
 
-messageRouter.post("/image", upload, (request, response) =>
+messageRouter.post("/:key/image", upload, (request, response) =>
     routesVersioning(request, response, {
         '1.0.0': sendImageMessageComposer()
     })
 );
 
-messageRouter.post("/video", upload, (request, response) =>
+messageRouter.post("/:key/video", upload, (request, response) =>
     routesVersioning(request, response, {
         '1.0.0': sendVideoMessageComposer()
     })
 );
 
-messageRouter.post("/contact", (request, response) =>
+messageRouter.post("/:key/contact", (request, response) =>
     routesVersioning(request, response, {
         '1.0.0': sendContactMessageComposer()
     })
 );
 
-messageRouter.post("/document", upload, (request, response) =>
+messageRouter.post("/:key/document", upload, (request, response) =>
     routesVersioning(request, response, {
         '1.0.0': sendDocumentMessageComposer()
     })
 );
 
-messageRouter.post("/mediaurl", (request, response) =>
+messageRouter.post("/:key/mediaurl", (request, response) =>
     routesVersioning(request, response, {
         '1.0.0': sendMediaUrlMessageComposer()
     })
