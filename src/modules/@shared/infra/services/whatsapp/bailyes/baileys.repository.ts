@@ -1,6 +1,6 @@
-import {Baileys} from "../../../../../../domain/entities/baileys.entity";
 import sem from "semaphore";
-import {logger} from "../../../../../../infrastructure/logger";
+import {Baileys} from "./instance";
+import {logger} from "../../../logger";
 
 export class BaileysRepository{
     private static instance: BaileysRepository | undefined;
@@ -18,14 +18,14 @@ export class BaileysRepository{
 
     async create(entity: Baileys): Promise<void> {
         this.semaphore.take(async () => {
-            if (this.repository.has(entity.key)) {
-                logger.warn(`Baileys with key ${entity.key} already exists`);
-                this.update(entity);
+            if (this.repository.has(entity.id.id)) {
+                logger.warn(`Baileys with key ${entity.id} already exists`);
+                await this.update(entity);
                 this.semaphore.leave();
                 return;
             }
 
-            this.repository.set(entity.key, entity);
+            this.repository.set(entity.id.id, entity);
             this.semaphore.leave();
         });
     }
@@ -36,12 +36,12 @@ export class BaileysRepository{
 
     async update(entity: Baileys): Promise<void> {
         this.semaphore.take(async () => {
-            if (!this.repository.has(entity.key)) {
-                logger.warn(`Baileys with key ${entity.key} does not exist`);
-                throw new Error(`Baileys with key ${entity.key} does not exist`);
+            if (!this.repository.has(entity.id.id)) {
+                logger.warn(`Baileys with key ${entity.id.id} does not exist`);
+                throw new Error(`Baileys with key ${entity.id.id} does not exist`);
             }
 
-            this.repository.set(entity.key, entity);
+            this.repository.set(entity.id.id, entity);
             this.semaphore.leave();
         });
     }
