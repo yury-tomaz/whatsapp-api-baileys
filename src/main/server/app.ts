@@ -13,6 +13,8 @@ import { MongoClient } from "mongodb";
 import { router } from "../routes/routes";
 import path from "path";
 import { config } from "dotenv";
+import {AMQPMessageQueue} from "../../modules/@shared/infra/services/messaging/AMQPMessageQueue";
+import environment from "../../modules/@shared/infra/environment";
 config();
 
 const app = express();
@@ -24,9 +26,11 @@ app.use(compression());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 let client: MongoClient;
+let messageQueue: AMQPMessageQueue
 
 (async () => {
-    client = await dbConnect()
+    client = await dbConnect();
+    messageQueue = new AMQPMessageQueue(environment.AMQPM_URL)
 })()
 
 app.use(router);
@@ -42,4 +46,4 @@ app.use((err: AppError, req: Request, res: Response, next: NextFunction) => {
 });
 
 
-export { app, client };
+export { app, client, messageQueue };
