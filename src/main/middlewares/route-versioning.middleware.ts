@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import { AppError, HttpCode } from "../../domain/exceptions/app-error";
+import { AppError, HttpCode } from "../../modules/@shared/domain/exceptions/app-error";
 import { ControllerInterface, requestAdapter } from "../adapters/request-adapter";
 
 
