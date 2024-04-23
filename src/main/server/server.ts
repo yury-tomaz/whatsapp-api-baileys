@@ -1,5 +1,5 @@
-import environment from "../../infrastructure/environment";
-import { logger } from "../../infrastructure/logger";
+import environment from "../../modules/@shared/infra/environment";
+import { logger } from "../../modules/@shared/infra/logger";
 import { app } from "./app";
 
 app.listen(environment.PORT , () => {
