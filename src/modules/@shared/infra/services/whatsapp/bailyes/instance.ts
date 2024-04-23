@@ -7,13 +7,12 @@ import makeWASocket, {
     WABrowserDescription
 } from "@whiskeysockets/baileys";
 import MAIN_LOGGER from "@whiskeysockets/baileys/lib/Utils/logger";
-import {Collection} from "mongodb";
-import {logger} from "../../../../../../infrastructure/logger";
-import EventDispatcherInterface from "../../../../../../domain/events/event-dispatcher.interface";
+import {logger} from "../../../logger";
+import EventDispatcherInterface from "../../../../domain/events/event-dispatcher.interface";
 import {authState, AuthStateRepositoryInterface} from "./auth-state-db";
 import NodeCache from 'node-cache';
-import EventInterface from "../../../../../../domain/events/event.interface";
-import {fa} from "@faker-js/faker";
+import {Chat} from "@whiskeysockets/baileys/lib/Types/Chat";
+import Id from "../../../../domain/value-object/id.value-object";
 
 const loggerBaileys = MAIN_LOGGER.child({});
 loggerBaileys.level = "error";
@@ -24,15 +23,13 @@ interface CustomSocketConfig extends Partial<SocketConfig> {
 }
 
 interface Props {
-    id: string;
-    collection: Collection<any>;
+    id: Id;
     eventDispatcher: EventDispatcherInterface;
     authStateRepository: AuthStateRepositoryInterface;
 }
 
-
-export class Bailyes {
-    private readonly id: string;
+export class Baileys {
+    private readonly _id: Id;
     private _socketConfig: CustomSocketConfig | undefined;
     private _waSocket: ReturnType<typeof makeWASocket> | undefined;
     private readonly eventDispatcher: EventDispatcherInterface;
@@ -40,9 +37,12 @@ export class Bailyes {
     private msgRetryCounterCache = new NodeCache();
     private _qrRetry: number = 0;
     private _qrCode: string | undefined;
-    private _chats: any[] | undefined;
+    private _chats: Chat[] = []
     private _only: boolean = false
 
+    get id(){
+        return this._id
+    }
     get qrCode() {return this._qrCode}
 
     get waSocket() {
@@ -53,10 +53,8 @@ export class Bailyes {
         return this._only
     }
 
-
-
     constructor(props: Props) {
-        this.id = props.id;
+        this._id = props.id;
         this.eventDispatcher = props.eventDispatcher;
         this.authStateRepository = props.authStateRepository;
     }
@@ -88,7 +86,15 @@ export class Bailyes {
 
     private async listeningEvents(socket: ReturnType<typeof makeWASocket>) {
         socket.ev.on('chats.upsert', async (chats) => {
-            //TODO: handle event
+            socket.ev.on('chats.upsert', (newChat) => {
+                this._chats = this._chats.map((chat) => {
+                        return {
+                            ...chat,
+                            messages: []
+                        };
+                    }
+                );
+            });
         });
 
         socket.ev.on('connection.update', async (update) => {
