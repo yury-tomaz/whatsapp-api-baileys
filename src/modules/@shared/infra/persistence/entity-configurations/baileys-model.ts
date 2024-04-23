@@ -1,5 +1,6 @@
 import { ObjectId } from "mongodb";
 
+// TODO: update model
 export default class Baileys {
     constructor(
         public key: string,

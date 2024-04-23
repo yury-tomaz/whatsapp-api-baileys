@@ -1,8 +1,8 @@
-import { BaileysRepositoryInterface } from "../../../domain/repositories/baileys.repository.interface";
+import { BaileysRepositoryInterface } from "../../../../../domain/repositories/baileys.repository.interface";
 import { collections } from "../settings/connection";
-import { Baileys } from "../../../domain/entities/baileys.entity";
+import { Baileys } from "../../../../../domain/entities/baileys.entity";
 import BaileysModel from "../entity-configurations/baileys-model";
-import Id from "../../../domain/value-object/id.value-object";
+import Id from "../../../../../domain/value-object/id.value-object";
 import EventDispatcher from "../../../domain/events/event-dispatcher";
 
 export class BaileysRepository implements BaileysRepositoryInterface {

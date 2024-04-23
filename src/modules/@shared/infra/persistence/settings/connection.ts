@@ -1,5 +1,5 @@
-import { logger } from '../../../infrastructure/logger';
-import environment from '../../../infrastructure/environment';
+import {logger} from '../../logger';
+import environment from '../../environment';
 
 import * as mongoDB from "mongodb";
 
@@ -17,9 +17,7 @@ export async function dbConnect() {
 
         const db: mongoDB.Db = client.db(environment.MONGO_DB);
 
-        const baileysCollection: mongoDB.Collection = db.collection('baileys');
-
-        collections.baileys = baileysCollection;
+        collections.baileys = db.collection('baileys');
         logger.info(`Successfully connected to database: ${db.databaseName}`);
 
         return client;
