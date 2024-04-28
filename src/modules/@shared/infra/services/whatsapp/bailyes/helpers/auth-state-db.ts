@@ -18,7 +18,6 @@ export async function authState(
         state: {
             creds,
             keys: {
-                // TODO:  define type
                 // @ts-ignore
                 get: async (type, ids: string[]) => {
                     // @ts-ignore

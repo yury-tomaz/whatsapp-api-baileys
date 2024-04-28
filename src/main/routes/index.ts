@@ -1,3 +1,4 @@
+import multer from 'multer';
 import { Router } from "express";
 import miscRoute from "./misc.route";
 import groupRoute from "./group.route";

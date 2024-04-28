@@ -2,17 +2,19 @@ import makeWASocket, {
     AuthenticationState, BaileysEventMap,
     Browsers,
     fetchLatestBaileysVersion,
-    makeInMemoryStore,
+    makeInMemoryStore, proto,
     SocketConfig,
-    WABrowserDescription
+    WABrowserDescription, WAMessage
 } from "@whiskeysockets/baileys";
 import MAIN_LOGGER from "@whiskeysockets/baileys/lib/Utils/logger";
 import {logger} from "../../../logger";
 import EventDispatcherInterface from "../../../../domain/events/event-dispatcher.interface";
-import {authState, AuthStateRepositoryInterface} from "./auth-state-db";
+import {authState, AuthStateRepositoryInterface} from "./helpers/auth-state-db";
 import NodeCache from 'node-cache';
 import {Chat} from "@whiskeysockets/baileys/lib/Types/Chat";
 import Id from "../../../../domain/value-object/id.value-object";
+import {ProcessSocketEvent} from "./process-socket-event";
+import {AppError, HttpCode} from "../../../../domain/exceptions/app-error";
 
 const loggerBaileys = MAIN_LOGGER.child({});
 loggerBaileys.level = "error";
@@ -26,37 +28,78 @@ interface Props {
     id: Id;
     eventDispatcher: EventDispatcherInterface;
     authStateRepository: AuthStateRepositoryInterface;
+    processSocketEvent: ProcessSocketEvent
 }
 
-export class Baileys {
+export class BaileysInstance {
     private readonly _id: Id;
     private _socketConfig: CustomSocketConfig | undefined;
     private _waSocket: ReturnType<typeof makeWASocket> | undefined;
-    private readonly eventDispatcher: EventDispatcherInterface;
     private readonly authStateRepository: AuthStateRepositoryInterface;
     private msgRetryCounterCache = new NodeCache();
-    private _qrRetry: number = 0;
+    private _qrRetry = 0;
+    private _qr?: string;
     private _qrCode: string | undefined;
-    private _chats: Chat[] = []
-    private _only: boolean = false
+    private _chats: Chat[] = [];
+    private _messages: WAMessage[] = [];
+    private _isOn: boolean = false;
+    private eventProcessor: ProcessSocketEvent;
 
-    get id(){
+    get id() {
         return this._id
     }
-    get qrCode() {return this._qrCode}
+
+    get qrCode() {
+        return this._qrCode
+    }
 
     get waSocket() {
         return this._waSocket
     }
 
-    get only(){
-        return this._only
+    get isOn() {
+        return this._isOn
+    }
+
+    set isOn(value: boolean) {
+        this._isOn = value
+    }
+
+    get qr(): string | undefined{
+        return this._qr
+    }
+
+    set qr(value: string){
+        this._qr = value
+    }
+
+    get qrRetry(){
+        return this._qrRetry
+    }
+
+    get chats(): Chat[]{
+        return this._chats;
+    }
+
+    set chats(value: Chat[]){
+        this._chats = value;
+    }
+
+    get messages(){
+        return this._messages;
+    }
+
+    set messages(value : any){
+        this._messages = value;
     }
 
     constructor(props: Props) {
         this._id = props.id;
-        this.eventDispatcher = props.eventDispatcher;
         this.authStateRepository = props.authStateRepository;
+        this.eventProcessor = props.processSocketEvent
+        this.init().then(r => {
+            logger.info('Baileys instance initialized');
+        })
     }
 
     async init() {
@@ -80,50 +123,14 @@ export class Baileys {
 
         if (this._waSocket) {
             this._waSocket.ev.on('creds.update', saveCreds);
-            logger.info('Baileys instance initialized');
+            await this.eventProcessor.execute(this)
         }
     }
 
-    private async listeningEvents(socket: ReturnType<typeof makeWASocket>) {
-        socket.ev.on('chats.upsert', async (chats) => {
-            socket.ev.on('chats.upsert', (newChat) => {
-                this._chats = this._chats.map((chat) => {
-                        return {
-                            ...chat,
-                            messages: []
-                        };
-                    }
-                );
-            });
-        });
-
-        socket.ev.on('connection.update', async (update) => {
-            //TODO: handle event
-        });
-
-        socket.ev.on('presence.update', async (json) => {
-            //TODO: handle event
-        });
-
-        socket.ev.on('chats.update', async (message) => {
-            //TODO: handle event
-        });
-
-        socket.ev.on('messaging-history.set', async ({chats}) => {
-            //TODO: handle event
-        });
-
-        socket.ev.on('messages.upsert', async ({messages, type}) => {
-            //TODO: handle event
-        });
-
-        socket.ev.on('messages.update', async (messages) => {
-            //TODO: handle event
-        });
-
-        socket.ev.on('contacts.upsert', async (contacts) => {
-            //TODO: handle event
-        });
+    closeWebSocketConnection() {
+        this._waSocket?.ws.close();
+        this.removeAllListeners();
+        this._qr = undefined;
     }
 
     private removeAllListeners() {
@@ -143,5 +150,23 @@ export class Baileys {
         });
     }
 
+    async verifyId(id:string){
+        if (id.includes('@g.us')) return true
 
+        if(!this._waSocket) throw new AppError({
+            message: 'Baileys instance not initialized',
+            statusCode: HttpCode['NOT_FOUND'],
+            isOperational: true
+        });
+
+        const [result] = await this._waSocket.onWhatsApp(id)
+        if (result?.exists) return true
+
+        throw new AppError({
+            message: 'no account exists',
+            statusCode: 204,
+            isOperational: true
+        })
+
+    }
 }

@@ -1,6 +1,7 @@
 import {MessageQueueInterface} from "../../../application/abstractions/messageQueue";
 import * as amqp from 'amqplib';
 import {AppError, HttpCode} from "../../../domain/exceptions/app-error";
+import {logger} from "../../logger";
 export class AMQPMessageQueue implements MessageQueueInterface {
     private readonly connectionUrl: string;
     private connection: amqp.Connection | null = null;
@@ -10,8 +11,10 @@ export class AMQPMessageQueue implements MessageQueueInterface {
     }
 
     async connect(): Promise<void> {
+        logger.info('AMQPMessageQueue connecting...');
         this.connection = await amqp.connect(this.connectionUrl);
         this.channel = await this.connection.createChannel();
+        logger.info('AMQPMessageQueue connection successful');
     }
 
     async sendMessage(queueName: string, message: any): Promise<void> {
@@ -24,6 +27,7 @@ export class AMQPMessageQueue implements MessageQueueInterface {
         }
         await this.channel.assertQueue(queueName);
         this.channel.sendToQueue(queueName, Buffer.from(JSON.stringify(message)));
+        logger.info(`Message sent to queue ${queueName}: ${JSON.stringify(message)}`);
     }
 
     async receiveMessage(queueName: string, callback: (message: any) => void): Promise<void> {
@@ -41,6 +45,7 @@ export class AMQPMessageQueue implements MessageQueueInterface {
                 const content = msg.content.toString();
                 callback(JSON.parse(content));
                 this.channel?.ack(msg);
+                logger.info(`Message received from queue ${queueName}: ${content}`);
             }
         });
     }
@@ -48,6 +53,7 @@ export class AMQPMessageQueue implements MessageQueueInterface {
     async disconnect(): Promise<void> {
         if (this.connection) {
             await this.connection.close();
+            logger.info('AMQPMessageQueue disconnected from server');
         }
     }
 }
