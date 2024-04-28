@@ -10,11 +10,8 @@ interface WhatsappProps {
 }
 
 export class Whatsapp extends BaseEntity implements AggregateRoot {
-    private _status: string = '';
-    private _profilePicture: string = '';
     private _title: string;
-    private _phoneNumber: string = '';
-    private _isOnly: boolean = false;
+    private _status: string = '';
 
     constructor(props: WhatsappProps) {
         super(props.id, props.createdAt, props.updatedAt);
@@ -24,32 +21,15 @@ export class Whatsapp extends BaseEntity implements AggregateRoot {
     get status() {
         return this._status;
     }
-    get profilePicture() {
-        return this._profilePicture;
-    }
     get title() {
         return this._title
-    }
-    get phoneNumber() {
-        return this._phoneNumber;
-    }
-    get isOnly() {
-        return this._isOnly
     }
 
     set status(NewStatus: string) {
         this._status = NewStatus
     }
-    set profilePicture(fileName: string) {
-        this._profilePicture = fileName
-    }
+
     set title(newTitle: string) {
          this._title = newTitle
-    }
-    set phoneNumber(newPhoneNumber:string) {
-        this._phoneNumber = newPhoneNumber
-    }
-    set isOnly(only: boolean) {
-         this._isOnly = only
     }
 }
