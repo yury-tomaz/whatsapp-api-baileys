@@ -1,23 +1,19 @@
 import {BaileysManager} from "../../../baileys-manager";
-import {getWhatsAppId} from "../../../helpers/get-whats-app-Id";
 import {checkInstance} from "../../../validate/check-Instance";
-import { CreateGroupDto } from "./create-group.dto";
+import { LeaveGroupDto } from "./leave-group.dto";
 
 
-export class CreateGroupUseCase {
+export class LeaveGroupUseCase {
     constructor(
         private baileysManager: BaileysManager
     ) {
     }
 
-    async execute(input: CreateGroupDto) {
+    async execute(input: LeaveGroupDto) {
         const result = await checkInstance(input.id, this.baileysManager)
 
         const sock = result.waSocket!
         
-        await sock.groupCreate(
-          input.name,
-          input.users.map(getWhatsAppId)
-        )
+        await sock.groupLeave(input.groupId);
     }
 }
