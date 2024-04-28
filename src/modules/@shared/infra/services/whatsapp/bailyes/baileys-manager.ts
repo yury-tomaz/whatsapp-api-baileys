@@ -1,22 +1,22 @@
 import sem from "semaphore";
-import {Baileys} from "./instance";
+import {BaileysInstance} from "./bailyes.instance";
 import {logger} from "../../../logger";
 
-export class BaileysRepository{
-    private static instance: BaileysRepository | undefined;
-    private repository: Map<string, Baileys> = new Map();
+export class BaileysManager {
+    private static instance: BaileysManager | undefined;
+    private repository: Map<string, BaileysInstance> = new Map();
     private semaphore = sem(1);
 
     private constructor() { }
 
-    static getInstance(): BaileysRepository {
-        if (!BaileysRepository.instance) {
-            BaileysRepository.instance = new BaileysRepository();
+    static getInstance(): BaileysManager {
+        if (!BaileysManager.instance) {
+            BaileysManager.instance = new BaileysManager();
         }
-        return BaileysRepository.instance;
+        return BaileysManager.instance;
     }
 
-    async create(entity: Baileys): Promise<void> {
+    async create(entity: BaileysInstance): Promise<void> {
         this.semaphore.take(async () => {
             if (this.repository.has(entity.id.id)) {
                 logger.warn(`Baileys with key ${entity.id} already exists`);
@@ -30,11 +30,11 @@ export class BaileysRepository{
         });
     }
 
-    async find(id: string): Promise<Baileys | undefined> {
+    async find(id: string): Promise<BaileysInstance | undefined> {
         return this.repository.get(id);
     }
 
-    async update(entity: Baileys): Promise<void> {
+    async update(entity: BaileysInstance): Promise<void> {
         this.semaphore.take(async () => {
             if (!this.repository.has(entity.id.id)) {
                 logger.warn(`Baileys with key ${entity.id.id} does not exist`);
@@ -46,7 +46,7 @@ export class BaileysRepository{
         });
     }
 
-    async findAll(): Promise<Baileys[]> {
+    async findAll(): Promise<BaileysInstance[]> {
         return Array.from(this.repository.values());
     }
 
