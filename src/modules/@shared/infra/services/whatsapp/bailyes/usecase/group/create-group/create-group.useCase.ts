@@ -15,11 +15,11 @@ export class CreateGroupUseCase {
 
         const sock = result.waSocket!
         
-       const group =  await sock.groupCreate(
+       const response =  await sock.groupCreate(
           input.name,
           input.users.map(getWhatsAppId)
         )
 
-        return group;
+        return response;
     }
 }

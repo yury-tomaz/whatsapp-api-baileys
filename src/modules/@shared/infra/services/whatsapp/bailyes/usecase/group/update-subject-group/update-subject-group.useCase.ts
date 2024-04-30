@@ -18,11 +18,11 @@ export class UpdateSubjectGroupUseCase {
         const whatsappId = getWhatsAppId(input.groupId);
         await result.verifyId(whatsappId);
 
-        const group =  await sock.groupUpdateSubject(
+        const response =  await sock.groupUpdateSubject(
           whatsappId,
           input.subject
         )
 
-        return group;
+        return response;
     }
 }

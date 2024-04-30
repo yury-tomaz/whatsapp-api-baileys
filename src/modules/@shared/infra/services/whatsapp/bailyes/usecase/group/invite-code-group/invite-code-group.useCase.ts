@@ -18,8 +18,8 @@ export class InviteCodeGroupUseCase {
         const whatsappId = getWhatsAppId(input.groupId);
         await result.verifyId(whatsappId);
 
-        const invite =  await sock.groupInviteCode(whatsappId);
+        const response =  await sock.groupInviteCode(whatsappId);
 
-        return invite;
+        return response;
     }
 }
