@@ -15,8 +15,11 @@ export class MakeUserGroupUseCase {
 
         const sock = result.waSocket!
 
+        const whatsappId = getWhatsAppId(input.groupId);
+        await result.verifyId(whatsappId);
+
         await sock.groupParticipantsUpdate(
-          result.id.id, 
+          whatsappId, 
           input.users.map(getWhatsAppId), 
           input.type
         )
