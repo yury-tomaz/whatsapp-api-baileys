@@ -1,7 +1,7 @@
 import {BaileysManager} from "../../../baileys-manager";
-import {SendMediaUrlMessageInputDTO} from "./send-url-media-file.dto";
 import {getWhatsAppId} from "../../../helpers/get-whats-app-Id";
 import {checkInstance} from "../../../validate/check-Instance";
+import {SendUrlMediaFileDto} from "../../../../../../../application/abstractions/whatsapp-lib/whatsapp-lib.dto";
 
 export class SendUrlMediaFileUseCase {
     constructor(
@@ -9,7 +9,7 @@ export class SendUrlMediaFileUseCase {
     ) {
     }
 
-    async execute(input: SendMediaUrlMessageInputDTO) {
+    async execute(input: SendUrlMediaFileDto) {
         const result = await checkInstance(input.id, this.baileysManager)
 
         const sock = result.waSocket!
