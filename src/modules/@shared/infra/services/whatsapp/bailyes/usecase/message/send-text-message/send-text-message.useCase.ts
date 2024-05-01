@@ -1,7 +1,7 @@
-import {SendTextMessageUseCaseInputDTO} from "./send-text-message.dto";
 import {BaileysManager} from "../../../baileys-manager";
 import {getWhatsAppId} from "../../../helpers/get-whats-app-Id";
 import {checkInstance} from "../../../validate/check-Instance";
+import {SendTextMessageDto} from "../../../../../../../application/abstractions/whatsapp-lib/whatsapp-lib.dto";
 
 export class SendTextMessageUseCase {
     constructor(
@@ -9,7 +9,7 @@ export class SendTextMessageUseCase {
     ) {
     }
 
-    async execute(input: SendTextMessageUseCaseInputDTO) {
+    async execute(input: SendTextMessageDto) {
         const result= await checkInstance(input.id, this.baileysManager)
 
         const sock = result.waSocket!
