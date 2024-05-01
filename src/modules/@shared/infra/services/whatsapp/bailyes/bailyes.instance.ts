@@ -9,12 +9,13 @@ import makeWASocket, {
 import MAIN_LOGGER from "@whiskeysockets/baileys/lib/Utils/logger";
 import {logger} from "../../../logger";
 import EventDispatcherInterface from "../../../../domain/events/event-dispatcher.interface";
-import {authState, AuthStateRepositoryInterface} from "./helpers/auth-state-db";
+import {authState} from "./helpers/auth-state-db";
 import NodeCache from 'node-cache';
 import {Chat} from "@whiskeysockets/baileys/lib/Types/Chat";
 import Id from "../../../../domain/value-object/id.value-object";
 import {ProcessSocketEvent} from "./process-socket-event";
 import {AppError, HttpCode} from "../../../../domain/exceptions/app-error";
+import {AuthStateRepositoryInterface} from "./repository/auth-state-repository.interface";
 
 const loggerBaileys = MAIN_LOGGER.child({});
 loggerBaileys.level = "error";
@@ -90,13 +91,14 @@ export class BaileysInstance {
     }
 
     set messages(value : any){
-        this._messages = value;
+this._messages = value;
     }
 
     constructor(props: Props) {
         this._id = props.id;
         this.authStateRepository = props.authStateRepository;
-        this.eventProcessor = props.processSocketEvent
+        this.eventProcessor = props.processSocketEvent;
+
         this.init().then(r => {
             logger.info('Baileys instance initialized');
         })
@@ -107,7 +109,7 @@ export class BaileysInstance {
             logger: loggerBaileys
         });
         const {version, isLatest} = await fetchLatestBaileysVersion();
-        const {state, saveCreds} = await authState(this.authStateRepository);
+        const {state, saveCreds} = await authState(this.authStateRepository, this._id.id);
 
         this._socketConfig = {
             version,
@@ -167,6 +169,5 @@ export class BaileysInstance {
             statusCode: 204,
             isOperational: true
         })
-
     }
 }
