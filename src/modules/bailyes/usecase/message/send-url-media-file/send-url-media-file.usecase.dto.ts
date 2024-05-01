@@ -1,4 +1,4 @@
-export interface SendMediaUrlMessageInputDTO {
+export interface SendUrlMediaFileUseCaseDto {
     id: string;
     to: string;
     type: 'image' | 'video' | 'audio' | 'document';

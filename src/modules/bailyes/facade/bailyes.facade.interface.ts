@@ -1,66 +1,49 @@
-import {
-    AddNewParticipantDto, BlockUnblockDto,
-    CreateNewGroupDto,
-    DeleteInstanceDto,
-    DemoteAdminDto, DownloadProfileDto,
-    GetAllGroupsDto,
-    GetInstanceInviteCodeGroupDto,
-    GetInviteCodeGroupDto, GetUserOrGroupByIdDto, GetUserStatusDto, AcceptInviteGroupDto,
-    GroupFetchAllParticipatingDto, GroupGetInviteInfoDto,
-    GroupParticipantsUpdateDto,
-    GroupSettingUpdateDto,
-    GroupUpdateDescriptionDto,
-    GroupUpdateSubjectDto,
-    InfoInstanceDto,
-    InitInstanceDto,
-    LeaveGroupDto,
-    logoutInstanceDto,
-    MakeAdminDto,
-    qrInstanceDto,
-    SendMediaFileDto,
-    SendTextMessageDto,
-    SendUrlMediaFileDto, UpdateProfilePictureDto, VerifyIdDto
-} from "./bailyes.facade.dto";
+import {InitInstanceDto} from "../usecase/instance/init/init-instance.dto";
+import {GetInfoUseCaseDTO} from "../usecase/instance/get-info/get-instance-info.dto";
+import {GetQrCodeUseCaseDTO} from "../usecase/instance/get-qr-code/get-qr-code.usecase.dto";
+import {DeleteInstanceUseCaseDto} from "../usecase/instance/delete/delete-instance.usecase.dto";
+import {SendTextMessageUseCaseDto} from "../usecase/message/send-text-message/send-text-message.dto";
+import {SendUrlMediaFileUseCaseDto} from "../usecase/message/send-url-media-file/send-url-media-file.usecase.dto";
 
 interface InstanceService {
     init(input: InitInstanceDto): Promise<void>;
-    info(input: InfoInstanceDto): Promise<void>;
-    qr(input: qrInstanceDto): Promise<void>;
-    logout(input: logoutInstanceDto): Promise<void>;
-    delete(input: DeleteInstanceDto): Promise<void>;
+    info(input: GetInfoUseCaseDTO): Promise<void>;
+    qr(input: GetQrCodeUseCaseDTO): Promise<void>;
+    logout(input: LogoutInstanceUseCaseDto): Promise<void>;
+    delete(input: DeleteInstanceUseCaseDto): Promise<void>;
 }
 
 interface MessageService {
-    sendTextMessage(input: SendTextMessageDto): Promise<void>;
-    sendUrlMediaFile(input: SendUrlMediaFileDto): Promise<void>;
-    sendMediaFile(input: SendMediaFileDto): Promise<void>;
+    sendTextMessage(input: SendTextMessageUseCaseDto): Promise<void>;
+    sendUrlMediaFile(input: SendUrlMediaFileUseCaseDto): Promise<void>;
+    sendMediaFile(input: SendMediaFileUseCaseDto): Promise<void>;
 }
 
 interface GroupService {
-    createNewGroup(input: CreateNewGroupDto): Promise<void>;
-    addNewParticipant(input: AddNewParticipantDto): Promise<void>;
-    makeAdmin(input: MakeAdminDto): Promise<void>;
-    demoteAdmin(input: DemoteAdminDto): Promise<void>;
-    getAllGroups(input: GetAllGroupsDto): Promise<void>;
-    leaveGroup(input: LeaveGroupDto): Promise<void>;
-    getInviteCodeGroup(input: GetInviteCodeGroupDto): Promise<void>;
-    getInstanceInviteCodeGroup(input: GetInstanceInviteCodeGroupDto): Promise<void>;
-    groupFetchAllParticipating(input: GroupFetchAllParticipatingDto): Promise<void>;
-    groupParticipantsUpdate(input: GroupParticipantsUpdateDto): Promise<void>;
-    groupSettingUpdate(input: GroupSettingUpdateDto): Promise<void>;
-    groupUpdateSubject(input: GroupUpdateSubjectDto): Promise<void>;
-    groupUpdateDescription(input: GroupUpdateDescriptionDto): Promise<void>;
-    groupGetInviteInfo(input: GroupGetInviteInfoDto): Promise<void>;
-    groupAcceptInvite(input: AcceptInviteGroupDto): Promise<void>;
+    createNewGroup(): Promise<void>;
+    addNewParticipant(): Promise<void>;
+    makeAdmin(): Promise<void>;
+    demoteAdmin(): Promise<void>;
+    getAllGroups(): Promise<void>;
+    leaveGroup(): Promise<void>;
+    getInviteCodeGroup(): Promise<void>;
+    getInstanceInviteCodeGroup(): Promise<void>;
+    groupFetchAllParticipating(): Promise<void>;
+    groupParticipantsUpdate(): Promise<void>;
+    groupSettingUpdate(): Promise<void>;
+    groupUpdateSubject(): Promise<void>;
+    groupUpdateDescription(): Promise<void>;
+    groupGetInviteInfo(): Promise<void>;
+    groupAcceptInvite(): Promise<void>;
 }
 
 interface MiscService {
-    verifyId(input: VerifyIdDto): Promise<void>;
-    downloadProfile(input: DownloadProfileDto): Promise<void>;
-    getUserStatus(input: GetUserStatusDto): Promise<void>;
-    blockUnblock(input: BlockUnblockDto): Promise<void>;
-    updateProfilePicture(input: UpdateProfilePictureDto): Promise<void>;
-    getUserOrGroupById(input: GetUserOrGroupByIdDto): Promise<void>;
+    verifyId(): Promise<void>;
+    downloadProfile(): Promise<void>;
+    getUserStatus(): Promise<void>;
+    blockUnblock(): Promise<void>;
+    updateProfilePicture(): Promise<void>;
+    getUserOrGroupById(): Promise<void>;
 }
 
 // TODO: implement 'MiscService' and GroupService

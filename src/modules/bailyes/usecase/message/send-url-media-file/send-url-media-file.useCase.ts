@@ -1,7 +1,7 @@
 import {BaileysInstanceRepositoryInMemory} from "../../../repository/baileys-instance-repository-in-memory";
 import {getWhatsAppId} from "../../../helpers/get-whats-app-Id";
 import {checkInstance} from "../../../helpers/check-Instance";
-import {SendUrlMediaFileDto} from "../../../../../../../application/abstractions/whatsapp-lib/whatsapp-lib.dto";
+import {SendUrlMediaFileUseCaseDto} from "./send-url-media-file.usecase.dto";
 
 export class SendUrlMediaFileUseCase {
     constructor(
@@ -9,7 +9,7 @@ export class SendUrlMediaFileUseCase {
     ) {
     }
 
-    async execute(input: SendUrlMediaFileDto) {
+    async execute(input: SendUrlMediaFileUseCaseDto) {
         const result = await checkInstance(input.id, this.baileysManager)
 
         const sock = result.waSocket!

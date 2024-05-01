@@ -6,7 +6,7 @@ import EventDispatcherInterface from "../../../../@shared/domain/events/event-di
 import {InitInstanceDto} from "./init-instance.dto";
 import Id from "../../../../@shared/domain/value-object/id.value-object";
 
-export class InitInstanceUseCase {
+export class InitInstanceUsecase {
     constructor(
         private eventDispatcher: EventDispatcherInterface,
         private authStateRepository: AuthStateRepositoryInterface,

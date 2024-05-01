@@ -1,6 +1,5 @@
 import {BaileysInstanceRepositoryInMemory} from "../../../repository/baileys-instance-repository-in-memory";
 import {checkInstance} from "../../../helpers/check-Instance";
-import {logoutInstanceDto} from "../../../../../../../application/abstractions/whatsapp-lib/whatsapp-lib.dto";
 
 export class LogoutInstanceUseCase {
     constructor(
@@ -8,7 +7,7 @@ export class LogoutInstanceUseCase {
     ) {
     }
 
-    async execute(input: logoutInstanceDto){
+    async execute(input: LogoutInstanceUseCaseDto){
         const result = await checkInstance(input.id, this.baileysManager);
 
         const sock = result.waSocket!
