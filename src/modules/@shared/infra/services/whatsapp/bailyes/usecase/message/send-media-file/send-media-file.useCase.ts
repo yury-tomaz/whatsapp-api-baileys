@@ -1,7 +1,9 @@
-import {SendMediaFileDto} from "./send-media-file.dto";
 import {BaileysManager} from "../../../baileys-manager";
 import {getWhatsAppId} from "../../../helpers/get-whats-app-Id";
 import {checkInstance} from "../../../validate/check-Instance";
+import {
+    SendMediaFileDto
+} from "../../../../../../../application/abstractions/whatsapp-lib/whatsapp-lib.dto";
 
 
 export class SendMediaFileUseCase {
