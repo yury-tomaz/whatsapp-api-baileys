@@ -1,18 +1,13 @@
 import {AuthenticationCreds, initAuthCreds, proto, SignalDataTypeMap} from "@whiskeysockets/baileys";
-
-export interface AuthStateRepositoryInterface {
-    writeData(data: any, key: string): Promise<any>;
-    readData(key: string): Promise<any>;
-    removeData(key: string): Promise<any>;
-}
+import {AuthStateRepositoryInterface} from "../repository/auth-state-repository.interface";
 
 export async function authState(
-    repository: AuthStateRepositoryInterface
+    repository: AuthStateRepositoryInterface,
+    instanceId: string
 ) {
-
     const {writeData, readData, removeData} = repository;
 
-    const creds: AuthenticationCreds = (await readData('creds')) || initAuthCreds();
+    const creds: AuthenticationCreds = (await readData(instanceId, 'creds')) || initAuthCreds();
 
     return {
         state: {
@@ -24,7 +19,7 @@ export async function authState(
                     const data: { [_: string]: SignalDataTypeMap[type] } = {};
                     await Promise.all(
                         ids.map(async (id) => {
-                            let value = await readData(`${type}-${id}`);
+                            let value = await readData(instanceId, `${type}-${id}`);
                             if (type === 'app-state-sync-key' && value) {
                                 value = proto.Message.AppStateSyncKeyData.fromObject(value);
                             }
@@ -41,7 +36,7 @@ export async function authState(
                         for (const id in data[category]) {
                             const value = data[category][id];
                             const key = `${category}-${id}`;
-                            tasks.push(value ? writeData(value, key) : removeData(key));
+                            tasks.push(value ? writeData(instanceId, value, key) : removeData(instanceId, key));
                         }
                     }
 
@@ -50,7 +45,7 @@ export async function authState(
             },
         },
         saveCreds: async () => {
-            return await writeData(creds, 'creds');
+            return await writeData(instanceId, creds, 'creds');
         },
     };
 
