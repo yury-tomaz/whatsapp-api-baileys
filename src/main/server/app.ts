@@ -25,11 +25,11 @@ app.use(pinoHttp({ logger }));
 app.use(compression());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-let client: MongoClient;
+let mongoClient: MongoClient;
 let messageQueue: AMQPMessageQueue
 
 (async () => {
-    client = await dbConnect();
+    mongoClient = await dbConnect();
     messageQueue = new AMQPMessageQueue(environment.AMQPM_URL)
 })()
 
@@ -46,4 +46,4 @@ app.use((err: AppError, req: Request, res: Response, next: NextFunction) => {
 });
 
 
-export { app, client, messageQueue };
+export { app, mongoClient, messageQueue };
