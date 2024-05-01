@@ -1,9 +1,12 @@
 import {WhatsappService} from "./bailyes.facade.interface";
 import UseCaseInterface from "../../@shared/application/use-case/use-case.interface";
-import {
-    AcceptInviteGroupDto,
-    InitInstanceDto
-} from "./bailyes.facade.dto";
+import {InitInstanceDto} from "../usecase/instance/init/init-instance.dto";
+import {GetInfoUseCaseDTO} from "../usecase/instance/get-info/get-instance-info.dto";
+import {GetQrCodeUseCaseDTO} from "../usecase/instance/get-qr-code/get-qr-code.usecase.dto";
+import {DeleteInstanceUseCaseDto} from "../usecase/instance/delete/delete-instance.usecase.dto";
+import {SendTextMessageUseCaseDto} from "../usecase/message/send-text-message/send-text-message.dto";
+import {SendUrlMediaFileUseCaseDto} from "../usecase/message/send-url-media-file/send-url-media-file.usecase.dto";
+
 
 export interface UseCasesProps {
     initUseCase: UseCaseInterface;
@@ -39,25 +42,25 @@ export class BailyesServiceFacade implements WhatsappService {
     init(input: InitInstanceDto){
         return this._initUseCase.execute(input)
     }
-    info(input: any){
+    info(input: GetInfoUseCaseDTO){
         return this._infoUseCase.execute(input)
     }
-    qr(input: any){
+    qr(input: GetQrCodeUseCaseDTO){
         return this._qrUseCase.execute(input)
     }
-    logout(input:any){
+    logout(input:LogoutInstanceUseCaseDto){
         return this._logoutUseCase.execute(input)
     }
-    delete(input: any){
+    delete(input: DeleteInstanceUseCaseDto){
         return this._deleteUseCase.execute(input)
     }
-    sendTextMessage(input:any){
+    sendTextMessage(input:SendTextMessageUseCaseDto){
         return this._sendTextMessageUseCase.execute(input)
     }
-    sendUrlMediaFile(input: any){
+    sendUrlMediaFile(input: SendUrlMediaFileUseCaseDto){
         return this._sendUrlMediaFileUseCase.execute(input)
     }
-    sendMediaFile(input:any){
+    sendMediaFile(input:SendMediaFileUseCaseDto){
         return this._sendMediaFileUseCase.execute(input)
     }
 
