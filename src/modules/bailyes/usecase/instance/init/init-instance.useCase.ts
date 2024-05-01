@@ -1,10 +1,10 @@
 import {Baileys} from "../../../domain/bailyes.entity";
-import Id from "../../../../../../../domain/value-object/id.value-object";
-import EventDispatcherInterface from "../../../../../../../domain/events/event-dispatcher.interface";
 import {ProcessSocketEvent} from "../../../domain/process-socket-event";
 import {BaileysInstanceRepositoryInMemory} from "../../../repository/baileys-instance-repository-in-memory";
 import {AuthStateRepositoryInterface} from "../../../gateway/auth-state-repository.interface";
-import {InitInstanceDto} from "../../../../../../../application/abstractions/whatsapp-lib/whatsapp-lib.dto";
+import EventDispatcherInterface from "../../../../@shared/domain/events/event-dispatcher.interface";
+import {InitInstanceDto} from "./init-instance.dto";
+import Id from "../../../../@shared/domain/value-object/id.value-object";
 
 export class InitInstanceUseCase {
     constructor(

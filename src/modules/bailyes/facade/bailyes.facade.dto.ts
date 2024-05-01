@@ -1,9 +1,7 @@
 // =================================
 // instance
 // =================================
-export interface InitInstanceDto {
-    id: string
-}
+
 export interface InfoInstanceDto{
     id: string
 }
