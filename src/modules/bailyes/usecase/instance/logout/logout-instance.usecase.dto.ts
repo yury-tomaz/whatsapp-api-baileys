@@ -1,0 +1,3 @@
+interface LogoutInstanceUseCaseDto{
+    id: string;
+}

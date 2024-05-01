@@ -1,14 +1,12 @@
 import {BaileysInstanceRepositoryInMemory} from "../../../repository/baileys-instance-repository-in-memory";
-import {DeleteInstanceDto} from "../../../../../../../application/abstractions/whatsapp-lib/whatsapp-lib.dto";
-
-
+import {DeleteInstanceUseCaseDto} from "./delete-instance.usecase.dto";
 export class DeleteInstanceUseCase{
     constructor(
         private baileysManager: BaileysInstanceRepositoryInMemory
     ) {
     }
 
-    async execute(input: DeleteInstanceDto){
+    async execute(input: DeleteInstanceUseCaseDto){
        return  await this.baileysManager.delete(input.id)
     }
 }
