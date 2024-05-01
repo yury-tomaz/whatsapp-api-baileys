@@ -1,15 +1,14 @@
 import {BaileysManager} from "../../../baileys-manager";
+import {DeleteInstanceDto} from "../../../../../../../application/abstractions/whatsapp-lib/whatsapp-lib.dto";
 
-interface DeleteInstanceUseCaseDTO{
-    id: string
-}
+
 export class DeleteInstanceUseCase{
     constructor(
         private baileysManager: BaileysManager
     ) {
     }
 
-    async execute(input: DeleteInstanceUseCaseDTO){
+    async execute(input: DeleteInstanceDto){
        return  await this.baileysManager.delete(input.id)
     }
 }

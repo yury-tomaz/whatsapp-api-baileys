@@ -9,7 +9,6 @@ interface CollectionsInterface {
 export const collections: CollectionsInterface = {}
 
 export async function dbConnect() {
-
     try {
         const client: mongoDB.MongoClient = new mongoDB.MongoClient(environment.MONGO_URL);
 
