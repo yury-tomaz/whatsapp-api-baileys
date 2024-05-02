@@ -14,6 +14,7 @@ import { UpdateDescriptionGroupDto } from "../usecase/group/update-description-g
 import { UpdateSubjectGroupDto } from "../usecase/group/update-subject-group/update-subject-group.dto";
 import { BlockUnblockUserDto } from "../usecase/misc/block-unblock-user/block-unblock-user.dto";
 import { IsOnWhatsappDto } from "../usecase/misc/is-on-whatsapp/is-on-whatsapp.dto";
+import { GetUserStatusDto } from "../usecase/misc/get-status-user/get-status-user.dto";
 
 
 export interface UseCasesProps {
@@ -38,6 +39,7 @@ export interface UseCasesProps {
     groupAcceptInvite: UseCaseInterface;
     verifyId: UseCaseInterface;
     blockUnblock: UseCaseInterface;
+    getUserStatus: UseCaseInterface;
 }
 
 export class BailyesServiceFacade implements WhatsappService {
@@ -57,6 +59,7 @@ export class BailyesServiceFacade implements WhatsappService {
     _groupAcceptInvite: UseCaseInterface;
     _verifyId: UseCaseInterface;
     _blockUnblock: UseCaseInterface;
+    _getUserStatus: UseCaseInterface;
 
     constructor(props: UseCasesProps) {
         this._initUseCase = props.initUseCase;
@@ -75,6 +78,7 @@ export class BailyesServiceFacade implements WhatsappService {
         this._groupAcceptInvite = props.groupAcceptInvite;
         this._blockUnblock = props.blockUnblock;
         this._verifyId = props.verifyId;
+        this._getUserStatus = props.getUserStatus;
     }
 
     init(input: InitInstanceDto){
@@ -131,5 +135,9 @@ export class BailyesServiceFacade implements WhatsappService {
 
     verifyId(input: IsOnWhatsappDto) {
         return this._verifyId.execute(input);
+    }
+
+    getUserStatus(input: GetUserStatusDto) {
+        return this._getUserStatus.execute(input);
     }
 }

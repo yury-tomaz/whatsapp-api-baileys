@@ -12,6 +12,7 @@ import { UpdateDescriptionGroupDto } from "../usecase/group/update-description-g
 import { AcceptInviteGroupDto } from "../usecase/group/accept-invite-group/accept-invite-group.dto";
 import { IsOnWhatsappDto } from "../usecase/misc/is-on-whatsapp/is-on-whatsapp.dto";
 import { BlockUnblockUserDto } from "../usecase/misc/block-unblock-user/block-unblock-user.dto";
+import { GetUserStatusDto } from "../usecase/misc/get-status-user/get-status-user.dto";
 
 interface InstanceService {
     init(input: InitInstanceDto): Promise<void>;
@@ -45,7 +46,7 @@ interface GroupService {
 interface MiscService {
     verifyId(input: IsOnWhatsappDto): Promise<any>;
     // downloadProfile(): Promise<void>;
-    // getUserStatus(): Promise<void>;
+    getUserStatus(input: GetUserStatusDto): Promise<void>;
     blockUnblock(input: BlockUnblockUserDto): Promise<any>;
     // updateProfilePicture(): Promise<void>;
     // getUserOrGroupById(): Promise<void>;
