@@ -15,6 +15,7 @@ import { BlockUnblockUserDto } from "../usecase/misc/block-unblock-user/block-un
 import { GetUserStatusDto } from "../usecase/misc/get-status-user/get-status-user.dto";
 import { GetProfilePictureDto } from "../usecase/misc/get-profile-picture/get-profile-picture.dto";
 import { UpdateProfilePictureDto } from "../usecase/misc/update-profile-picture/update-profile-picture.dto";
+import { MakeUserGroupDto } from "../usecase/group/make-user-group/make-user-group.dto";
 
 interface InstanceService {
     init(input: InitInstanceDto): Promise<void>;
@@ -35,6 +36,7 @@ interface GroupService {
     //getAllGroups(): Promise<void>;
     leaveGroup(input: LeaveGroupDto): Promise<any>;
     getInviteCodeGroup(input: InviteCodeGroupDto): Promise<any>;
+    makeUserGroup(input: MakeUserGroupDto): Promise<any>;
     //getInstanceInviteCodeGroup(): Promise<void>;
     //groupFetchAllParticipating(): Promise<void>;
     //groupParticipantsUpdate(): Promise<void>;

@@ -22,6 +22,7 @@ import { LogoutInstanceUseCase } from "../usecase/instance/logout/logout-instanc
 import { GetInfoUseCase } from "../usecase/instance/get-info/get-info.usecase";
 import { SendMediaFileUseCase } from "../usecase/message/send-media-file/send-media-file.usecase";
 import { IsOnWhatsappUseCase } from "../usecase/misc/is-on-whatsapp/is-on-whatsapp.useCase";
+import { MakeUserGroupUseCase } from "../usecase/group/make-user-group/make-user-group.useCase";
 
 export class BailyesFactory {
     static create(){
@@ -48,6 +49,7 @@ export class BailyesFactory {
         const groupUpdateSubjectUseCase = new UpdateSubjectGroupUseCase(baileysManager);
         const groupUpdateDescriptionUseCase = new UpdateDescriptionGroupUseCase(baileysManager);
         const groupAcceptInviteUseCase = new AcceptInviteGroupUseCase(baileysManager);
+        const makeUserGroupUseCase = new MakeUserGroupUseCase(baileysManager);
 
         const getUserStatusUseCase = new GetUserStatusUseCase(baileysManager);
         const downloadProfileUseCase = new GetProfilePictureUseCase(baileysManager);
@@ -74,7 +76,8 @@ export class BailyesFactory {
             getInviteCodeGroupUseCase,
             groupAcceptInviteUseCase,
             groupUpdateDescriptionUseCase,
-            groupUpdateSubjectUseCase
+            groupUpdateSubjectUseCase,
+            makeUserGroupUseCase
         });
     }
 }
