@@ -1,5 +1,5 @@
 import sem from "semaphore";
-import {Baileys} from "../domain/bailyes.entity";
+import {Baileys} from "../domain/baileys.entity";
 import {logger} from "../../@shared/infra/logger";
 
 
