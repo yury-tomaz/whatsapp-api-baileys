@@ -1,5 +1,5 @@
 import {DisconnectReason, proto, WAMessage} from "@whiskeysockets/baileys";
-import {Baileys} from "./bailyes.entity";
+import {Baileys} from "./baileys.entity";
 
 import QRCode from 'qrcode';
 import {downloadMessage} from "../helpers/download-message.helper";

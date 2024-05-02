@@ -1,12 +1,11 @@
-import {WhatsappService} from "./bailyes.facade.interface";
+import {WhatsappService} from "./baileys.facade.interface";
 import UseCaseInterface from "../../@shared/application/use-case/use-case.interface";
-import {InitInstanceDto} from "../usecase/instance/init/init-instance.dto";
 import {GetInfoUseCaseDTO} from "../usecase/instance/get-info/get-instance-info.dto";
-import {GetQrCodeUseCaseDTO} from "../usecase/instance/get-qr-code/get-qr-code.usecase.dto";
+import {GetQrCodeUseCaseInputDTO} from "../usecase/instance/get-qr-code/get-qr-code.usecase.dto";
 import {DeleteInstanceUseCaseDto} from "../usecase/instance/delete/delete-instance.usecase.dto";
 import {SendTextMessageUseCaseDto} from "../usecase/message/send-text-message/send-text-message.dto";
 import {SendUrlMediaFileUseCaseDto} from "../usecase/message/send-url-media-file/send-url-media-file.usecase.dto";
-
+import {InitInstanceDto} from "../usecase/instance/init/init-instance.dto";
 
 export interface UseCasesProps {
     initUseCase: UseCaseInterface;
@@ -19,7 +18,7 @@ export interface UseCasesProps {
     sendMediaFileUseCase: UseCaseInterface;
 }
 
-export class BailyesServiceFacade implements WhatsappService {
+export class BaileysFacade implements WhatsappService {
     _initUseCase: UseCaseInterface;
     _infoUseCase: UseCaseInterface;
     _qrUseCase: UseCaseInterface;
@@ -45,7 +44,7 @@ export class BailyesServiceFacade implements WhatsappService {
     info(input: GetInfoUseCaseDTO){
         return this._infoUseCase.execute(input)
     }
-    qr(input: GetQrCodeUseCaseDTO){
+    qr(input: GetQrCodeUseCaseInputDTO){
         return this._qrUseCase.execute(input)
     }
     logout(input:LogoutInstanceUseCaseDto){
