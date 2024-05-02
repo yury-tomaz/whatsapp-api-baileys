@@ -14,6 +14,7 @@ import { IsOnWhatsappDto } from "../usecase/misc/is-on-whatsapp/is-on-whatsapp.d
 import { BlockUnblockUserDto } from "../usecase/misc/block-unblock-user/block-unblock-user.dto";
 import { GetUserStatusDto } from "../usecase/misc/get-status-user/get-status-user.dto";
 import { GetProfilePictureDto } from "../usecase/misc/get-profile-picture/get-profile-picture.dto";
+import { UpdateProfilePictureDto } from "../usecase/misc/update-profile-picture/update-profile-picture.dto";
 
 interface InstanceService {
     init(input: InitInstanceDto): Promise<void>;
@@ -49,7 +50,7 @@ interface MiscService {
     downloadProfile(input: GetProfilePictureDto): Promise<any>;
     getUserStatus(input: GetUserStatusDto): Promise<any>;
     blockUnblock(input: BlockUnblockUserDto): Promise<any>;
-    // updateProfilePicture(): Promise<void>;
+    updateProfilePicture(input: UpdateProfilePictureDto): Promise<any>;
     // getUserOrGroupById(): Promise<void>;
 }
 

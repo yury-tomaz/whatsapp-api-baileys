@@ -16,6 +16,7 @@ import { BlockUnblockUserDto } from "../usecase/misc/block-unblock-user/block-un
 import { IsOnWhatsappDto } from "../usecase/misc/is-on-whatsapp/is-on-whatsapp.dto";
 import { GetUserStatusDto } from "../usecase/misc/get-status-user/get-status-user.dto";
 import { GetProfilePictureDto } from "../usecase/misc/get-profile-picture/get-profile-picture.dto";
+import { UpdateProfilePictureDto } from "../usecase/misc/update-profile-picture/update-profile-picture.dto";
 
 
 export interface UseCasesProps {
@@ -42,6 +43,7 @@ export interface UseCasesProps {
     blockUnblock: UseCaseInterface;
     getUserStatus: UseCaseInterface;
     downloadProfile: UseCaseInterface;
+    updateProfilePicture: UseCaseInterface;
 }
 
 export class BailyesServiceFacade implements WhatsappService {
@@ -63,6 +65,7 @@ export class BailyesServiceFacade implements WhatsappService {
     _blockUnblock: UseCaseInterface;
     _getUserStatus: UseCaseInterface;
     _downloadProfile: UseCaseInterface;
+    _updateProfilePicture: UseCaseInterface;
 
     constructor(props: UseCasesProps) {
         this._initUseCase = props.initUseCase;
@@ -83,6 +86,7 @@ export class BailyesServiceFacade implements WhatsappService {
         this._verifyId = props.verifyId;
         this._getUserStatus = props.getUserStatus;
         this._downloadProfile = props.downloadProfile;
+        this._updateProfilePicture = props.updateProfilePicture;
     }
 
     init(input: InitInstanceDto){
@@ -147,5 +151,9 @@ export class BailyesServiceFacade implements WhatsappService {
 
     downloadProfile(input: GetProfilePictureDto) {
         return this._downloadProfile.execute(input);
+    }
+
+    updateProfilePicture(input: UpdateProfilePictureDto) {
+        return this._updateProfilePicture.execute(input);
     }
 }
