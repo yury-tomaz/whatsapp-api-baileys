@@ -1,15 +1,15 @@
 import {BaileysInstanceRepositoryInMemory} from "../../../repository/baileys-instance-repository-in-memory";
 import {getWhatsAppId} from "../../../helpers/get-whats-app-Id";
 import {checkInstance} from "../../../helpers/check-Instance";
-import { BlockUnblockUserDto } from "./block-unblock-user.dto";
+import { UpdateProfilePictureDto } from "./update-profile-picture.dto";
 
-export class BlockUnblockUserUseCase {
+export class UpdateProfilePictureUseCase {
     constructor(
         private baileysManager: BaileysInstanceRepositoryInMemory
     ) {
     }
 
-    async execute(input: BlockUnblockUserDto) {
+    async execute(input: UpdateProfilePictureDto) {
         const result = await checkInstance(input.id, this.baileysManager)
 
         const sock = result.waSocket!
@@ -17,7 +17,9 @@ export class BlockUnblockUserUseCase {
         const whatsappId = getWhatsAppId(input.to);
         await result.verifyId(whatsappId);
         
-        const response =  await sock.updateBlockStatus(whatsappId, input.action)
+        const response =  await sock.updateProfilePicture(whatsappId, {
+          url: input.url
+        });
 
         return response;
     }
