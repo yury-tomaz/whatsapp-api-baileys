@@ -28,22 +28,22 @@ export interface UseCasesProps {
     sendTextMessageUseCase: UseCaseInterface;
     sendUrlMediaFileUseCase: UseCaseInterface;
     sendMediaFileUseCase: UseCaseInterface;
-    createNewGroup: UseCaseInterface;
+    createGroupUseCase: UseCaseInterface;
     //getAllGroups: UseCaseInterface;
-    leaveGroup: UseCaseInterface;
-    getInviteCodeGroup: UseCaseInterface;
+    leaveGroupUseCase: UseCaseInterface;
+    getInviteCodeGroupUseCase: UseCaseInterface;
     //groupFetchAllParticipating: UseCaseInterface;
     //groupParticipantsUpdate: UseCaseInterface;
     ///groupSettingUpdate: UseCaseInterface;
-    groupUpdateSubject: UseCaseInterface;
-    groupUpdateDescription: UseCaseInterface;
+    groupUpdateSubjectUseCase: UseCaseInterface;
+    groupUpdateDescriptionUseCase: UseCaseInterface;
     //groupGetInviteInfo: UseCaseInterface;
-    groupAcceptInvite: UseCaseInterface;
-    verifyId: UseCaseInterface;
-    blockUnblock: UseCaseInterface;
-    getUserStatus: UseCaseInterface;
-    downloadProfile: UseCaseInterface;
-    updateProfilePicture: UseCaseInterface;
+    groupAcceptInviteUseCase: UseCaseInterface;
+    verifyIdUseCase: UseCaseInterface;
+    blockUnblockUseCase: UseCaseInterface;
+    getUserStatusUseCase: UseCaseInterface;
+    downloadProfileUseCase: UseCaseInterface;
+    updateProfilePictureUseCase: UseCaseInterface;
 }
 
 export class BailyesServiceFacade implements WhatsappService {
@@ -76,17 +76,17 @@ export class BailyesServiceFacade implements WhatsappService {
         this._sendTextMessageUseCase = props.sendTextMessageUseCase;
         this._sendUrlMediaFileUseCase = props.sendUrlMediaFileUseCase;
         this._sendMediaFileUseCase = props.sendMediaFileUseCase;
-        this._createNewGroup = props.createNewGroup;
-        this._leaveGroup = props.leaveGroup;
-        this._getInviteCodeGroup = props.getInviteCodeGroup;
-        this._groupUpdateSubject = props.groupUpdateSubject;
-        this._groupUpdateDescription = props.groupUpdateDescription;
-        this._groupAcceptInvite = props.groupAcceptInvite;
-        this._blockUnblock = props.blockUnblock;
-        this._verifyId = props.verifyId;
-        this._getUserStatus = props.getUserStatus;
-        this._downloadProfile = props.downloadProfile;
-        this._updateProfilePicture = props.updateProfilePicture;
+        this._createNewGroup = props.createGroupUseCase;
+        this._leaveGroup = props.leaveGroupUseCase;
+        this._getInviteCodeGroup = props.getInviteCodeGroupUseCase
+        this._groupUpdateSubject = props.groupUpdateSubjectUseCase
+        this._groupUpdateDescription = props.groupUpdateDescriptionUseCase
+        this._groupAcceptInvite = props.groupAcceptInviteUseCase
+        this._blockUnblock = props.blockUnblockUseCase
+        this._verifyId = props.verifyIdUseCase
+        this._getUserStatus = props.getUserStatusUseCase
+        this._downloadProfile = props.downloadProfileUseCase
+        this._updateProfilePicture = props.updateProfilePictureUseCase
     }
 
     init(input: InitInstanceDto){
