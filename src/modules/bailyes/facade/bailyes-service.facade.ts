@@ -19,6 +19,7 @@ import { GetProfilePictureDto } from "../usecase/misc/get-profile-picture/get-pr
 import { UpdateProfilePictureDto } from "../usecase/misc/update-profile-picture/update-profile-picture.dto";
 import { MakeUserGroupDto } from "../usecase/group/make-user-group/make-user-group.dto";
 import { UpdateSettingsGroupDto } from "../usecase/group/update-settings-group/update-settings-group.dto";
+import { GetInviteInGroupDto } from "../usecase/group/get-invite-info-group/get-invite-info-group.dto";
 
 
 export interface UseCasesProps {
@@ -40,7 +41,7 @@ export interface UseCasesProps {
     groupSettingUpdate: UseCaseInterface;
     groupUpdateSubjectUseCase: UseCaseInterface;
     groupUpdateDescriptionUseCase: UseCaseInterface;
-    //groupGetInviteInfo: UseCaseInterface;
+    groupGetInviteInfo: UseCaseInterface;
     groupAcceptInviteUseCase: UseCaseInterface;
     verifyIdUseCase: UseCaseInterface;
     blockUnblockUseCase: UseCaseInterface;
@@ -71,6 +72,7 @@ export class BailyesServiceFacade implements WhatsappService {
     _updateProfilePicture: UseCaseInterface;
     _makeUserGroupUseCase: UseCaseInterface;
     _groupSettingUpdate:  UseCaseInterface;
+    _groupGetInviteInfo: UseCaseInterface;
 
     constructor(props: UseCasesProps) {
         this._initUseCase = props.initUseCase;
@@ -94,6 +96,7 @@ export class BailyesServiceFacade implements WhatsappService {
         this._updateProfilePicture = props.updateProfilePictureUseCase;
         this._makeUserGroupUseCase = props.makeUserGroupUseCase;
         this._groupSettingUpdate = props.groupSettingUpdate;
+        this._groupGetInviteInfo = props.groupGetInviteInfo;
     }
 
     init(input: InitInstanceDto){
@@ -148,8 +151,12 @@ export class BailyesServiceFacade implements WhatsappService {
         return this._makeUserGroupUseCase.execute(input);
     }
 
-    groupSettingUpdate(input: UpdateSettingsGroupDto): Promise<void> {
+    groupSettingUpdate(input: UpdateSettingsGroupDto) {
         return this._groupSettingUpdate.execute(input);
+    }
+
+    groupGetInviteInfo(input: GetInviteInGroupDto) {
+        return this._groupGetInviteInfo.execute(input);
     }
 
     blockUnblock(input: BlockUnblockUserDto) {

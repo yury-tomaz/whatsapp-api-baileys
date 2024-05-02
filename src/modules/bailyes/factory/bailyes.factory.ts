@@ -24,6 +24,7 @@ import { SendMediaFileUseCase } from "../usecase/message/send-media-file/send-me
 import { IsOnWhatsappUseCase } from "../usecase/misc/is-on-whatsapp/is-on-whatsapp.useCase";
 import { MakeUserGroupUseCase } from "../usecase/group/make-user-group/make-user-group.useCase";
 import { UpdateSettingsGroupUseCase } from "../usecase/group/update-settings-group/update-settings-group.useCase";
+import { GetInviteInfoGroupUseCase } from "../usecase/group/get-invite-info-group/get-invite-info-group.useCase";
 
 export class BailyesFactory {
     static create(){
@@ -52,6 +53,7 @@ export class BailyesFactory {
         const groupAcceptInviteUseCase = new AcceptInviteGroupUseCase(baileysManager);
         const makeUserGroupUseCase = new MakeUserGroupUseCase(baileysManager);
         const groupSettingUpdate = new UpdateSettingsGroupUseCase(baileysManager);
+        const groupGetInviteInfo = new GetInviteInfoGroupUseCase(baileysManager);
 
         const getUserStatusUseCase = new GetUserStatusUseCase(baileysManager);
         const downloadProfileUseCase = new GetProfilePictureUseCase(baileysManager);
@@ -80,7 +82,8 @@ export class BailyesFactory {
             groupUpdateDescriptionUseCase,
             groupUpdateSubjectUseCase,
             makeUserGroupUseCase,
-            groupSettingUpdate
+            groupSettingUpdate,
+            groupGetInviteInfo
         });
     }
 }
