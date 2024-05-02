@@ -3,7 +3,7 @@ import {getWhatsAppId} from "../../../helpers/get-whats-app-Id";
 import {checkInstance} from "../../../helpers/check-Instance";
 import { BlockUnblockUserDto } from "./block-unblock-user.dto";
 
-export class IsOnWhatsappUseCase {
+export class BlockUnblockUserUseCase {
     constructor(
         private baileysManager: BaileysInstanceRepositoryInMemory
     ) {
