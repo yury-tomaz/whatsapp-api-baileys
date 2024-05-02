@@ -18,6 +18,7 @@ import { GetUserStatusDto } from "../usecase/misc/get-status-user/get-status-use
 import { GetProfilePictureDto } from "../usecase/misc/get-profile-picture/get-profile-picture.dto";
 import { UpdateProfilePictureDto } from "../usecase/misc/update-profile-picture/update-profile-picture.dto";
 import { MakeUserGroupDto } from "../usecase/group/make-user-group/make-user-group.dto";
+import { UpdateSettingsGroupDto } from "../usecase/group/update-settings-group/update-settings-group.dto";
 
 
 export interface UseCasesProps {
@@ -36,7 +37,7 @@ export interface UseCasesProps {
     getInviteCodeGroupUseCase: UseCaseInterface;
     //groupFetchAllParticipating: UseCaseInterface;
     //groupParticipantsUpdate: UseCaseInterface;
-    ///groupSettingUpdate: UseCaseInterface;
+    groupSettingUpdate: UseCaseInterface;
     groupUpdateSubjectUseCase: UseCaseInterface;
     groupUpdateDescriptionUseCase: UseCaseInterface;
     //groupGetInviteInfo: UseCaseInterface;
@@ -69,6 +70,7 @@ export class BailyesServiceFacade implements WhatsappService {
     _downloadProfile: UseCaseInterface;
     _updateProfilePicture: UseCaseInterface;
     _makeUserGroupUseCase: UseCaseInterface;
+    _groupSettingUpdate:  UseCaseInterface;
 
     constructor(props: UseCasesProps) {
         this._initUseCase = props.initUseCase;
@@ -91,6 +93,7 @@ export class BailyesServiceFacade implements WhatsappService {
         this._downloadProfile = props.downloadProfileUseCase
         this._updateProfilePicture = props.updateProfilePictureUseCase;
         this._makeUserGroupUseCase = props.makeUserGroupUseCase;
+        this._groupSettingUpdate = props.groupSettingUpdate;
     }
 
     init(input: InitInstanceDto){
@@ -143,6 +146,10 @@ export class BailyesServiceFacade implements WhatsappService {
 
     makeUserGroup(input: MakeUserGroupDto) {
         return this._makeUserGroupUseCase.execute(input);
+    }
+
+    groupSettingUpdate(input: UpdateSettingsGroupDto): Promise<void> {
+        return this._groupSettingUpdate.execute(input);
     }
 
     blockUnblock(input: BlockUnblockUserDto) {
