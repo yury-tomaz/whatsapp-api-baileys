@@ -21,8 +21,8 @@ import EventDispatcherInterface from "../../@shared/domain/events/event-dispatch
 import AggregateRoot from "../../@shared/domain/entities/aggregate-root.interface";
 import {logger} from "../../@shared/infra/logger";
 import {AppError, HttpCode} from "../../@shared/domain/exceptions/app-error";
-import {AuthStateRepositoryInterface} from "../../bailyes/gateway/auth-state-repository.interface";
-import {authState} from "../../bailyes/helpers/auth-state-db";
+import {AuthStateRepositoryInterface} from "../gateway/auth-state-repository.interface";
+import {authState} from "../helpers/auth-state-db";
 
 const loggerBaileys = MAIN_LOGGER.child({});
 loggerBaileys.level = "error";
