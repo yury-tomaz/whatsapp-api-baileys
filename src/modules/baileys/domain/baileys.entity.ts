@@ -9,18 +9,20 @@ import makeWASocket, {
 import MAIN_LOGGER from "@whiskeysockets/baileys/lib/Utils/logger";
 
 
-import {authState} from "../helpers/auth-state-db";
+
 import NodeCache from 'node-cache';
 import {Chat} from "@whiskeysockets/baileys/lib/Types/Chat";
 import {ProcessSocketEvent} from "./process-socket-event";
 
-import {AuthStateRepositoryInterface} from "../gateway/auth-state-repository.interface";
+
 import BaseEntity from "../../@shared/domain/entities/base.entity";
 import Id from "../../@shared/domain/value-object/id.value-object";
 import EventDispatcherInterface from "../../@shared/domain/events/event-dispatcher.interface";
 import AggregateRoot from "../../@shared/domain/entities/aggregate-root.interface";
 import {logger} from "../../@shared/infra/logger";
 import {AppError, HttpCode} from "../../@shared/domain/exceptions/app-error";
+import {AuthStateRepositoryInterface} from "../gateway/auth-state-repository.interface";
+import {authState} from "../helpers/auth-state-db";
 
 const loggerBaileys = MAIN_LOGGER.child({});
 loggerBaileys.level = "error";
@@ -32,6 +34,8 @@ interface CustomSocketConfig extends Partial<SocketConfig> {
 
 interface Props {
     id?: Id;
+    belongsTo: string;
+    name: string;
     eventDispatcher: EventDispatcherInterface;
     authStateRepository: AuthStateRepositoryInterface;
     processSocketEvent: ProcessSocketEvent
@@ -40,6 +44,8 @@ interface Props {
 }
 
 export class Baileys extends BaseEntity implements AggregateRoot{
+    private readonly _belongsTo: string;
+    private readonly _name: string;
     private _socketConfig: CustomSocketConfig | undefined;
     private _waSocket: ReturnType<typeof makeWASocket> | undefined;
     private readonly authStateRepository: AuthStateRepositoryInterface;
@@ -93,13 +99,15 @@ export class Baileys extends BaseEntity implements AggregateRoot{
     }
 
     set messages(value : any){
-this._messages = value;
+        this._messages = value;
     }
 
     constructor(props: Props) {
         super(props.id);
         this.authStateRepository = props.authStateRepository;
         this.eventProcessor = props.processSocketEvent;
+        this._belongsTo = props.belongsTo;
+        this._name = props.name;
 
         this.init().then(r => {
             logger.info('Baileys instance initialized');

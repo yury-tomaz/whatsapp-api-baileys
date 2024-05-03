@@ -1,12 +1,11 @@
-import {Baileys} from "../../../domain/bailyes.entity";
+import {Baileys} from "../../../domain/baileys.entity";
 import {ProcessSocketEvent} from "../../../domain/process-socket-event";
 import {BaileysInstanceRepositoryInMemory} from "../../../repository/baileys-instance-repository-in-memory";
 import {AuthStateRepositoryInterface} from "../../../gateway/auth-state-repository.interface";
 import EventDispatcherInterface from "../../../../@shared/domain/events/event-dispatcher.interface";
 import {InitInstanceDto} from "./init-instance.dto";
-import Id from "../../../../@shared/domain/value-object/id.value-object";
 
-export class InitInstanceUsecase {
+export class InitInstanceUseCase {
     constructor(
         private eventDispatcher: EventDispatcherInterface,
         private authStateRepository: AuthStateRepositoryInterface,
@@ -17,10 +16,11 @@ export class InitInstanceUsecase {
 
     async execute(input: InitInstanceDto) {
         const baileys = new Baileys({
-            id: new Id(input.id),
+            belongsTo: input.belongsTo,
+            name: input.name,
             authStateRepository: this.authStateRepository,
             eventDispatcher: this.eventDispatcher,
-            processSocketEvent: this.processSocketEvent
+            processSocketEvent: this.processSocketEvent,
         })
 
         baileys.init().then(r => this.baileysManager.create(baileys))

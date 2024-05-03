@@ -1,6 +1,8 @@
-import {InitInstanceDto} from "../usecase/instance/init/init-instance.dto";
 import {GetInfoUseCaseDTO} from "../usecase/instance/get-info/get-instance-info.dto";
-import {GetQrCodeUseCaseDTO} from "../usecase/instance/get-qr-code/get-qr-code.usecase.dto";
+import {
+    GetQrCodeUseCaseInputDTO,
+    GetQrCodeUseCaseOutPutDTO
+} from "../usecase/instance/get-qr-code/get-qr-code.usecase.dto";
 import {DeleteInstanceUseCaseDto} from "../usecase/instance/delete/delete-instance.usecase.dto";
 import {SendTextMessageUseCaseDto} from "../usecase/message/send-text-message/send-text-message.dto";
 import {SendUrlMediaFileUseCaseDto} from "../usecase/message/send-url-media-file/send-url-media-file.usecase.dto";
@@ -18,11 +20,12 @@ import { UpdateProfilePictureDto } from "../usecase/misc/update-profile-picture/
 import { MakeUserGroupDto } from "../usecase/group/make-user-group/make-user-group.dto";
 import { UpdateSettingsGroupDto } from "../usecase/group/update-settings-group/update-settings-group.dto";
 import { GetInviteInGroupDto } from "../usecase/group/get-invite-info-group/get-invite-info-group.dto";
+import {InitInstanceDto} from "../usecase/instance/init/init-instance.dto";
 
 interface InstanceService {
     init(input: InitInstanceDto): Promise<void>;
     info(input: GetInfoUseCaseDTO): Promise<void>;
-    qr(input: GetQrCodeUseCaseDTO): Promise<void>;
+    qr(input: GetQrCodeUseCaseInputDTO): Promise<GetQrCodeUseCaseOutPutDTO>;
     logout(input: LogoutInstanceUseCaseDto): Promise<void>;
     delete(input: DeleteInstanceUseCaseDto): Promise<void>;
 }
