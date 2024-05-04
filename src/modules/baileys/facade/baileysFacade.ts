@@ -5,7 +5,7 @@ import {GetQrCodeUseCaseInputDTO} from "../usecase/instance/get-qr-code/get-qr-c
 import {DeleteInstanceUseCaseDto} from "../usecase/instance/delete/delete-instance.usecase.dto";
 import {SendTextMessageUseCaseDto} from "../usecase/message/send-text-message/send-text-message.dto";
 import {SendUrlMediaFileUseCaseDto} from "../usecase/message/send-url-media-file/send-url-media-file.usecase.dto";
-import {InitInstanceDto} from "../usecase/instance/init/init-instance.dto";
+import {InitInstanceInputDto} from "../usecase/instance/init/init-instance.dto";
 import { CreateGroupDto } from "../usecase/group/create-group/create-group.dto";
 import { LeaveGroupDto } from "../usecase/group/leave-group/leave-group.dto";
 import { InviteCodeGroupDto } from "../usecase/group/invite-code-group/invite-code-group.dto";
@@ -99,7 +99,7 @@ export class BaileysFacade implements WhatsappService {
         this._groupGetInviteInfo = props.groupGetInviteInfo;
     }
 
-    init(input: InitInstanceDto){
+    init(input: InitInstanceInputDto){
         return this._initUseCase.execute(input)
     }
     info(input: GetInfoUseCaseDTO){
