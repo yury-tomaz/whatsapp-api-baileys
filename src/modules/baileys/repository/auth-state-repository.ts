@@ -1,6 +1,6 @@
 import {AuthStateRepositoryInterface} from "../gateway/auth-state-repository.interface";
 import {BufferJSON} from "@whiskeysockets/baileys";
-import {mongoClient} from "../../../main/server/app";
+import {mongoClient} from "../../@shared/infra/persistence/settings/connection";
 import {logger} from "../../@shared/infra/logger";
 
 

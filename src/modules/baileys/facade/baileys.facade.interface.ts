@@ -20,10 +20,10 @@ import { UpdateProfilePictureDto } from "../usecase/misc/update-profile-picture/
 import { MakeUserGroupDto } from "../usecase/group/make-user-group/make-user-group.dto";
 import { UpdateSettingsGroupDto } from "../usecase/group/update-settings-group/update-settings-group.dto";
 import { GetInviteInGroupDto } from "../usecase/group/get-invite-info-group/get-invite-info-group.dto";
-import {InitInstanceDto} from "../usecase/instance/init/init-instance.dto";
+import {InitInstanceInputDto} from "../usecase/instance/init/init-instance.dto";
 
 interface InstanceService {
-    init(input: InitInstanceDto): Promise<void>;
+    init(input: InitInstanceInputDto): Promise<void>;
     info(input: GetInfoUseCaseDTO): Promise<void>;
     qr(input: GetQrCodeUseCaseInputDTO): Promise<GetQrCodeUseCaseOutPutDTO>;
     logout(input: LogoutInstanceUseCaseDto): Promise<void>;
