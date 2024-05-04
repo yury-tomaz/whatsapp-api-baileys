@@ -3,7 +3,7 @@ import {ProcessSocketEvent} from "../../../domain/process-socket-event";
 import {BaileysInstanceRepositoryInMemory} from "../../../repository/baileys-instance-repository-in-memory";
 import {AuthStateRepositoryInterface} from "../../../gateway/auth-state-repository.interface";
 import EventDispatcherInterface from "../../../../@shared/domain/events/event-dispatcher.interface";
-import {InitInstanceDto} from "./init-instance.dto";
+import {InitInstanceInputDto} from "./init-instance.dto";
 
 export class InitInstanceUseCase {
     constructor(
@@ -14,7 +14,7 @@ export class InitInstanceUseCase {
     ) {
     }
 
-    async execute(input: InitInstanceDto) {
+    async execute(input: InitInstanceInputDto) {
         const baileys = new Baileys({
             belongsTo: input.belongsTo,
             name: input.name,
@@ -23,6 +23,7 @@ export class InitInstanceUseCase {
             processSocketEvent: this.processSocketEvent,
         })
 
-        baileys.init().then(r => this.baileysManager.create(baileys))
+        await baileys.init();
+        await this.baileysManager.create(baileys);
     }
 }
