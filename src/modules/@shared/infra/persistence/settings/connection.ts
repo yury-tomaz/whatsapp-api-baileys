@@ -2,26 +2,33 @@ import {logger} from '../../logger';
 import environment from '../../environment';
 
 import * as mongoDB from "mongodb";
+import {MongoClient} from "mongodb";
 
 interface CollectionsInterface {
     baileys?: mongoDB.Collection;
 }
 export const collections: CollectionsInterface = {}
-
-export async function dbConnect() {
+let mongoClient: MongoClient
+export const dbConnect = async () => {
     try {
-        const client: mongoDB.MongoClient = new mongoDB.MongoClient(environment.MONGO_URL);
-
-        await client.connect();
-
-        const db: mongoDB.Db = client.db(environment.MONGO_DB);
+        mongoClient = new mongoDB.MongoClient(environment.MONGO_URL);
+        await mongoClient.connect();
+        const db: mongoDB.Db = mongoClient.db(environment.MONGO_DB);
 
         collections.baileys = db.collection('baileys');
         logger.info(`Successfully connected to database: ${db.databaseName}`);
 
-        return client;
+        return mongoClient;
     } catch (err) {
         logger.error('STATE: Connection to MongoDB failed!', err);
         process.exit()
     }
 }
+
+export const dbDisconnect = async () => {
+    logger.info('Successfully disconnected to database')
+    await mongoClient.close()
+}
+
+
+export {mongoClient }
