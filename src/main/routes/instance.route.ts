@@ -9,6 +9,10 @@ instanceRoute.post(
     '/instance',
     (req: Request, res: Response) =>  requestAdapter(req, res, controller.init)
 )
+instanceRoute.delete(
+    '/instance/:id',
+    (req: Request, res: Response) => requestAdapter(req, res, controller.delete)
+)
 
 instanceRoute.get(
     '/instance/:id/qr',
