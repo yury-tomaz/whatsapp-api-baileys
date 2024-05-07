@@ -23,7 +23,7 @@ import { GetInviteInGroupDto } from "../usecase/group/get-invite-info-group/get-
 import {InitInstanceInputDto} from "../usecase/instance/init/init-instance.dto";
 
 interface InstanceService {
-    init(input: InitInstanceInputDto): Promise<void>;
+    init(input: InitInstanceInputDto): Promise<any>;
     info(input: GetInfoUseCaseDTO): Promise<void>;
     qr(input: GetQrCodeUseCaseInputDTO): Promise<GetQrCodeUseCaseOutPutDTO>;
     logout(input: LogoutInstanceUseCaseDto): Promise<void>;
