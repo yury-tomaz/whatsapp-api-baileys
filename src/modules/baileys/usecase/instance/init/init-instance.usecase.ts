@@ -25,5 +25,12 @@ export class InitInstanceUseCase {
 
         await baileys.init();
         await this.baileysManager.create(baileys);
+
+        return {
+            id: baileys.id.id,
+            name: baileys.name,
+            qr: baileys.qr,
+            belongsTo: baileys.belongsTo
+        }
     }
 }
