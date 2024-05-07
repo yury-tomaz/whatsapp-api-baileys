@@ -2,6 +2,7 @@ import {ControllerInterface} from "../../../interfaces/controller.interface";
 import {HttpRequest} from "../../../http-types/http-request";
 import {HttpResponse} from "../../../http-types/http-response";
 import {WhatsappService} from "../../../../modules/baileys/facade/baileys.facade.interface";
+import {getQrCodeValidator} from "../../../validators/get-qr-code.validator";
 
 export class GetQrCodeController implements ControllerInterface {
     constructor(
@@ -10,8 +11,10 @@ export class GetQrCodeController implements ControllerInterface {
     }
 
     async handle(request: HttpRequest): Promise<HttpResponse> {
-        // TODO: add belongsTo
-        const {id} = request.params
+
+        const {id} = request.params;
+        const {belongsTo} = request.query;
+        getQrCodeValidator.validateSync({id, belongsTo});
 
         const execute = await this.usecase.qr({id})
 
@@ -20,7 +23,7 @@ export class GetQrCodeController implements ControllerInterface {
                 message: 'Successfully obtained QR Code',
                 data: execute
             },
-            {},
+            {"Content-Type": "application/json"},
             200
         )
     }
