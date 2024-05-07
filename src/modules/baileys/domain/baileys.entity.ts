@@ -58,6 +58,14 @@ export class Baileys extends BaseEntity implements AggregateRoot{
     private _isOn: boolean = false;
     private eventProcessor: ProcessSocketEvent;
 
+    get name(): string{
+        return this._name
+    }
+
+    get belongsTo(): string{
+        return this._belongsTo
+    }
+
     get qrCode() {
         return this._qrCode
     }

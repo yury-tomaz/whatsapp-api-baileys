@@ -15,11 +15,12 @@ export class InitBaileysController implements  ControllerInterface{
 
         initBaileysValidator.validateSync({name, belongsTo})
 
-        await this.usecase.init({name, belongsTo})
+        const execute = await this.usecase.init({name, belongsTo});
 
         return new HttpResponse(
             {
                 message: "Baileys instance initialized successfully",
+                data: execute
             },
             {"Content-Type": "application/json"},
             200

@@ -5,7 +5,7 @@ export class BaileysControllerFacade {
         init: ControllerInterface;
         acceptInviteGroup: ControllerInterface;
         // info: ControllerInterface;
-        // qr: ControllerInterface;
+        qr: ControllerInterface;
         // logout: ControllerInterface;
         // delete: ControllerInterface;
         // sendTextMessage: ControllerInterface;
@@ -16,7 +16,7 @@ export class BaileysControllerFacade {
     get init() { return this.props.init; }
     get acceptInviteGroup() { return this.props.acceptInviteGroup; }
     // get info() { return this.props.info; }
-    // get qr() { return this.props.qr; }
+    get qr() { return this.props.qr; }
     // get logout() { return this.props.logout; }
     // get delete() { return this.props.delete; }
     // get sendTextMessage() { return this.props.sendTextMessage; }
