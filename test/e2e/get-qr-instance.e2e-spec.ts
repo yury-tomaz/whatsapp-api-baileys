@@ -5,6 +5,7 @@ import {faker} from '@faker-js/faker';
 import TestAgent from 'supertest/lib/agent';
 import {logger} from "../../src/modules/@shared/infra/logger";
 import {dbConnect, dbDisconnect} from "../../src/modules/@shared/infra/persistence/settings/connection";
+import {delay} from "./helper/delay";
 
 describe('Get Qr Code', () => {
     let server: Server<typeof IncomingMessage, typeof ServerResponse>;
@@ -36,7 +37,7 @@ describe('Get Qr Code', () => {
             .set(header)
             .send(body)
 
-        await aguardarDezSegundos()
+        await delay(5)
 
         const T = await api.get(`/instance/${create.body.data.id}/qr?belongsTo=${body.belongsTo}`)
         expect(T.status).toBe(200);
@@ -46,10 +47,3 @@ describe('Get Qr Code', () => {
 
 });
 
-function aguardarDezSegundos(): Promise<void> {
-    return new Promise<void>((resolve) => {
-        setTimeout(() => {
-            resolve();
-        }, 5000);
-    });
-}
