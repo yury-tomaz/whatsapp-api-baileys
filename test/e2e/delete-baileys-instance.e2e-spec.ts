@@ -7,7 +7,7 @@ import {logger} from "../../src/modules/@shared/infra/logger";
 import {dbConnect, dbDisconnect} from "../../src/modules/@shared/infra/persistence/settings/connection";
 import {delay} from "./helper/delay";
 
-describe('Get Qr Code', () => {
+describe('Delete baileys instance', () => {
     let server: Server<typeof IncomingMessage, typeof ServerResponse>;
     let api: TestAgent;
 
@@ -23,7 +23,7 @@ describe('Get Qr Code', () => {
     });
 
 
-    it('should return 200 when GET /instance/:id/qr', async () => {
+    it('should return 200 when DELETE /instance/:id', async () => {
         const body = {
             name: faker.animal.bear(),
             belongsTo: faker.string.uuid()
@@ -39,11 +39,11 @@ describe('Get Qr Code', () => {
 
         await delay(5)
 
-        const T = await api.get(`/instance/${create.body.data.id}/qr?belongsTo=${body.belongsTo}`)
+
+
+        const T = await api.delete(`/instance/${create.body.data.id}`)
         expect(T.status).toBe(200);
-        expect(T.body.data).toHaveProperty('qr')
 
     }, 6000);
 
 });
-
