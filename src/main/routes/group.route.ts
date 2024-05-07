@@ -1,6 +1,11 @@
-import {Router} from "express";
+import {Router, Request, Response} from "express";
+import { requestAdapter } from "../adapters/request-adapter";
+import { BaileysComposer } from "../compose/baileys/bailyes.composer";
 
 const groupRoute = Router();
+const controller = BaileysComposer.create();
+
+groupRoute.patch('/:id/accept-invite', (req: Request, res: Response) =>  requestAdapter(req, res, controller.acceptInviteGroup))
 
 
 export default groupRoute;
