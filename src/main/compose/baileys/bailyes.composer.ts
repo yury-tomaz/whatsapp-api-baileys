@@ -27,6 +27,9 @@ import {
 } from "../../../presentation/controllers/baileys-controllers/message/send-url-media-file.controller";
 import { UpdateDescriptionGroupController } from "../../../presentation/controllers/baileys-controllers/group/update-description-group.controller";
 import { UpdateSubjectGroupController } from "../../../presentation/controllers/baileys-controllers/group/update-subject-group.controller";
+import {
+  SendMediaFileController
+} from "../../../presentation/controllers/baileys-controllers/message/send-media-file.controller";
 
 export class BaileysComposer{
     private static baileysFactory = BaileysFactory.create()
@@ -44,6 +47,7 @@ export class BaileysComposer{
         const info = new GetInfoInstanceController(this.baileysFactory)
         const sendTextMessage = new SendTextMessageController(this.baileysFactory);
         const sendUrlMediaFile =new SendUrlMediaFileController(this.baileysFactory);
+        const sendMediaFile = new SendMediaFileController(this.baileysFactory);
 
         return new BaileysControllerFacade({
             init,
@@ -58,7 +62,8 @@ export class BaileysComposer{
             logout,
             info,
             sendTextMessage,
-            sendUrlMediaFile
+            sendUrlMediaFile,
+            sendMediaFile
         })
     }
 }
