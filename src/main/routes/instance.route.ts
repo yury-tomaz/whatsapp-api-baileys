@@ -19,4 +19,9 @@ instanceRoute.get(
     (req: Request, res: Response) =>  requestAdapter(req, res, controller.qr)
 )
 
+instanceRoute.post(
+  '/instance/:id/logout',
+  (req: Request, res: Response) => requestAdapter(req, res, controller.logout)
+)
+
 export default instanceRoute;
