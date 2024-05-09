@@ -14,6 +14,6 @@ export class AcceptInviteGroupUseCase {
 
         const sock = result.waSocket!
 
-        return await sock.groupAcceptInvite(input.codeGroup);
+        return await sock.groupAcceptInvite(input.code);
     }
 }
