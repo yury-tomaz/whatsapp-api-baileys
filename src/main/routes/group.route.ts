@@ -11,6 +11,7 @@ groupRoute.patch('/:id/description', (req: Request, res: Response) =>  requestAd
 groupRoute.patch('/:id/subject', (req: Request, res: Response) =>  requestAdapter(req, res, controller.updateSubjectGroup))
 groupRoute.patch('/:id/settings', (req: Request, res: Response) =>  requestAdapter(req, res, controller.updateSettingsGroup))
 groupRoute.get('/:id/info-invite', (req: Request, res: Response) =>  requestAdapter(req, res, controller.inviteInfoGroup))
+groupRoute.get('/:id/code-invite', (req: Request, res: Response) =>  requestAdapter(req, res, controller.inviteCodeGroup))
 groupRoute.post('/:id', (req: Request, res: Response) =>  requestAdapter(req, res, controller.createGroup))
 
 
