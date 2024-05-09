@@ -24,4 +24,10 @@ instanceRoute.post(
   (req: Request, res: Response) => requestAdapter(req, res, controller.logout)
 )
 
+instanceRoute.get(
+  'instance/:id/info',
+  (req: Request, res: Response) => requestAdapter(req, res, controller.info)
+)
+
+
 export default instanceRoute;
