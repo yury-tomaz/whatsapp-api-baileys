@@ -13,12 +13,14 @@ import {
 import {
   LogoutInstanceController
 } from "../../../presentation/controllers/baileys-controllers/instance/logout-instance.controller";
+import { CreateGroupGroupController } from "../../../presentation/controllers/baileys-controllers/group/create-group.controller";
 
 export class BaileysComposer{
     private static baileysFactory = BaileysFactory.create()
     static create(){
         const init = new InitBaileysController(this.baileysFactory);
         const acceptInviteGroup = new AcceptInviteGroupController(this.baileysFactory);
+        const createGroup = new CreateGroupGroupController(this.baileysFactory);
         const qr = new GetQrCodeController(this.baileysFactory);
         const del = new DeleteInstanceController(this.baileysFactory)
         const logout = new LogoutInstanceController(this.baileysFactory)
@@ -27,6 +29,7 @@ export class BaileysComposer{
             init,
             qr,
             acceptInviteGroup,
+            createGroup,
             delete: del,
             logout
         })
