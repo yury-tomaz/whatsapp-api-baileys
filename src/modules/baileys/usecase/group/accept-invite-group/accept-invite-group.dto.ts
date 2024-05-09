@@ -1,4 +1,4 @@
 export interface AcceptInviteGroupDto{
   id: string;
-  codeGroup: string;
+  code: string;
 }

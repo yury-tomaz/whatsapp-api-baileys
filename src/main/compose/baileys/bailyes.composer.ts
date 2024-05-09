@@ -30,6 +30,8 @@ import { UpdateSubjectGroupController } from "../../../presentation/controllers/
 import {
   SendMediaFileController
 } from "../../../presentation/controllers/baileys-controllers/message/send-media-file.controller";
+import { InviteInfoGroupController } from "../../../presentation/controllers/baileys-controllers/group/invite-info-group.controller";
+import { UpdateSettingGroupController } from "../../../presentation/controllers/baileys-controllers/group/update-settings-group.controller";
 
 export class BaileysComposer{
     private static baileysFactory = BaileysFactory.create()
@@ -41,6 +43,8 @@ export class BaileysComposer{
         const makeUserGroup = new MakeUserGroupController(this.baileysFactory);
         const updateDescriptionGroup = new UpdateDescriptionGroupController(this.baileysFactory);
         const updateSubjectGroup = new UpdateSubjectGroupController(this.baileysFactory);
+        const updateSettingsGroup = new UpdateSettingGroupController(this.baileysFactory);
+        const inviteInfoGroup = new InviteInfoGroupController(this.baileysFactory);
         const qr = new GetQrCodeController(this.baileysFactory);
         const del = new DeleteInstanceController(this.baileysFactory)
         const logout = new LogoutInstanceController(this.baileysFactory)
@@ -58,6 +62,8 @@ export class BaileysComposer{
             makeUserGroup,
             updateDescriptionGroup,
             updateSubjectGroup,
+            updateSettingsGroup,
+            inviteInfoGroup,
             delete: del,
             logout,
             info,

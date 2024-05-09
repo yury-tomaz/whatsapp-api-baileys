@@ -2,9 +2,9 @@ import {HttpRequest} from "../../../http-types/http-request";
 import {HttpResponse} from "../../../http-types/http-response";
 import {WhatsappService} from "../../../../modules/baileys/facade/baileys.facade.interface";
 import {ControllerInterface} from "../../../interfaces/controller.interface";
-import { accepInviteGroupValidator } from "../../../validators/baileys/group/accep-invite-group.validator";
+import { inviteInfoGroupValidator } from "../../../validators/baileys/group/invite-info-group.validator";
 
-export class AcceptInviteGroupController implements  ControllerInterface{
+export class InviteInfoGroupController implements  ControllerInterface{
     constructor(
         private usecase: WhatsappService
     ) {
@@ -14,16 +14,16 @@ export class AcceptInviteGroupController implements  ControllerInterface{
         const { id } = request.params;
         const { code } = request.query;
 
-        accepInviteGroupValidator.validateSync({id, code});
+        inviteInfoGroupValidator.validateSync({id, code});
 
-        const execute = await this.usecase.groupAcceptInvite({
+        const execute = await this.usecase.groupGetInviteInfo({
           id,
           code
         });
 
         return new HttpResponse(
             {
-                message: "Baileys accept invite group successfully",
+                message: "Baileys invite info group successfully",
                 data: execute
             },
             {"Content-Type": "application/json"},
