@@ -10,6 +10,7 @@ groupRoute.patch('/:id/make-user', (req: Request, res: Response) =>  requestAdap
 groupRoute.patch('/:id/description', (req: Request, res: Response) =>  requestAdapter(req, res, controller.updateDescriptionGroup))
 groupRoute.patch('/:id/subject', (req: Request, res: Response) =>  requestAdapter(req, res, controller.updateSubjectGroup))
 groupRoute.patch('/:id/settings', (req: Request, res: Response) =>  requestAdapter(req, res, controller.updateSettingsGroup))
+groupRoute.get('/:id/code-invite', (req: Request, res: Response) =>  requestAdapter(req, res, controller.inviteCodeGroup))
 groupRoute.post('/:id', (req: Request, res: Response) =>  requestAdapter(req, res, controller.createGroup))
 
 
