@@ -10,6 +10,9 @@ import { AcceptInviteGroupController } from "../../../presentation/controllers/b
 import {
     DeleteInstanceController
 } from "../../../presentation/controllers/baileys-controllers/instance/delete-instance.controller";
+import {
+  LogoutInstanceController
+} from "../../../presentation/controllers/baileys-controllers/instance/logout-instance.controller";
 
 export class BaileysComposer{
     private static baileysFactory = BaileysFactory.create()
@@ -18,12 +21,14 @@ export class BaileysComposer{
         const acceptInviteGroup = new AcceptInviteGroupController(this.baileysFactory);
         const qr = new GetQrCodeController(this.baileysFactory);
         const del = new DeleteInstanceController(this.baileysFactory)
+        const logout = new LogoutInstanceController(this.baileysFactory)
 
         return new BaileysControllerFacade({
             init,
             qr,
             acceptInviteGroup,
-            delete: del
+            delete: del,
+            logout
         })
     }
 }
