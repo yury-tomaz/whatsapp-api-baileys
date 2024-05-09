@@ -11,7 +11,7 @@ export class BaileysControllerFacade {
         qr: ControllerInterface;
         logout: ControllerInterface;
         delete: ControllerInterface;
-        // sendTextMessage: ControllerInterface;
+        sendTextMessage: ControllerInterface;
         // sendUrlMediaFile: ControllerInterface;
         // sendMediaFile: ControllerInterface;
     }) {}
@@ -25,7 +25,7 @@ export class BaileysControllerFacade {
     get qr() { return this.props.qr; }
     get logout() { return this.props.logout}
     get delete() { return this.props.delete; }
-    // get sendTextMessage() { return this.props.sendTextMessage; }
+    get sendTextMessage() { return this.props.sendTextMessage; }
     // get sendUrlMediaFile() { return this.props.sendUrlMediaFile; }
     // get sendMediaFile() { return this.props.sendMediaFile; }
 }

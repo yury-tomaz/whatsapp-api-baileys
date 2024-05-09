@@ -18,6 +18,9 @@ import { LeaveGroupController } from "../../../presentation/controllers/baileys-
 import {
   GetInfoInstanceController
 } from "../../../presentation/controllers/baileys-controllers/instance/get-info-instance.controller";
+import {
+  SendTextMessageController
+} from "../../../presentation/controllers/baileys-controllers/message/send-text-message.controller";
 
 export class BaileysComposer{
     private static baileysFactory = BaileysFactory.create()
@@ -30,6 +33,7 @@ export class BaileysComposer{
         const del = new DeleteInstanceController(this.baileysFactory)
         const logout = new LogoutInstanceController(this.baileysFactory)
         const info = new GetInfoInstanceController(this.baileysFactory)
+        const sendTextMessage = new SendTextMessageController(this.baileysFactory);
 
         return new BaileysControllerFacade({
             init,
@@ -39,7 +43,8 @@ export class BaileysComposer{
             acceptInviteGroup,
             delete: del,
             logout,
-            info
+            info,
+            sendTextMessage
         })
     }
 }
