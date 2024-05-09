@@ -4,6 +4,7 @@ export class BaileysControllerFacade {
     constructor(private props: {
         init: ControllerInterface;
         acceptInviteGroup: ControllerInterface;
+        info: ControllerInterface;
         createGroup: ControllerInterface;
         // info: ControllerInterface;
         qr: ControllerInterface;
@@ -16,6 +17,7 @@ export class BaileysControllerFacade {
 
     get init() { return this.props.init; }
     get acceptInviteGroup() { return this.props.acceptInviteGroup; }
+    get info() { return this.props.info; }
     get createGroup() { return this.props.createGroup; }
     // get info() { return this.props.info; }
     get qr() { return this.props.qr; }
