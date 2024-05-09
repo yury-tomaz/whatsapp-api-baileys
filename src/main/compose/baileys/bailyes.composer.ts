@@ -22,6 +22,9 @@ import {
   SendTextMessageController
 } from "../../../presentation/controllers/baileys-controllers/message/send-text-message.controller";
 import { MakeUserGroupController } from "../../../presentation/controllers/baileys-controllers/group/make-user-group.controller";
+import {
+  SendUrlMediaFileController
+} from "../../../presentation/controllers/baileys-controllers/message/send-url-media-file.controller";
 import { UpdateDescriptionGroupController } from "../../../presentation/controllers/baileys-controllers/group/update-description-group.controller";
 import { UpdateSubjectGroupController } from "../../../presentation/controllers/baileys-controllers/group/update-subject-group.controller";
 
@@ -40,6 +43,7 @@ export class BaileysComposer{
         const logout = new LogoutInstanceController(this.baileysFactory)
         const info = new GetInfoInstanceController(this.baileysFactory)
         const sendTextMessage = new SendTextMessageController(this.baileysFactory);
+        const sendUrlMediaFile =new SendUrlMediaFileController(this.baileysFactory);
 
         return new BaileysControllerFacade({
             init,
@@ -53,7 +57,8 @@ export class BaileysComposer{
             delete: del,
             logout,
             info,
-            sendTextMessage
+            sendTextMessage,
+            sendUrlMediaFile
         })
     }
 }
