@@ -2,9 +2,9 @@ import {HttpRequest} from "../../../http-types/http-request";
 import {HttpResponse} from "../../../http-types/http-response";
 import {WhatsappService} from "../../../../modules/baileys/facade/baileys.facade.interface";
 import {ControllerInterface} from "../../../interfaces/controller.interface";
-import { createGroupValidator } from "../../../validators/create-group.validator";
+import { createGroupValidator } from "../../../validators/baileys/group/create-group.validator";
 
-export class CreateGroupGroupController implements  ControllerInterface{
+export class CreateGroupController implements  ControllerInterface{
     constructor(
         private usecase: WhatsappService
     ) {
@@ -12,7 +12,7 @@ export class CreateGroupGroupController implements  ControllerInterface{
 
     async handle(request: HttpRequest): Promise<HttpResponse> {
         const { id } = request.params;
-        const { users, name } = request.query;
+        const { users, name } = request.body;
 
         createGroupValidator.validateSync({id, users, name});
 

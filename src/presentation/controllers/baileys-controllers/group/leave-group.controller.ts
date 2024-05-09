@@ -2,9 +2,9 @@ import {HttpRequest} from "../../../http-types/http-request";
 import {HttpResponse} from "../../../http-types/http-response";
 import {WhatsappService} from "../../../../modules/baileys/facade/baileys.facade.interface";
 import {ControllerInterface} from "../../../interfaces/controller.interface";
-import { accepInviteGroupValidator } from "../../../validators/baileys/group/accep-invite-group.validator";
+import { leaveGroupValidator } from "../../../validators/baileys/group/leave-group.validator";
 
-export class AcceptInviteGroupController implements  ControllerInterface{
+export class LeaveGroupController implements  ControllerInterface{
     constructor(
         private usecase: WhatsappService
     ) {
@@ -12,18 +12,18 @@ export class AcceptInviteGroupController implements  ControllerInterface{
 
     async handle(request: HttpRequest): Promise<HttpResponse> {
         const { id } = request.params;
-        const { codeGroup } = request.query;
+        const { groupId } = request.query;
 
-        accepInviteGroupValidator.validateSync({id, codeGroup});
+        leaveGroupValidator.validateSync({id, groupId});
 
-        const execute = await this.usecase.groupAcceptInvite({
+        const execute = await this.usecase.leaveGroup({
           id,
-          codeGroup
+          groupId
         });
 
         return new HttpResponse(
             {
-                message: "Baileys accept invite group successfully",
+                message: "Baileys leave group successfully",
                 data: execute
             },
             {"Content-Type": "application/json"},

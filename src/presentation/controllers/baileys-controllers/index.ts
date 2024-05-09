@@ -5,6 +5,7 @@ export class BaileysControllerFacade {
         init: ControllerInterface;
         acceptInviteGroup: ControllerInterface;
         createGroup: ControllerInterface;
+        leaveGroup: ControllerInterface;
         // info: ControllerInterface;
         qr: ControllerInterface;
         logout: ControllerInterface;
@@ -17,6 +18,7 @@ export class BaileysControllerFacade {
     get init() { return this.props.init; }
     get acceptInviteGroup() { return this.props.acceptInviteGroup; }
     get createGroup() { return this.props.createGroup; }
+    get leaveGroup() { return this.props.leaveGroup; }
     // get info() { return this.props.info; }
     get qr() { return this.props.qr; }
     get logout() { return this.props.logout}
