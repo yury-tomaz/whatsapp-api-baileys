@@ -9,7 +9,8 @@ export class BaileysControllerFacade {
         leaveGroup: ControllerInterface;
         makeUserGroup: ControllerInterface;
         updateDescriptionGroup: ControllerInterface;
-        updateSubjectGroup: ControllerInterface; 
+        updateSubjectGroup: ControllerInterface;
+        updateSettingsGroup: ControllerInterface;
         // info: ControllerInterface;
         qr: ControllerInterface;
         logout: ControllerInterface;
@@ -27,6 +28,7 @@ export class BaileysControllerFacade {
     get makeUserGroup () { return this.props.makeUserGroup; }
     get updateDescriptionGroup() { return this.props.updateDescriptionGroup; }
     get updateSubjectGroup() { return this.props.updateSubjectGroup; }
+    get updateSettingsGroup() { return this.props.updateSettingsGroup; }
     // get info() { return this.props.info; }
     get qr() { return this.props.qr; }
     get logout() { return this.props.logout}
