@@ -2,13 +2,13 @@ const { config } = require('dotenv');
 const jwt = require('jsonwebtoken');
 
 config({
-  path: __dirname + '/envs/.env',
+  path: __dirname + '/envs/.env.development',
 });
 
 const token = jwt.sign(
   {
     realm_access: {
-      roles: ['admin-catalog'],
+      roles: ['admin'],
     },
   },
   process.env.JWT_PRIVATE_KEY,
