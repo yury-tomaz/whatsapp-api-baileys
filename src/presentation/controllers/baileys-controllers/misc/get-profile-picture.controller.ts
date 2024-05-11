@@ -2,9 +2,9 @@ import {ControllerInterface} from "../../../interfaces/controller.interface";
 import {WhatsappService} from "../../../../modules/baileys/facade/baileys.facade.interface";
 import {HttpRequest} from "../../../http-types/http-request";
 import {HttpResponse} from "../../../http-types/http-response";
-import { blockUnblockUserValidator } from "../../../validators/baileys/misc/block-unblock-user.validator";
+import { getProfilePictureValidator } from "../../../validators/baileys/misc/get-profile-picture.validator";
 
-export class BlockUnblockUserController implements ControllerInterface {
+export class GetProfilePictureController implements ControllerInterface {
   constructor(
     private usecase: WhatsappService
   ) {
@@ -12,19 +12,19 @@ export class BlockUnblockUserController implements ControllerInterface {
 
   async handle(request: HttpRequest): Promise<HttpResponse> {
     const {id} = request.params;
-    const {to, action} = request.body;
+    const {to} = request.body;
 
-    blockUnblockUserValidator.validateSync({
-      id,to, action
+    getProfilePictureValidator.validateSync({
+      id,to
     })
 
-    const execute= await this.usecase.blockUnblock({
-      id, to, action
+    const execute= await this.usecase.downloadProfile({
+      id, to
     })
 
     return new HttpResponse(
       {
-        message: 'Block and Unblock Successfully',
+        message: 'Baileys get profile picture successfully',
         data: execute
       },
       {"Content-Type": "application/json"},
