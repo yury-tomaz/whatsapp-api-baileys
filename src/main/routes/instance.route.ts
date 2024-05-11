@@ -5,7 +5,6 @@ import {controller} from "./index";
 
 const instanceRoute = Router();
 
-
 instanceRoute.post(
     '/instance',
     (req: Request, res: Response) =>  requestAdapter(req, res, controller.init)

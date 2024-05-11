@@ -19,6 +19,11 @@ export class BaileysControllerFacade {
         sendTextMessage: ControllerInterface;
         sendUrlMediaFile: ControllerInterface;
         sendMediaFile: ControllerInterface;
+        blockUnblockUser: ControllerInterface;
+        profilePicture: ControllerInterface;
+        getUserStatus: ControllerInterface;
+        isOnWhatsap: ControllerInterface;
+        updateProfilePicture: ControllerInterface;
     }) {}
 
     get init() { return this.props.init; }
@@ -38,4 +43,9 @@ export class BaileysControllerFacade {
     get sendTextMessage() { return this.props.sendTextMessage; }
     get sendUrlMediaFile() { return this.props.sendUrlMediaFile; }
     get sendMediaFile() { return this.props.sendMediaFile; }
+    get blockUnblockUser() { return this.props.blockUnblockUser; }
+    get profilePicture() { return this.props.profilePicture; }
+    get getUserStatus() { return this.props.getUserStatus; }
+    get isOnWhatsap() { return this.props.isOnWhatsap; }
+    get updateProfilePicture() { return this.props.updateProfilePicture; }
 }

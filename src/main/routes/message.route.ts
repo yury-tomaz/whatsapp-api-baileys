@@ -6,15 +6,18 @@ import multer from "multer";
 const messageRoute = Router();
 const storage = multer.memoryStorage();
 const upload = multer({ storage: storage });
+
+messageRoute.use('/instance');
+
 messageRoute.post(
-  '/instance/:id/message/text',
+  '/:id/message/text',
   (req, res) =>  requestAdapter(req, res, controller.sendTextMessage))
 messageRoute.post(
-  '/instance/:id/message/media-url',
+  '/:id/message/media-url',
   (req, res) =>  requestAdapter(req, res, controller.sendTextMessage))
 
 messageRoute.post(
-  '/instance/:id/message/media', upload.single('file'),
+  '/:id/message/media', upload.single('file'),
   (req, res) =>  requestAdapter(req, res, controller.sendTextMessage)
 
 )

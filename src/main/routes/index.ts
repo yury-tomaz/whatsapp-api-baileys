@@ -10,7 +10,7 @@ const controller = BaileysComposer.create();
 
 router.use(instanceRoute);
 router.use(messageRoute);
-router.use('/api/whatsapp/group', groupRoute);
-router.use('/api/whatsapp/misc', miscRoute );
+router.use(groupRoute);
+router.use(miscRoute );
 
 export { router, controller };
