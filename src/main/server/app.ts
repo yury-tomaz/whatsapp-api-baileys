@@ -12,7 +12,8 @@ import { router } from "../routes";
 import path from "path";
 import { config } from "dotenv";
 import {AMQPMessageQueue} from "../../modules/@shared/infra/services/messaging/AMQPMessageQueue";
-import environment from "../../modules/@shared/infra/environment";
+import {Config} from "../../modules/@shared/infra/config";
+
 config();
 
 const app = express();
@@ -23,7 +24,7 @@ app.use(pinoHttp({ logger }));
 app.use(compression());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-const messageQueue = new AMQPMessageQueue(environment.AMQPM_URL)
+const messageQueue = new AMQPMessageQueue(Config.rabbitmqUri())
 
 app.use(express.static(path.join(__dirname, '..', '..', 'public')))
 app.set('view engine', 'ejs');

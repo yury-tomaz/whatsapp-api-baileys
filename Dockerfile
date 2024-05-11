@@ -1,22 +1,9 @@
-FROM node:16-alpine AS builder
+FROM node:20.5.1-slim
 
+RUN npm install -g @nestjs/cli@10.1.17
 
-WORKDIR /app
+USER node
 
-COPY . .
+WORKDIR /home/node/app
 
-RUN npm install
-RUN npm run build
-
-FROM node:16-alpine AS final
-
-WORKDIR /app
-
-COPY --from=builder ./app/dist ./dist
-
-COPY package*.json .
-
-ENV NODE_ENV=production
-RUN npm install --only=production
-
-CMD ["npm", "run", "start"]
+CMD ["tail", "-f", "/dev/null"]
