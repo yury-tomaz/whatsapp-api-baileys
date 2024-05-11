@@ -2,9 +2,9 @@ import {ControllerInterface} from "../../../interfaces/controller.interface";
 import {WhatsappService} from "../../../../modules/baileys/facade/baileys.facade.interface";
 import {HttpRequest} from "../../../http-types/http-request";
 import {HttpResponse} from "../../../http-types/http-response";
-import { getStatusUserValidator } from "../../../validators/baileys/misc/get-status-user.validator";
+import { updateProfilePictureValidator } from "../../../validators/baileys/misc/update-profile-picture.validator";
 
-export class GetStatusUserController implements ControllerInterface {
+export class UpdateProfilePictureController implements ControllerInterface {
   constructor(
     private usecase: WhatsappService
   ) {
@@ -12,19 +12,19 @@ export class GetStatusUserController implements ControllerInterface {
 
   async handle(request: HttpRequest): Promise<HttpResponse> {
     const {id} = request.params;
-    const {to} = request.query;
+    const {to, url} = request.body;
 
-    getStatusUserValidator.validateSync({
-      id,to
-    })
+    updateProfilePictureValidator.validateSync({
+      id,to,url
+    });
 
-    const execute= await this.usecase.getUserStatus({
-      id, to
-    })
+    const execute= await this.usecase.updateProfilePicture({
+      id, to, url
+    });
 
     return new HttpResponse(
       {
-        message: 'Get status user successfully',
+        message: 'Update profile picture successfully',
         data: execute
       },
       {"Content-Type": "application/json"},

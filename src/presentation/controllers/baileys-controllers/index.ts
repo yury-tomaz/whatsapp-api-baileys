@@ -23,6 +23,7 @@ export class BaileysControllerFacade {
         profilePicture: ControllerInterface;
         getUserStatus: ControllerInterface;
         isOnWhatsap: ControllerInterface;
+        updateProfilePicture: ControllerInterface;
     }) {}
 
     get init() { return this.props.init; }
@@ -46,4 +47,5 @@ export class BaileysControllerFacade {
     get profilePicture() { return this.props.profilePicture; }
     get getUserStatus() { return this.props.getUserStatus; }
     get isOnWhatsap() { return this.props.isOnWhatsap; }
+    get updateProfilePicture() { return this.props.updateProfilePicture; }
 }
