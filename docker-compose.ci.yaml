@@ -1,0 +1,39 @@
+version: '3.4'
+
+services:
+
+  api:
+    build:
+      context: .
+      dockerfile: Dockerfile.prod
+
+    environment:
+      - MONGO_URL=mongodb://mongo:27017
+      - MONGO_DB=instance
+    ports:
+      - "3000:3000"
+    volumes:
+      - .:/home/node/app
+      - '/etc/timezone:/etc/timezone:ro'
+      - '/etc/localtime:/etc/localtime:ro'
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+
+    depends_on:
+      - mongo
+
+  db:
+    image: mongo:6.0.8
+    restart: always
+    ports:
+      - "27017:27017"
+    volumes:
+      - ./data/db:/data/db
+
+  rabbitmq:
+    build: ./.docker/rabbitmq
+    ports:
+      - "15672:15672"
+    environment:
+      - RABBITMQ_DEFAULT_USER=admin
+      - RABBITMQ_DEFAULT_PASS=admin
