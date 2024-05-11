@@ -6,21 +6,18 @@ services:
     build:
       context: .
       dockerfile: Dockerfile.prod
-
-    environment:
-      - MONGO_URL=mongodb://mongo:27017
-      - MONGO_DB=instance
+    restart: on-failure
     ports:
       - "3000:3000"
     volumes:
-      - .:/home/node/app
       - '/etc/timezone:/etc/timezone:ro'
       - '/etc/localtime:/etc/localtime:ro'
+      - ./envs:/home/node/app/envs
     extra_hosts:
       - "host.docker.internal:host-gateway"
 
     depends_on:
-      - mongo
+      - db
 
   db:
     image: mongo:6.0.8
