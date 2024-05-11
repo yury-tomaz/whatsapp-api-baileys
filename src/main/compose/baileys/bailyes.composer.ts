@@ -36,6 +36,7 @@ import { InviteCodeGroupController } from "../../../presentation/controllers/bai
 import { BlockUnblockUserController } from "../../../presentation/controllers/baileys-controllers/misc/block-unblock-user.controller";
 import { GetProfilePictureController } from "../../../presentation/controllers/baileys-controllers/misc/get-profile-picture.controller";
 import { GetStatusUserController } from "../../../presentation/controllers/baileys-controllers/misc/get-status-user.controller";
+import { IsOnWhatsappController } from "../../../presentation/controllers/baileys-controllers/misc/is-on-whatsapp.controller";
 
 export class BaileysComposer{
     private static baileysFactory = BaileysFactory.create()
@@ -60,6 +61,7 @@ export class BaileysComposer{
         const blockUnblockUser = new BlockUnblockUserController(this.baileysFactory);
         const profilePicture = new GetProfilePictureController(this.baileysFactory);
         const getUserStatus = new GetStatusUserController(this.baileysFactory);
+        const isOnWhatsap = new IsOnWhatsappController(this.baileysFactory);
 
         return new BaileysControllerFacade({
             init,
@@ -81,7 +83,8 @@ export class BaileysComposer{
             sendMediaFile,
             blockUnblockUser,
             profilePicture,
-            getUserStatus
+            getUserStatus,
+            isOnWhatsap
         })
     }
 }
