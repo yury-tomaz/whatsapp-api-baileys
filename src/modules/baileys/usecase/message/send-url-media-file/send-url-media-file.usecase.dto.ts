@@ -3,6 +3,6 @@ export interface SendUrlMediaFileUseCaseDto {
     to: string;
     type: 'image' | 'video' | 'audio' | 'document';
     url: string;
-    mimetype: string;
+    mimetype?: string;
     caption?: string;
 }
