@@ -37,6 +37,7 @@ import { BlockUnblockUserController } from "../../../presentation/controllers/ba
 import { GetProfilePictureController } from "../../../presentation/controllers/baileys-controllers/misc/get-profile-picture.controller";
 import { GetStatusUserController } from "../../../presentation/controllers/baileys-controllers/misc/get-status-user.controller";
 import { IsOnWhatsappController } from "../../../presentation/controllers/baileys-controllers/misc/is-on-whatsapp.controller";
+import { UpdateProfilePictureController } from "../../../presentation/controllers/baileys-controllers/misc/update-profile-picture.controller";
 
 export class BaileysComposer{
     private static baileysFactory = BaileysFactory.create()
@@ -62,6 +63,7 @@ export class BaileysComposer{
         const profilePicture = new GetProfilePictureController(this.baileysFactory);
         const getUserStatus = new GetStatusUserController(this.baileysFactory);
         const isOnWhatsap = new IsOnWhatsappController(this.baileysFactory);
+        const updateProfilePicture = new UpdateProfilePictureController(this.baileysFactory);
 
         return new BaileysControllerFacade({
             init,
@@ -84,7 +86,8 @@ export class BaileysComposer{
             blockUnblockUser,
             profilePicture,
             getUserStatus,
-            isOnWhatsap
+            isOnWhatsap,
+            updateProfilePicture
         })
     }
 }

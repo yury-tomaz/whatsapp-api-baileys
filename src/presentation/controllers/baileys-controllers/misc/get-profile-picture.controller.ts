@@ -24,7 +24,7 @@ export class GetProfilePictureController implements ControllerInterface {
 
     return new HttpResponse(
       {
-        message: 'Baileys get profile picture successfully',
+        message: 'Profile picture successfully',
         data: execute
       },
       {"Content-Type": "application/json"},
