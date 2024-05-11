@@ -35,6 +35,7 @@ import { UpdateSettingGroupController } from "../../../presentation/controllers/
 import { InviteCodeGroupController } from "../../../presentation/controllers/baileys-controllers/group/invite-code-group.controller";
 import { BlockUnblockUserController } from "../../../presentation/controllers/baileys-controllers/misc/block-unblock-user.controller";
 import { GetProfilePictureController } from "../../../presentation/controllers/baileys-controllers/misc/get-profile-picture.controller";
+import { GetStatusUserController } from "../../../presentation/controllers/baileys-controllers/misc/get-status-user.controller";
 
 export class BaileysComposer{
     private static baileysFactory = BaileysFactory.create()
@@ -58,6 +59,7 @@ export class BaileysComposer{
         const sendMediaFile = new SendMediaFileController(this.baileysFactory);
         const blockUnblockUser = new BlockUnblockUserController(this.baileysFactory);
         const profilePicture = new GetProfilePictureController(this.baileysFactory);
+        const getUserStatus = new GetStatusUserController(this.baileysFactory);
 
         return new BaileysControllerFacade({
             init,
@@ -78,7 +80,8 @@ export class BaileysComposer{
             sendUrlMediaFile,
             sendMediaFile,
             blockUnblockUser,
-            profilePicture
+            profilePicture,
+            getUserStatus
         })
     }
 }
