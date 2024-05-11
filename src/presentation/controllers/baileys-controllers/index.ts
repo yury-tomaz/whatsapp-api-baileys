@@ -19,6 +19,7 @@ export class BaileysControllerFacade {
         sendTextMessage: ControllerInterface;
         sendUrlMediaFile: ControllerInterface;
         sendMediaFile: ControllerInterface;
+        blockUnblockUser: ControllerInterface;
     }) {}
 
     get init() { return this.props.init; }
@@ -38,4 +39,5 @@ export class BaileysControllerFacade {
     get sendTextMessage() { return this.props.sendTextMessage; }
     get sendUrlMediaFile() { return this.props.sendUrlMediaFile; }
     get sendMediaFile() { return this.props.sendMediaFile; }
+    get blockUnblockUser() { return this.props.blockUnblockUser; }
 }
