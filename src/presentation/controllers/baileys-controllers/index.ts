@@ -22,6 +22,7 @@ export class BaileysControllerFacade {
         blockUnblockUser: ControllerInterface;
         profilePicture: ControllerInterface;
         getUserStatus: ControllerInterface;
+        isOnWhatsap: ControllerInterface;
     }) {}
 
     get init() { return this.props.init; }
@@ -44,4 +45,5 @@ export class BaileysControllerFacade {
     get blockUnblockUser() { return this.props.blockUnblockUser; }
     get profilePicture() { return this.props.profilePicture; }
     get getUserStatus() { return this.props.getUserStatus; }
+    get isOnWhatsap() { return this.props.isOnWhatsap; }
 }
