@@ -3,8 +3,10 @@ version: '3.4'
 services:
 
   api:
-    build: .
-    command: ./.docker/start.sh
+    build:
+      context: .
+      dockerfile: Dockerfile.prod
+
     environment:
       - MONGO_URL=mongodb://mongo:27017
       - MONGO_DB=instance
