@@ -46,3 +46,4 @@ jobs:
           body: "Release notes or changelog here"
           draft: false
           prerelease: true
+          allow_override: true
