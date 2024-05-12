@@ -45,7 +45,7 @@
     "typescript": "^5.4.5"
   },
   "dependencies": {
-    "@whiskeysockets/baileys": "^6.6.0",
+    "@whiskeysockets/baileys": "^6.7.2",
     "amqplib": "^0.10.4",
     "axios": "^1.6.7",
     "compression": "^1.7.4",
