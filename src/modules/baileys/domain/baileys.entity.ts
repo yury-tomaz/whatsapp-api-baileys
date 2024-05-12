@@ -34,7 +34,7 @@ interface CustomSocketConfig extends Partial<SocketConfig> {
 
 interface Props {
     id?: Id;
-    belongsTo: string;
+    belongsTo?: string;
     name: string;
     eventDispatcher: EventDispatcherInterface;
     authStateRepository: AuthStateRepositoryInterface;
@@ -44,7 +44,7 @@ interface Props {
 }
 
 export class Baileys extends BaseEntity implements AggregateRoot{
-    private readonly _belongsTo: string;
+    private readonly _belongsTo: string | undefined;
     private readonly _name: string;
     private _socketConfig: CustomSocketConfig | undefined;
     private _waSocket: ReturnType<typeof makeWASocket> | undefined;
@@ -62,7 +62,7 @@ export class Baileys extends BaseEntity implements AggregateRoot{
         return this._name
     }
 
-    get belongsTo(): string{
+    get belongsTo(): string | undefined{
         return this._belongsTo
     }
 
