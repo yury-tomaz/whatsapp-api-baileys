@@ -1,6 +1,7 @@
 import { Request, Response } from "express";
 import { AppError, HttpCode } from "../../modules/@shared/domain/exceptions/app-error";
-import { ControllerInterface, requestAdapter } from "../adapters/request-adapter";
+import { requestAdapter } from "../adapters/request-adapter";
+import {ControllerInterface} from "../../presentation/interfaces/controller.interface";
 
 
 interface RouteVersioningInterface {
