@@ -18,7 +18,7 @@ jobs:
 
       - uses: mshick/add-pr-comment@v2
         with:
-          repo-token: ${{secrets.PERSONAL_TOKEN}}
+          repo-token: ${{secrets.REPO_TOKEN }}
           message-id: pr-test
           message: |
             Thank you for your contribution.
