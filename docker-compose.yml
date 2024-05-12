@@ -5,9 +5,6 @@ services:
   api:
     build: .
     command: ./.docker/start.sh
-    environment:
-      - MONGO_URL=mongodb://mongo:27017
-      - MONGO_DB=instance
     ports:
       - "3000:3000"
     volumes:
@@ -18,7 +15,7 @@ services:
       - "host.docker.internal:host-gateway"
 
     depends_on:
-      - mongo
+      - db
 
   db:
     image: mongo:6.0.8
