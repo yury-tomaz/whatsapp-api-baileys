@@ -8,6 +8,13 @@ export class Config {
 
     return Config.env.PORT
   }
+
+  static instanceHash(){
+    Config.readEnv();
+
+    return Config.env.INSTANCE_HASH
+  }
+
   static rabbitmqUri(){
     Config.readEnv();
 
