@@ -1,4 +1,4 @@
-import { DisconnectReason, proto, WAMessage } from '@whiskeysockets/baileys';
+import { DisconnectReason, WAMessage } from '@whiskeysockets/baileys';
 import { Baileys } from './baileys.entity';
 
 import QRCode from 'qrcode';
@@ -30,7 +30,7 @@ export class ProcessSocketEvent {
   private eventNotify(type: string, body: any, instanceKey: string) {
 
     this.eventDispatcher.notify(new BaileysEvent({
-      type: 'connection',
+      type: type,
       body: body,
       instanceKey,
     }));
