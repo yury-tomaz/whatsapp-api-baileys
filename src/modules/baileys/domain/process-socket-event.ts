@@ -105,16 +105,16 @@ export class ProcessSocketEvent {
     });
 
     socket.ev.on('messaging-history.set', async ({ chats }) => {
-      baileys.chats = baileys.chats.map(chat => {
+      baileys.chats = chats.map(chat => {
         return {
           ...chat,
-          messages: [],
+          messages: []
         };
       });
     });
 
     socket.ev.on('chats.upsert', async (chats) => {
-      baileys.chats = baileys.chats.map(chat => {
+      baileys.chats = chats.map(chat => {
         return {
           ...chat,
           messages: [],
