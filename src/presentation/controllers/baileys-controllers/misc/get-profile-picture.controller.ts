@@ -12,7 +12,7 @@ export class GetProfilePictureController implements ControllerInterface {
 
   async handle(request: HttpRequest): Promise<HttpResponse> {
     const {id} = request.params;
-    const {to} = request.body;
+    const {to} = request.query;
 
     getProfilePictureValidator.validateSync({
       id,to
