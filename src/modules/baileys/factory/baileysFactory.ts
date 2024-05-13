@@ -24,6 +24,7 @@ import { MakeUserGroupUseCase } from "../usecase/group/make-user-group/make-user
 import { UpdateSettingsGroupUseCase } from "../usecase/group/update-settings-group/update-settings-group.useCase";
 import { GetInviteInfoGroupUseCase } from "../usecase/group/get-invite-info-group/get-invite-info-group.useCase";
 import {AuthStateRepository} from "../repository/auth-state-repository";
+import { eventDispatcher } from '../../../main/server/app';
 
 export class BaileysFactory {
     static create(){
