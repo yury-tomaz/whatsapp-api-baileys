@@ -36,7 +36,6 @@ interface Props {
     id?: Id;
     belongsTo?: string;
     name: string;
-    eventDispatcher: EventDispatcherInterface;
     authStateRepository: AuthStateRepositoryInterface;
     processSocketEvent: ProcessSocketEvent
     createdAt?: Date;

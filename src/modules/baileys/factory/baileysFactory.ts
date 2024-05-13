@@ -7,7 +7,6 @@ import {DeleteInstanceUseCase} from "../usecase/instance/delete/delete-instance.
 import {SendTextMessageUseCase} from "../usecase/message/send-text-message/send-text-message.useCase";
 import {SendUrlMediaFileUseCase} from "../usecase/message/send-url-media-file/send-url-media-file.useCase";
 import {AcceptInviteGroupUseCase} from "../usecase/group/accept-invite-group/accept-invite-group.useCase";
-import EventDispatcher from "../../@shared/domain/events/event-dispatcher";
 import {SendMediaFileUseCase} from "../usecase/message/send-media-file/send-media-file.usecase";
 import { GetUserStatusUseCase } from "../usecase/misc/get-status-user/get-status-user.useCase";
 import { GetProfilePictureUseCase } from "../usecase/misc/get-profile-picture/get-profile-picture.useCase";
@@ -25,17 +24,18 @@ import { MakeUserGroupUseCase } from "../usecase/group/make-user-group/make-user
 import { UpdateSettingsGroupUseCase } from "../usecase/group/update-settings-group/update-settings-group.useCase";
 import { GetInviteInfoGroupUseCase } from "../usecase/group/get-invite-info-group/get-invite-info-group.useCase";
 import {AuthStateRepository} from "../repository/auth-state-repository";
+import { eventDispatcher } from '../../../main/server/app';
 
 export class BaileysFactory {
     static create(){
-        const eventDispatcher = new EventDispatcher();
+
         const authStateRepository = new AuthStateRepository();
         const baileysManager =  BaileysInstanceRepositoryInMemory.getInstance();
-        const processSocketEvent = new ProcessSocketEvent(baileysManager);
+
+        const processSocketEvent = new ProcessSocketEvent(baileysManager, eventDispatcher);
 
         const initUseCase = new InitInstanceUseCase(
-            eventDispatcher, authStateRepository,
-            processSocketEvent, baileysManager,
+          authStateRepository, processSocketEvent, baileysManager
         );
         const infoUseCase = new GetInfoUseCase(baileysManager);
         const qrUseCase = new GetQrCodeUsecase(baileysManager);
