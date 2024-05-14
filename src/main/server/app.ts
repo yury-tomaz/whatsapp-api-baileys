@@ -12,8 +12,6 @@ import { router } from '../routes';
 import path from 'path';
 import { config } from 'dotenv';
 import { RabbitmqMessageBroker } from '../../modules/@shared/infra/services/message-broker/rabbitmq-message-broker';
-import EventDispatcher from '../../modules/@shared/domain/events/event-dispatcher';
-import { BaileysEventHandler } from '../../modules/baileys/events/handler/baileys-event-handler';
 
 config();
 
@@ -26,8 +24,6 @@ app.use(compression());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 const messageBroker = new RabbitmqMessageBroker();
-const eventDispatcher = new EventDispatcher();
-eventDispatcher.register('BaileysEvent', new BaileysEventHandler());
 
 app.use(express.static(path.join(__dirname, '..', '..', 'public')));
 app.set('view engine', 'ejs');
@@ -39,4 +35,4 @@ app.use((err: AppError, req: Request, res: Response, next: NextFunction) => {
   errorHandler.handleError(err, res);
 });
 
-export { app, messageBroker, eventDispatcher };
+export { app, messageBroker };
