@@ -4,25 +4,22 @@ import makeWASocket, {
   Browsers,
   fetchLatestBaileysVersion,
   makeInMemoryStore,
-  proto,
-  SocketConfig,
+  SocketConfig, useMultiFileAuthState,
   WABrowserDescription,
   WAMessage,
 } from '@whiskeysockets/baileys';
 import MAIN_LOGGER from '@whiskeysockets/baileys/lib/Utils/logger';
-
-import NodeCache from 'node-cache';
 import { Chat } from '@whiskeysockets/baileys/lib/Types/Chat';
 import { ProcessSocketEvent } from './process-socket-event';
-
 import BaseEntity from '../../@shared/domain/entities/base.entity';
 import Id from '../../@shared/domain/value-object/id.value-object';
-import EventDispatcherInterface from '../../@shared/domain/events/event-dispatcher.interface';
 import AggregateRoot from '../../@shared/domain/entities/aggregate-root.interface';
 import { logger } from '../../@shared/infra/logger';
 import { AppError, HttpCode } from '../../@shared/domain/exceptions/app-error';
 import { AuthStateRepositoryInterface } from '../gateway/auth-state-repository.interface';
-import { authState } from '../helpers/auth-state-db';
+import { Collection } from 'mongodb';
+import { mongoClient } from '../../@shared/infra/persistence/settings/connection';
+import { useMultiFileAuthStateDb } from '../helpers/auth-state-db';
 
 const loggerBaileys = MAIN_LOGGER.child({});
 loggerBaileys.level = 'error';
@@ -46,9 +43,8 @@ export class Baileys extends BaseEntity implements AggregateRoot {
   private readonly _belongsTo: string | undefined;
   private readonly _name: string;
   private _socketConfig: CustomSocketConfig | undefined;
-  private _waSocket: ReturnType<typeof makeWASocket> | undefined;
-  private readonly authStateRepository: AuthStateRepositoryInterface;
-  private msgRetryCounterCache = new NodeCache();
+  private readonly _collection: Collection;
+  private _waSocket?: ReturnType<typeof makeWASocket>;
   private _qrRetry = 0;
   private _qr?: string;
   private _qrCode: string | undefined;
@@ -61,6 +57,10 @@ export class Baileys extends BaseEntity implements AggregateRoot {
     return this._name;
   }
 
+  get collection(){
+    return this._collection
+  }
+
   get belongsTo(): string | undefined {
     return this._belongsTo;
   }
@@ -69,7 +69,7 @@ export class Baileys extends BaseEntity implements AggregateRoot {
     return this._qrCode;
   }
 
-  get waSocket() {
+  get waSocket():  ReturnType<typeof makeWASocket> | undefined{
     return this._waSocket;
   }
 
@@ -111,10 +111,12 @@ export class Baileys extends BaseEntity implements AggregateRoot {
 
   constructor(props: Props) {
     super(props.id);
-    this.authStateRepository = props.authStateRepository;
     this.eventProcessor = props.processSocketEvent;
     this._belongsTo = props.belongsTo;
     this._name = props.name;
+    this._collection = mongoClient
+      .db('whatsapp-api')
+      .collection(`session-${this.id.id}`);
 
     this.init().then((r) => {
       logger.info('Baileys instance initialized');
@@ -126,10 +128,7 @@ export class Baileys extends BaseEntity implements AggregateRoot {
       logger: loggerBaileys,
     });
     const { version, isLatest } = await fetchLatestBaileysVersion();
-    const { state, saveCreds } = await authState(
-      this.authStateRepository,
-      this.id.id,
-    );
+    const { state, saveCreds } = await useMultiFileAuthStateDb(this._collection)
 
     this._socketConfig = {
       version,
@@ -137,7 +136,6 @@ export class Baileys extends BaseEntity implements AggregateRoot {
       printQRInTerminal: false,
       browser: Browsers.ubuntu('Chrome'),
       auth: state,
-      msgRetryCounterCache: this.msgRetryCounterCache,
     };
 
     this._waSocket = makeWASocket(this._socketConfig);
@@ -155,7 +153,7 @@ export class Baileys extends BaseEntity implements AggregateRoot {
     this._qr = undefined;
   }
 
-  private removeAllListeners() {
+  public removeAllListeners() {
     const sock = this._waSocket;
     if (!sock) return;
 
