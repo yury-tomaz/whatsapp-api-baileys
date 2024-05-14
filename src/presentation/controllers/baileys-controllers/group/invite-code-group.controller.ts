@@ -21,7 +21,9 @@ export class InviteCodeGroupController implements ControllerInterface {
     return new HttpResponse(
       {
         message: 'Baileys invite code group successfully',
-        data: execute,
+        data: {
+          code: execute,
+        },
       },
       { 'Content-Type': 'application/json' },
       200,
