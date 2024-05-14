@@ -24,13 +24,16 @@ import { MakeUserGroupUseCase } from '../usecase/group/make-user-group/make-user
 import { UpdateSettingsGroupUseCase } from '../usecase/group/update-settings-group/update-settings-group.useCase';
 import { GetInviteInfoGroupUseCase } from '../usecase/group/get-invite-info-group/get-invite-info-group.useCase';
 import { AuthStateRepository } from '../repository/auth-state-repository';
-import { eventDispatcher } from '../../../main/server/app';
+import EventDispatcher from '../../@shared/domain/events/event-dispatcher';
+import { BaileysEventHandler } from '../events/handler/baileys-event-handler';
 
 export class BaileysFactory {
   static create() {
     const authStateRepository = new AuthStateRepository();
     const baileysManager = BaileysInstanceRepositoryInMemory.getInstance();
 
+    const eventDispatcher = new EventDispatcher();
+    eventDispatcher.register('BaileysEvent', new BaileysEventHandler());
     const processSocketEvent = new ProcessSocketEvent(
       baileysManager,
       eventDispatcher,
