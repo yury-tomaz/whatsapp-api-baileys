@@ -26,8 +26,7 @@ app.use(compression());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 const messageBroker = new RabbitmqMessageBroker();
-const eventDispatcher = new EventDispatcher();
-eventDispatcher.register('BaileysEvent', new BaileysEventHandler());
+
 
 app.use(express.static(path.join(__dirname, '..', '..', 'public')));
 app.set('view engine', 'ejs');
@@ -39,4 +38,4 @@ app.use((err: AppError, req: Request, res: Response, next: NextFunction) => {
   errorHandler.handleError(err, res);
 });
 
-export { app, messageBroker, eventDispatcher };
+export { app, messageBroker };
