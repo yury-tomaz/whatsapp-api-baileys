@@ -1,7 +1,7 @@
 export interface GetQrCodeUseCaseInputDTO {
-    id: string
+  id: string;
 }
 
 export interface GetQrCodeUseCaseOutPutDTO {
-    qr: string | undefined
+  qr: string | undefined;
 }

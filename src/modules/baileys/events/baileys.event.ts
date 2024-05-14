@@ -1,6 +1,6 @@
 import EventInterface from '../../@shared/domain/events/event.interface';
 
-export class BaileysEvent implements  EventInterface{
+export class BaileysEvent implements EventInterface {
   dateTimeOccurred: Date;
   eventData: any;
 

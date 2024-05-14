@@ -1,4 +1,4 @@
-import "express-async-errors";
+import 'express-async-errors';
 import express, { NextFunction, Request, Response } from 'express';
 import helmet from 'helmet';
 import cors from 'cors';
@@ -8,10 +8,10 @@ import { logger } from '../../modules/@shared/infra/logger';
 import { AppError } from '../../modules/@shared/domain/exceptions/app-error';
 import { errorHandler } from '../../modules/@shared/domain/exceptions/error-handler';
 import './process';
-import { router } from "../routes";
-import path from "path";
-import { config } from "dotenv";
-import {RabbitmqMessageBroker} from "../../modules/@shared/infra/services/message-broker/rabbitmq-message-broker";
+import { router } from '../routes';
+import path from 'path';
+import { config } from 'dotenv';
+import { RabbitmqMessageBroker } from '../../modules/@shared/infra/services/message-broker/rabbitmq-message-broker';
 import EventDispatcher from '../../modules/@shared/domain/events/event-dispatcher';
 import { BaileysEventHandler } from '../../modules/baileys/events/handler/baileys-event-handler';
 
@@ -27,16 +27,16 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 const messageBroker = new RabbitmqMessageBroker();
 const eventDispatcher = new EventDispatcher();
-eventDispatcher.register('BaileysEvent', new BaileysEventHandler())
+eventDispatcher.register('BaileysEvent', new BaileysEventHandler());
 
-app.use(express.static(path.join(__dirname, '..', '..', 'public')))
+app.use(express.static(path.join(__dirname, '..', '..', 'public')));
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, '..', '..', 'public'));
 
 app.use(router);
 
 app.use((err: AppError, req: Request, res: Response, next: NextFunction) => {
-    errorHandler.handleError(err, res);
+  errorHandler.handleError(err, res);
 });
 
 export { app, messageBroker, eventDispatcher };

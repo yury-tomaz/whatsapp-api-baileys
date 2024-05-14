@@ -1,30 +1,25 @@
-import {WhatsappService} from "../../../../modules/baileys/facade/baileys.facade.interface";
-import {HttpRequest} from "../../../http-types/http-request";
-import {HttpResponse} from "../../../http-types/http-response";
-import {deleteInstanceValidator} from "../../../validators/delete-instance.validator";
-
+import { WhatsappService } from '../../../../modules/baileys/facade/baileys.facade.interface';
+import { HttpRequest } from '../../../http-types/http-request';
+import { HttpResponse } from '../../../http-types/http-response';
+import { deleteInstanceValidator } from '../../../validators/delete-instance.validator';
 
 export class DeleteInstanceController {
-    constructor(
-        private usecase: WhatsappService
-    ) {
-    }
+  constructor(private usecase: WhatsappService) {}
 
+  async handle(request: HttpRequest): Promise<HttpResponse> {
+    const { id } = request.params;
+    deleteInstanceValidator.validateSync({ id });
 
-    async handle(request: HttpRequest): Promise<HttpResponse> {
-        const {id} = request.params;
-        deleteInstanceValidator.validateSync({id})
+    await this.usecase.delete({
+      id,
+    });
 
-        await this.usecase.delete({
-            id
-        });
-
-        return new HttpResponse(
-            {
-                message: 'Instance successfully deleted.',
-            },
-            {"Content-Type": "application/json"},
-            200
-        )
-    }
+    return new HttpResponse(
+      {
+        message: 'Instance successfully deleted.',
+      },
+      { 'Content-Type': 'application/json' },
+      200,
+    );
+  }
 }
