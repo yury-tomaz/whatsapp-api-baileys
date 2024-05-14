@@ -34,7 +34,6 @@ export class BaileysFactory {
 
     const eventDispatcher = new EventDispatcher();
     eventDispatcher.register('BaileysEvent', new BaileysEventHandler());
-
     const processSocketEvent = new ProcessSocketEvent(
       baileysManager,
       eventDispatcher,
