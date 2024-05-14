@@ -20,7 +20,7 @@ instanceRoute.post('/instance/:id/logout', (req: Request, res: Response) =>
   requestAdapter(req, res, controller.logout),
 );
 
-instanceRoute.get('instance/:id/info', (req: Request, res: Response) =>
+instanceRoute.get('/instance/:id/info', (req: Request, res: Response) =>
   requestAdapter(req, res, controller.info),
 );
 
