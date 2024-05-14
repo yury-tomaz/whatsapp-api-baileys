@@ -1,3 +1,3 @@
-interface LogoutInstanceUseCaseDto{
-    id: string;
+interface LogoutInstanceUseCaseDto {
+  id: string;
 }

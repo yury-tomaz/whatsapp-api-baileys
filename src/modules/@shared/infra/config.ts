@@ -3,25 +3,25 @@ import { join } from 'path';
 export class Config {
   static env: any = null;
 
-  static port(){
+  static port() {
     Config.readEnv();
 
-    return Config.env.PORT
+    return Config.env.PORT;
   }
-  static rabbitmqUri(){
+  static rabbitmqUri() {
     Config.readEnv();
 
-    return Config.env.RABBITMQ_URI
+    return Config.env.RABBITMQ_URI;
   }
 
-  static db(){
+  static db() {
     Config.readEnv();
 
-    return{
+    return {
       uri: Config.env.MONGO_URI,
       dbName: Config.env.MONGO_DB_NAME,
-      colection: Config.env.MONGO_DB_COLLECTION
-    }
+      colection: Config.env.MONGO_DB_COLLECTION,
+    };
   }
 
   static readEnv() {

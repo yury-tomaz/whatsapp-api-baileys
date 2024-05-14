@@ -1,4 +1,4 @@
-import * as yup from "yup";
+import * as yup from 'yup';
 
 export const updateSubjectGroupValidator = yup.object().shape({
   id: yup.string().required(),

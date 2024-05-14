@@ -1,31 +1,36 @@
-import { Request, Response } from "express";
-import { AppError, HttpCode } from "../../modules/@shared/domain/exceptions/app-error";
-import { requestAdapter } from "../adapters/request-adapter";
-import {ControllerInterface} from "../../presentation/interfaces/controller.interface";
-
+import { Request, Response } from 'express';
+import {
+  AppError,
+  HttpCode,
+} from '../../modules/@shared/domain/exceptions/app-error';
+import { requestAdapter } from '../adapters/request-adapter';
+import { ControllerInterface } from '../../presentation/interfaces/controller.interface';
 
 interface RouteVersioningInterface {
-    [key: string]: ControllerInterface;
+  [key: string]: ControllerInterface;
 }
 
-export const routesVersioning = (req: Request, res: Response, versioning: RouteVersioningInterface) => {
-    const version = req.headers['accept-version'];
-    
-    if (!version || typeof version !== 'string' || !validateVersion(version) ) {
-        throw new AppError({
-            message: `Invalid or unsupported version: ${version}`,
-            statusCode: HttpCode.BAD_REQUEST,
-            isOperational: true,
-        });
-    }
+export const routesVersioning = (
+  req: Request,
+  res: Response,
+  versioning: RouteVersioningInterface,
+) => {
+  const version = req.headers['accept-version'];
 
-    const controller = versioning[version];
+  if (!version || typeof version !== 'string' || !validateVersion(version)) {
+    throw new AppError({
+      message: `Invalid or unsupported version: ${version}`,
+      statusCode: HttpCode.BAD_REQUEST,
+      isOperational: true,
+    });
+  }
 
-    requestAdapter(req, res, controller)
+  const controller = versioning[version];
+
+  requestAdapter(req, res, controller);
 };
 
-
 const validateVersion = (version: string): boolean => {
-    const regex = new RegExp('^\\d+\\.\\d+\\.\\d+$');
-    return regex.test(version);
-}
+  const regex = new RegExp('^\\d+\\.\\d+\\.\\d+$');
+  return regex.test(version);
+};

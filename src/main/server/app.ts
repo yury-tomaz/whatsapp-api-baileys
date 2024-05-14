@@ -1,4 +1,4 @@
-import "express-async-errors";
+import 'express-async-errors';
 import express, { NextFunction, Request, Response } from 'express';
 import helmet from 'helmet';
 import cors from 'cors';
@@ -8,11 +8,11 @@ import { logger } from '../../modules/@shared/infra/logger';
 import { AppError } from '../../modules/@shared/domain/exceptions/app-error';
 import { errorHandler } from '../../modules/@shared/domain/exceptions/error-handler';
 import './process';
-import { router } from "../routes";
-import path from "path";
-import { config } from "dotenv";
-import {AMQPMessageQueue} from "../../modules/@shared/infra/services/messaging/AMQPMessageQueue";
-import {Config} from "../../modules/@shared/infra/config";
+import { router } from '../routes';
+import path from 'path';
+import { config } from 'dotenv';
+import { AMQPMessageQueue } from '../../modules/@shared/infra/services/messaging/AMQPMessageQueue';
+import { Config } from '../../modules/@shared/infra/config';
 
 config();
 
@@ -24,16 +24,16 @@ app.use(pinoHttp({ logger }));
 app.use(compression());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-const messageQueue = new AMQPMessageQueue(Config.rabbitmqUri())
+const messageQueue = new AMQPMessageQueue(Config.rabbitmqUri());
 
-app.use(express.static(path.join(__dirname, '..', '..', 'public')))
+app.use(express.static(path.join(__dirname, '..', '..', 'public')));
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, '..', '..', 'public'));
 
 app.use(router);
 
 app.use((err: AppError, req: Request, res: Response, next: NextFunction) => {
-    errorHandler.handleError(err, res);
+  errorHandler.handleError(err, res);
 });
 
 export { app, messageQueue };
