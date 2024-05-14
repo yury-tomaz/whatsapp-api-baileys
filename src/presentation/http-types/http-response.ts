@@ -1,9 +1,7 @@
-
-
 export class HttpResponse {
-    constructor(
-        public readonly body: any,
-        public readonly headers: any,
-        public readonly statusCode: number,
-    ) { }
+  constructor(
+    public readonly body: any,
+    public readonly headers: any,
+    public readonly statusCode: number,
+  ) {}
 }

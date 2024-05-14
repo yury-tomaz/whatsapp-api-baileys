@@ -1,11 +1,11 @@
-import * as yup from "yup";
+import * as yup from 'yup';
 
 export const sendMediaFileValidator = yup.object().shape({
   id: yup.string().required(),
   to: yup.string().required(),
   type: yup.string().required(),
   caption: yup.string().required(),
-  file:  yup
+  file: yup
     .mixed()
     .test('file', 'Arquivo inválido', async function (value) {
       if (!value) {
@@ -19,4 +19,4 @@ export const sendMediaFileValidator = yup.object().shape({
       return value.length <= maxSize;
     })
     .required(),
-})
+});

@@ -6,14 +6,15 @@ import { MessageBrokerInterface } from '../../../application/abstractions/messag
 import EventInterface from '../../../domain/events/event.interface';
 
 export class RabbitmqMessageBroker implements MessageBrokerInterface {
-
   private channel: amqp.Channel | null = null;
   private exchangeName: string = 'baileys-api';
 
   constructor() {
     this.connect()
-      .then(r => logger.info('AMQP initialized'))
-      .catch(error => logger.error('Erro ao inicializar AMQP:', error.message));
+      .then((r) => logger.info('AMQP initialized'))
+      .catch((error) =>
+        logger.error('Erro ao inicializar AMQP:', error.message),
+      );
   }
 
   private async connect() {
@@ -30,13 +31,20 @@ export class RabbitmqMessageBroker implements MessageBrokerInterface {
   async publishEvent(event: EventInterface, routingKey: string): Promise<void> {
     if (!this.channel) {
       throw new AppError({
-        message: 'The connection has not been established. Call connect() before sending messages.',
+        message:
+          'The connection has not been established. Call connect() before sending messages.',
         isOperational: true,
         statusCode: HttpCode['NOT_FOUND'],
       });
     }
 
-    this.channel.publish(this.exchangeName, routingKey, Buffer.from(JSON.stringify(event)));
-    logger.info(`Message sent to exchange ${this.exchangeName} with routing key ${routingKey}: ${JSON.stringify(event)}`);
+    this.channel.publish(
+      this.exchangeName,
+      routingKey,
+      Buffer.from(JSON.stringify(event)),
+    );
+    logger.info(
+      `Message sent to exchange ${this.exchangeName} with routing key ${routingKey}: ${JSON.stringify(event)}`,
+    );
   }
 }

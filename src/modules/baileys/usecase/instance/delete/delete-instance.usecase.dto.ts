@@ -1,3 +1,3 @@
-export interface DeleteInstanceUseCaseDto{
-    id: string
+export interface DeleteInstanceUseCaseDto {
+  id: string;
 }

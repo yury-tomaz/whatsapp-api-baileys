@@ -15,25 +15,25 @@ interface CustomError extends Error {
 }
 
 interface NotifyData extends WAMessage {
-  instanceKey: string,
-  text: WAMessage[],
-  msgContent: string | undefined
+  instanceKey: string;
+  text: WAMessage[];
+  msgContent: string | undefined;
 }
 
 export class ProcessSocketEvent {
   constructor(
     private readonly baileysRepository: BaileysInstanceRepositoryInMemory,
     private readonly eventDispatcher: EventDispatcherInterface,
-  ) {
-  }
+  ) {}
 
   private eventNotify(type: string, body: any, instanceKey: string) {
-
-    this.eventDispatcher.notify(new BaileysEvent({
-      type: type,
-      body: body,
-      instanceKey,
-    }));
+    this.eventDispatcher.notify(
+      new BaileysEvent({
+        type: type,
+        body: body,
+        instanceKey,
+      }),
+    );
   }
 
   async execute(baileys: Baileys) {
@@ -64,7 +64,6 @@ export class ProcessSocketEvent {
           },
           baileys.id.id,
         );
-
       } else if (connection === 'open') {
         logger.info('Connection open');
 
@@ -93,28 +92,23 @@ export class ProcessSocketEvent {
           logger.info('QRCode expired');
         }
       }
-
     });
 
     socket.ev.on('presence.update', async (json) => {
-      this.eventNotify(
-        'presence',
-        json,
-        baileys.id.id
-      )
+      this.eventNotify('presence', json, baileys.id.id);
     });
 
     socket.ev.on('messaging-history.set', async ({ chats }) => {
-      baileys.chats = chats.map(chat => {
+      baileys.chats = chats.map((chat) => {
         return {
           ...chat,
-          messages: []
+          messages: [],
         };
       });
     });
 
     socket.ev.on('chats.upsert', async (chats) => {
-      baileys.chats = chats.map(chat => {
+      baileys.chats = chats.map((chat) => {
         return {
           ...chat,
           messages: [],
@@ -123,8 +117,10 @@ export class ProcessSocketEvent {
     });
 
     socket.ev.on('chats.update', async (changedChats) => {
-      changedChats.forEach(changedChat => {
-        const chatIndex = baileys.chats.findIndex((chat) => chat.id === changedChat.id);
+      changedChats.forEach((changedChat) => {
+        const chatIndex = baileys.chats.findIndex(
+          (chat) => chat.id === changedChat.id,
+        );
 
         if (chatIndex >= 0) {
           baileys.chats[chatIndex] = {
@@ -144,7 +140,6 @@ export class ProcessSocketEvent {
       });
     });
 
-
     socket.ev.on('messages.upsert', async ({ messages, type }) => {
       const currentMessages = baileys.messages;
       if (type === 'append') {
@@ -153,7 +148,7 @@ export class ProcessSocketEvent {
 
       if (type !== 'notify') return;
 
-      const unreadMessages = messages.map(message => {
+      const unreadMessages = messages.map((message) => {
         return {
           remoteJid: message.key.remoteJid,
           id: message.key.id,
@@ -170,7 +165,10 @@ export class ProcessSocketEvent {
 
         const messageType = Object.keys(message.message)[0];
 
-        const isProtocolOrKeyMessage: boolean = ['protocolMessage', 'senderKeyDistributionMessage'].includes(messageType);
+        const isProtocolOrKeyMessage: boolean = [
+          'protocolMessage',
+          'senderKeyDistributionMessage',
+        ].includes(messageType);
         if (isProtocolOrKeyMessage) return;
 
         const notifyData = {
@@ -179,36 +177,41 @@ export class ProcessSocketEvent {
 
         switch (messageType) {
           case 'imageMessage':
-            notifyData.msgContent = await downloadMessage({
-              directPath: message.message.imageMessage?.directPath,
-              mediaKey: message.message.imageMessage?.mediaKey,
-              url: message.message.imageMessage?.url,
-            }, 'image');
+            notifyData.msgContent = await downloadMessage(
+              {
+                directPath: message.message.imageMessage?.directPath,
+                mediaKey: message.message.imageMessage?.mediaKey,
+                url: message.message.imageMessage?.url,
+              },
+              'image',
+            );
             break;
           case 'videoMessage':
-            notifyData.msgContent = await downloadMessage({
-              directPath: message.message.videoMessage?.directPath,
-              mediaKey: message.message.videoMessage?.mediaKey,
-              url: message.message.videoMessage?.url,
-            }, 'video');
+            notifyData.msgContent = await downloadMessage(
+              {
+                directPath: message.message.videoMessage?.directPath,
+                mediaKey: message.message.videoMessage?.mediaKey,
+                url: message.message.videoMessage?.url,
+              },
+              'video',
+            );
             break;
           case 'audioMessage':
-            notifyData.msgContent = await downloadMessage({
-              directPath: message.message.audioMessage?.directPath,
-              mediaKey: message.message.audioMessage?.mediaKey,
-              url: message.message.audioMessage?.url,
-            }, 'audio');
+            notifyData.msgContent = await downloadMessage(
+              {
+                directPath: message.message.audioMessage?.directPath,
+                mediaKey: message.message.audioMessage?.mediaKey,
+                url: message.message.audioMessage?.url,
+              },
+              'audio',
+            );
             break;
           default:
             notifyData.msgContent = '';
             break;
         }
 
-        this.eventNotify(
-          'message',
-          notifyData,
-          baileys.id.id
-        )
+        this.eventNotify('message', notifyData, baileys.id.id);
       });
     });
 
@@ -221,27 +224,15 @@ export class ProcessSocketEvent {
     });
 
     socket.ev.on('groups.upsert', async (newChat) => {
-      this.eventNotify(
-        'group_created',
-        newChat,
-        baileys.id.id
-      )
+      this.eventNotify('group_created', newChat, baileys.id.id);
     });
 
     socket.ev.on('groups.update', async (newChat) => {
-      this.eventNotify(
-        'group_updated',
-        newChat,
-        baileys.id.id
-      )
+      this.eventNotify('group_updated', newChat, baileys.id.id);
     });
 
     socket.ev.on('group-participants.update', async (newChat) => {
-      this.eventNotify(
-        'group_participants_updated',
-        newChat,
-        baileys.id.id
-      )
+      this.eventNotify('group_participants_updated', newChat, baileys.id.id);
     });
   }
 }

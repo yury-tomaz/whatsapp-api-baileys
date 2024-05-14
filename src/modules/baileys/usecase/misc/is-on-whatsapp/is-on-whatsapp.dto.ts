@@ -1,4 +1,4 @@
-export interface IsOnWhatsappDto{
+export interface IsOnWhatsappDto {
   id: string;
   to: string;
 }

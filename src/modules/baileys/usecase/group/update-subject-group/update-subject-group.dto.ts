@@ -1,5 +1,5 @@
 export interface UpdateSubjectGroupDto {
-  id:string;
+  id: string;
   groupId: string;
-  subject:string;
+  subject: string;
 }

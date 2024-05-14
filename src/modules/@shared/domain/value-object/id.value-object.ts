@@ -1,6 +1,5 @@
-import { v4 as uuidv4 } from "uuid";
-import ValueObject from "./value-object.interface";
-
+import { v4 as uuidv4 } from 'uuid';
+import ValueObject from './value-object.interface';
 
 export default class Id implements ValueObject {
   private readonly _id: string;

@@ -1,4 +1,4 @@
 export interface InitInstanceInputDto {
-    name: string;
-    belongsTo?: string;
+  name: string;
+  belongsTo?: string;
 }

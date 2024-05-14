@@ -1,11 +1,11 @@
 interface GenerateVCInput {
-    fullName: string;
-    organization: string;
-    phoneNumber: string;
+  fullName: string;
+  organization: string;
+  phoneNumber: string;
 }
 
 export const generateVC = (input: GenerateVCInput) =>
-`BEGIN:VCARD
+  `BEGIN:VCARD
 VERSION:3.0
 FN:${input.fullName}
 ORG:${input.organization};
