@@ -7,12 +7,9 @@ import { BaileysInstanceRepositoryInMemory } from '../repository/baileys-instanc
 import { logger } from '../../@shared/infra/logger';
 import EventDispatcherInterface from '../../@shared/domain/events/event-dispatcher.interface';
 import { BaileysEvent } from '../events/baileys.event';
+import { Boom } from '@hapi/boom';
 
-interface CustomError extends Error {
-  output?: {
-    statusCode: number;
-  };
-}
+
 
 interface NotifyData extends WAMessage {
   instanceKey: string;
@@ -24,7 +21,8 @@ export class ProcessSocketEvent {
   constructor(
     private readonly baileysRepository: BaileysInstanceRepositoryInMemory,
     private readonly eventDispatcher: EventDispatcherInterface,
-  ) {}
+  ) {
+  }
 
   private eventNotify(type: string, body: any, instanceKey: string) {
     this.eventDispatcher.notify(
@@ -45,16 +43,33 @@ export class ProcessSocketEvent {
     }
 
     socket.ev.on('connection.update', async (update) => {
-      const { connection, lastDisconnect, qr } = update;
+      const { connection, lastDisconnect, qr } = update || {}
       if (connection === 'connecting') return;
 
       if (connection === 'close') {
-        const { error } = lastDisconnect as { error: CustomError };
+        let reason = new Boom(lastDisconnect?.error).output.statusCode;
 
-        if (error.output?.statusCode !== DisconnectReason.loggedOut) {
-          await baileys.init();
+
+        if (reason === DisconnectReason.badSession) {
+          baileys.collection.drop().then(r => {
+            logger.info('Bad Session File, Please Delete and Scan Again')
+          })
+        }else if (reason === DisconnectReason.connectionClosed) {
+          await baileys.init()
+        } else if (reason === DisconnectReason.connectionLost) {
+          await baileys.init()
+        }else if (reason === DisconnectReason.connectionReplaced) {
+          logger.info('connection Replaced')
+        }else if (reason === DisconnectReason.loggedOut) {
+          logger.info('Device Logged Out, Please Login Again')
+        } else if (reason === DisconnectReason.restartRequired) {
+          console.log("Restart Required, Restarting...");
+          await baileys.init()
+        } else if (reason === DisconnectReason.timedOut) {
+          console.log("Connection TimedOut, Reconnecting...");
+          await baileys.init()
         } else {
-          baileys.isOn = false;
+          baileys.waSocket?.end(new Error(`Unknown DisconnectReason: ${reason}|${lastDisconnect!.error}`));
         }
 
         this.eventNotify(
@@ -64,14 +79,11 @@ export class ProcessSocketEvent {
           },
           baileys.id.id,
         );
+
       } else if (connection === 'open') {
         logger.info('Connection open');
 
-        const alreadyThere = await this.baileysRepository.find(baileys.id.id);
-
-        if (!alreadyThere) {
-          await this.baileysRepository.create(baileys);
-        }
+        // TODO: Implement Collection for the sessions
 
         baileys.isOn = true;
 
