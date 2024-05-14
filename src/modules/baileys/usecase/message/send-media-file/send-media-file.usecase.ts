@@ -1,6 +1,7 @@
 import { BaileysInstanceRepositoryInMemory } from '../../../repository/baileys-instance-repository-in-memory';
 import { getWhatsAppId } from '../../../helpers/get-whats-app-Id';
 import { checkInstance } from '../../../helpers/check-Instance';
+import { SendMediaFileUseCaseDto } from './send-media-file.usecase.dto';
 
 export class SendMediaFileUseCase {
   constructor(private baileysManager: BaileysInstanceRepositoryInMemory) {}

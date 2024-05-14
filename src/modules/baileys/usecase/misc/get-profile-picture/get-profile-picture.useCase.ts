@@ -14,7 +14,7 @@ export class GetProfilePictureUseCase {
     const whatsappId = getWhatsAppId(input.to);
     await result.verifyId(whatsappId);
 
-    const response = await sock.profilePictureUrl(whatsappId);
+    const response = await sock.profilePictureUrl(whatsappId, 'image');
 
     return response;
   }

@@ -133,7 +133,7 @@ export class Baileys extends BaseEntity implements AggregateRoot {
     this._socketConfig = {
       version,
       logger: loggerBaileys,
-      printQRInTerminal: false,
+      printQRInTerminal: true,
       browser: Browsers.ubuntu('Chrome'),
       auth: state,
     };
