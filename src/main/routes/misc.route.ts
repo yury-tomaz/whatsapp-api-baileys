@@ -5,11 +5,6 @@ import { requestAdapter } from '../adapters/request-adapter';
 const miscRoute = Router();
 
 miscRoute.patch(
-  '/instance/:id/misc/profile-picture',
-  (req: Request, res: Response) =>
-    requestAdapter(req, res, controller.updateProfilePicture),
-);
-miscRoute.patch(
   '/instance/:id/misc/block-unblock',
   (req: Request, res: Response) =>
     requestAdapter(req, res, controller.blockUnblockUser),
@@ -18,9 +13,6 @@ miscRoute.get(
   '/instance/:id/misc/profile-picture',
   (req: Request, res: Response) =>
     requestAdapter(req, res, controller.profilePicture),
-);
-miscRoute.get('/instance/:id/misc/status-user', (req: Request, res: Response) =>
-  requestAdapter(req, res, controller.getUserStatus),
 );
 miscRoute.get('/instance/:id/misc/verify-wpp', (req: Request, res: Response) =>
   requestAdapter(req, res, controller.isOnWhatsap),

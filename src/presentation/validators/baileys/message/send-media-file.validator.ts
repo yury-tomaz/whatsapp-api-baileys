@@ -5,18 +5,10 @@ export const sendMediaFileValidator = yup.object().shape({
   to: yup.string().required(),
   type: yup.string().required(),
   caption: yup.string().required(),
-  file: yup
-    .mixed()
-    .test('file', 'Arquivo inválido', async function (value) {
-      if (!value) {
-        return false;
-      }
-
-      if (!Buffer.isBuffer(value)) {
-        return false;
-      }
-      const maxSize = 10 * 1024 * 1024; // 10MB
-      return value.length <= maxSize;
-    })
-    .required(),
+  file: yup.mixed().test('file', 'The file is too large', (value: any) => {
+    if (!value) return false;
+    if (!value.length) return true;
+    const maxSize = 10 * 1024 * 1024;
+    return value[0].size <= maxSize;
+  }),
 });
