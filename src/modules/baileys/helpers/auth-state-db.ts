@@ -4,15 +4,14 @@ import {
   BufferJSON,
   initAuthCreds,
   proto,
-  SignalDataTypeMap
+  SignalDataTypeMap,
 } from '@whiskeysockets/baileys';
-import {Collection} from 'mongodb';
+import { Collection } from 'mongodb';
 import { logger } from '../../@shared/infra/logger';
-
 
 export async function useMultiFileAuthStateDb(coll: Collection<any>): Promise<{
   state: AuthenticationState;
-  saveCreds: () => Promise<void>
+  saveCreds: () => Promise<void>;
 }> {
   const writeData = async (data: any, key: string): Promise<any> => {
     try {
@@ -23,7 +22,7 @@ export async function useMultiFileAuthStateDb(coll: Collection<any>): Promise<{
           content_array: msgParsed,
         };
       }
-      return await coll.replaceOne({_id: key}, msgParsed, {upsert: true});
+      return await coll.replaceOne({ _id: key }, msgParsed, { upsert: true });
     } catch (error) {
       logger.error(error);
     }
@@ -31,7 +30,7 @@ export async function useMultiFileAuthStateDb(coll: Collection<any>): Promise<{
 
   const readData = async (key: string): Promise<any> => {
     try {
-      let data = (await coll.findOne({_id: key})) as any;
+      let data = (await coll.findOne({ _id: key })) as any;
       if (data?.content_array) {
         data = data.content_array;
       }
@@ -44,13 +43,14 @@ export async function useMultiFileAuthStateDb(coll: Collection<any>): Promise<{
 
   const removeData = async (key: string) => {
     try {
-      return await coll.deleteOne({_id: key});
+      return await coll.deleteOne({ _id: key });
     } catch (error) {
       logger.error(error);
     }
   };
 
-  const creds: AuthenticationCreds = (await readData('creds')) || initAuthCreds();
+  const creds: AuthenticationCreds =
+    (await readData('creds')) || initAuthCreds();
 
   return {
     state: {

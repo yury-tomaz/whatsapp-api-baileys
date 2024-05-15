@@ -21,6 +21,9 @@ import { MakeUserGroupDto } from '../usecase/group/make-user-group/make-user-gro
 import { UpdateSettingsGroupDto } from '../usecase/group/update-settings-group/update-settings-group.dto';
 import { GetInviteInGroupDto } from '../usecase/group/get-invite-info-group/get-invite-info-group.dto';
 import { InitInstanceInputDto } from '../usecase/instance/init/init-instance.dto';
+import { LogoutInstanceUseCaseDto } from '../usecase/instance/logout/logout-instance.usecase.dto';
+import { SendMediaFileUseCaseDto } from '../usecase/message/send-media-file/send-media-file.usecase.dto';
+import { SendListMessageUseCaseDto } from '../usecase/message/send-list-message/send-list-message.dto';
 
 interface InstanceService {
   init(input: InitInstanceInputDto): Promise<any>;
@@ -34,16 +37,14 @@ interface MessageService {
   sendTextMessage(input: SendTextMessageUseCaseDto): Promise<void>;
   sendUrlMediaFile(input: SendUrlMediaFileUseCaseDto): Promise<void>;
   sendMediaFile(input: SendMediaFileUseCaseDto): Promise<void>;
+  sendListMessage(input: SendListMessageUseCaseDto): Promise<any>;
 }
 
 interface GroupService {
   createNewGroup(input: CreateGroupDto): Promise<any>;
-  //getAllGroups(): Promise<void>;
   leaveGroup(input: LeaveGroupDto): Promise<any>;
   getInviteCodeGroup(input: InviteCodeGroupDto): Promise<any>;
   makeUserGroup(input: MakeUserGroupDto): Promise<any>;
-  //getInstanceInviteCodeGroup(): Promise<void>;
-  //groupFetchAllParticipating(): Promise<void>;
   groupSettingUpdate(input: UpdateSettingsGroupDto): Promise<void>;
   groupUpdateSubject(input: UpdateSubjectGroupDto): Promise<any>;
   groupUpdateDescription(input: UpdateDescriptionGroupDto): Promise<any>;
@@ -57,10 +58,8 @@ interface MiscService {
   getUserStatus(input: GetUserStatusDto): Promise<any>;
   blockUnblock(input: BlockUnblockUserDto): Promise<any>;
   updateProfilePicture(input: UpdateProfilePictureDto): Promise<any>;
-  // getUserOrGroupById(): Promise<void>;
 }
 
-// TODO: implement 'MiscService' and GroupService
 export interface WhatsappService
   extends MessageService,
     InstanceService,
