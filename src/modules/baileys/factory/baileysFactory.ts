@@ -26,6 +26,7 @@ import { GetInviteInfoGroupUseCase } from '../usecase/group/get-invite-info-grou
 import { AuthStateRepository } from '../repository/auth-state-repository';
 import EventDispatcher from '../../@shared/domain/events/event-dispatcher';
 import { BaileysEventHandler } from '../events/handler/baileys-event-handler';
+import { SendListMessageUseCase } from '../usecase/message/send-list-message/send-list-message.useCase';
 
 export class BaileysFactory {
   static create() {
@@ -77,6 +78,7 @@ export class BaileysFactory {
     );
     const verifyIdUseCase = new IsOnWhatsappUseCase(baileysManager);
     const blockUnblockUseCase = new BlockUnblockUserUseCase(baileysManager);
+    const sendListMessage = new SendListMessageUseCase(baileysManager);
 
     return new BaileysFacade({
       initUseCase,
@@ -101,6 +103,7 @@ export class BaileysFactory {
       makeUserGroupUseCase,
       groupSettingUpdate,
       groupGetInviteInfo,
+      sendListMessage,
     });
   }
 }
