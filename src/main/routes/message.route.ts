@@ -10,6 +10,11 @@ const upload = multer({ storage: storage });
 messageRoute.post('/instance/:id/message/text', (req, res) =>
   requestAdapter(req, res, controller.sendTextMessage),
 );
+
+messageRoute.post('/instance/:id/message/list', (req, res) =>
+  requestAdapter(req, res, controller.sendListMessage),
+);
+
 messageRoute.post(
   '/instance/:id/message/media-url',
   upload.none(),
