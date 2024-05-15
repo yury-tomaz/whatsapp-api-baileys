@@ -20,6 +20,8 @@ import { UpdateProfilePictureDto } from '../usecase/misc/update-profile-picture/
 import { MakeUserGroupDto } from '../usecase/group/make-user-group/make-user-group.dto';
 import { UpdateSettingsGroupDto } from '../usecase/group/update-settings-group/update-settings-group.dto';
 import { GetInviteInGroupDto } from '../usecase/group/get-invite-info-group/get-invite-info-group.dto';
+import { SendMediaFileUseCaseDto } from '../usecase/message/send-media-file/send-media-file.usecase.dto';
+import { LogoutInstanceUseCaseDto } from '../usecase/instance/logout/logout-instance.usecase.dto';
 
 export interface UseCasesProps {
   initUseCase: UseCaseInterface;
