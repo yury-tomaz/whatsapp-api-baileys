@@ -20,6 +20,7 @@ export class BaileysControllerFacade {
       sendTextMessage: ControllerInterface;
       sendUrlMediaFile: ControllerInterface;
       sendMediaFile: ControllerInterface;
+      sendListMessage: ControllerInterface;
       blockUnblockUser: ControllerInterface;
       profilePicture: ControllerInterface;
       getUserStatus: ControllerInterface;
@@ -78,6 +79,9 @@ export class BaileysControllerFacade {
   }
   get sendMediaFile() {
     return this.props.sendMediaFile;
+  }
+  get sendListMessage() {
+    return this.props.sendListMessage;
   }
   get blockUnblockUser() {
     return this.props.blockUnblockUser;

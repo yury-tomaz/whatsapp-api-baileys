@@ -22,6 +22,7 @@ import { GetProfilePictureController } from '../../../presentation/controllers/b
 import { GetStatusUserController } from '../../../presentation/controllers/baileys-controllers/misc/get-status-user.controller';
 import { IsOnWhatsappController } from '../../../presentation/controllers/baileys-controllers/misc/is-on-whatsapp.controller';
 import { UpdateProfilePictureController } from '../../../presentation/controllers/baileys-controllers/misc/update-profile-picture.controller';
+import { SendMessageListController } from '../../../presentation/controllers/baileys-controllers/message/send-message-list.controller';
 
 export class BaileysComposer {
   private static baileysFactory = BaileysFactory.create();
@@ -52,6 +53,7 @@ export class BaileysComposer {
     const sendUrlMediaFile = new SendUrlMediaFileController(
       this.baileysFactory,
     );
+    const sendListMessage = new SendMessageListController(this.baileysFactory);
     const sendMediaFile = new SendMediaFileController(this.baileysFactory);
     const blockUnblockUser = new BlockUnblockUserController(
       this.baileysFactory,
@@ -86,6 +88,7 @@ export class BaileysComposer {
       getUserStatus,
       isOnWhatsap,
       updateProfilePicture,
+      sendListMessage,
     });
   }
 }
