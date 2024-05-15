@@ -64,7 +64,6 @@ interface MiscService {
   // getUserOrGroupById(): Promise<void>;
 }
 
-// TODO: implement 'MiscService' and GroupService
 export interface WhatsappService
   extends MessageService,
     InstanceService,
