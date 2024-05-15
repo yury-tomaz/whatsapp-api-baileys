@@ -37,7 +37,7 @@ interface MessageService {
   sendTextMessage(input: SendTextMessageUseCaseDto): Promise<void>;
   sendUrlMediaFile(input: SendUrlMediaFileUseCaseDto): Promise<void>;
   sendMediaFile(input: SendMediaFileUseCaseDto): Promise<void>;
-  sendListMessage(input: SendListMessageUseCaseDto): Promise<void>;
+  sendListMessage(input: SendListMessageUseCaseDto): Promise<any>;
 }
 
 interface GroupService {

@@ -14,7 +14,7 @@ export class SendListMessageUseCase {
     const whatsappId = getWhatsAppId(input.to);
     await result.verifyId(whatsappId);
 
-    await sock.sendMessage(whatsappId, {
+    const response = await sock.sendMessage(whatsappId, {
       text: input.text,
       buttonText: input.buttonText,
       footer: input.description,
@@ -22,5 +22,7 @@ export class SendListMessageUseCase {
       sections: input.sections,
       viewOnce: true,
     });
+
+    return response;
   }
 }
