@@ -1,10 +1,8 @@
 import {
   Request as ExpressRequest,
   Response as ExpressResponse,
-  NextFunction,
 } from 'express';
 import { HttpRequest } from '../../presentation/http-types/http-request';
-import { HttpResponse } from '../../presentation/http-types/http-response';
 import { ControllerInterface } from '../../presentation/interfaces/controller.interface';
 
 export async function requestAdapter(

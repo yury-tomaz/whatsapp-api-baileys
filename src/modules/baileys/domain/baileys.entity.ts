@@ -4,7 +4,7 @@ import makeWASocket, {
   Browsers,
   fetchLatestBaileysVersion,
   makeInMemoryStore,
-  SocketConfig, useMultiFileAuthState,
+  SocketConfig,
   WABrowserDescription,
   WAMessage,
 } from '@whiskeysockets/baileys';
@@ -57,8 +57,8 @@ export class Baileys extends BaseEntity implements AggregateRoot {
     return this._name;
   }
 
-  get collection(){
-    return this._collection
+  get collection() {
+    return this._collection;
   }
 
   get belongsTo(): string | undefined {
@@ -69,7 +69,7 @@ export class Baileys extends BaseEntity implements AggregateRoot {
     return this._qrCode;
   }
 
-  get waSocket():  ReturnType<typeof makeWASocket> | undefined{
+  get waSocket(): ReturnType<typeof makeWASocket> | undefined {
     return this._waSocket;
   }
 
@@ -128,7 +128,9 @@ export class Baileys extends BaseEntity implements AggregateRoot {
       logger: loggerBaileys,
     });
     const { version, isLatest } = await fetchLatestBaileysVersion();
-    const { state, saveCreds } = await useMultiFileAuthStateDb(this._collection)
+    const { state, saveCreds } = await useMultiFileAuthStateDb(
+      this._collection,
+    );
 
     this._socketConfig = {
       version,

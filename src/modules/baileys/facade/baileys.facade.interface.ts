@@ -42,12 +42,9 @@ interface MessageService {
 
 interface GroupService {
   createNewGroup(input: CreateGroupDto): Promise<any>;
-  //getAllGroups(): Promise<void>;
   leaveGroup(input: LeaveGroupDto): Promise<any>;
   getInviteCodeGroup(input: InviteCodeGroupDto): Promise<any>;
   makeUserGroup(input: MakeUserGroupDto): Promise<any>;
-  //getInstanceInviteCodeGroup(): Promise<void>;
-  //groupFetchAllParticipating(): Promise<void>;
   groupSettingUpdate(input: UpdateSettingsGroupDto): Promise<void>;
   groupUpdateSubject(input: UpdateSubjectGroupDto): Promise<any>;
   groupUpdateDescription(input: UpdateDescriptionGroupDto): Promise<any>;
@@ -61,7 +58,6 @@ interface MiscService {
   getUserStatus(input: GetUserStatusDto): Promise<any>;
   blockUnblock(input: BlockUnblockUserDto): Promise<any>;
   updateProfilePicture(input: UpdateProfilePictureDto): Promise<any>;
-  // getUserOrGroupById(): Promise<void>;
 }
 
 export interface WhatsappService
