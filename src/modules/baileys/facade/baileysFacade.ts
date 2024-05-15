@@ -20,6 +20,9 @@ import { UpdateProfilePictureDto } from '../usecase/misc/update-profile-picture/
 import { MakeUserGroupDto } from '../usecase/group/make-user-group/make-user-group.dto';
 import { UpdateSettingsGroupDto } from '../usecase/group/update-settings-group/update-settings-group.dto';
 import { GetInviteInGroupDto } from '../usecase/group/get-invite-info-group/get-invite-info-group.dto';
+import { LogoutInstanceUseCaseDto } from '../usecase/instance/logout/logout-instance.usecase.dto';
+import { SendMediaFileUseCaseDto } from '../usecase/message/send-media-file/send-media-file.usecase.dto';
+import { SendListMessageUseCaseDto } from '../usecase/message/send-list-message/send-list-message.dto';
 
 export interface UseCasesProps {
   initUseCase: UseCaseInterface;
@@ -30,6 +33,7 @@ export interface UseCasesProps {
   sendTextMessageUseCase: UseCaseInterface;
   sendUrlMediaFileUseCase: UseCaseInterface;
   sendMediaFileUseCase: UseCaseInterface;
+  sendListMessage: UseCaseInterface;
   createGroupUseCase: UseCaseInterface;
   makeUserGroupUseCase: UseCaseInterface;
   //getAllGroups: UseCaseInterface;
@@ -58,6 +62,7 @@ export class BaileysFacade implements WhatsappService {
   _sendTextMessageUseCase: UseCaseInterface;
   _sendUrlMediaFileUseCase: UseCaseInterface;
   _sendMediaFileUseCase: UseCaseInterface;
+  _sendListMessage: UseCaseInterface;
   _createNewGroup: UseCaseInterface;
   _leaveGroup: UseCaseInterface;
   _getInviteCodeGroup: UseCaseInterface;
@@ -96,6 +101,7 @@ export class BaileysFacade implements WhatsappService {
     this._makeUserGroupUseCase = props.makeUserGroupUseCase;
     this._groupSettingUpdate = props.groupSettingUpdate;
     this._groupGetInviteInfo = props.groupGetInviteInfo;
+    this._sendListMessage = props.sendListMessage;
   }
 
   init(input: InitInstanceInputDto) {
@@ -121,6 +127,9 @@ export class BaileysFacade implements WhatsappService {
   }
   sendMediaFile(input: SendMediaFileUseCaseDto) {
     return this._sendMediaFileUseCase.execute(input);
+  }
+  sendListMessage(input: SendListMessageUseCaseDto) {
+    return this._sendListMessage.execute(input);
   }
   createNewGroup(input: CreateGroupDto) {
     return this._createNewGroup.execute(input);

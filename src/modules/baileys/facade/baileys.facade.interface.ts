@@ -21,6 +21,9 @@ import { MakeUserGroupDto } from '../usecase/group/make-user-group/make-user-gro
 import { UpdateSettingsGroupDto } from '../usecase/group/update-settings-group/update-settings-group.dto';
 import { GetInviteInGroupDto } from '../usecase/group/get-invite-info-group/get-invite-info-group.dto';
 import { InitInstanceInputDto } from '../usecase/instance/init/init-instance.dto';
+import { LogoutInstanceUseCaseDto } from '../usecase/instance/logout/logout-instance.usecase.dto';
+import { SendMediaFileUseCaseDto } from '../usecase/message/send-media-file/send-media-file.usecase.dto';
+import { SendListMessageUseCaseDto } from '../usecase/message/send-list-message/send-list-message.dto';
 
 interface InstanceService {
   init(input: InitInstanceInputDto): Promise<any>;
@@ -34,6 +37,7 @@ interface MessageService {
   sendTextMessage(input: SendTextMessageUseCaseDto): Promise<void>;
   sendUrlMediaFile(input: SendUrlMediaFileUseCaseDto): Promise<void>;
   sendMediaFile(input: SendMediaFileUseCaseDto): Promise<void>;
+  sendListMessage(input: SendListMessageUseCaseDto): Promise<void>;
 }
 
 interface GroupService {
