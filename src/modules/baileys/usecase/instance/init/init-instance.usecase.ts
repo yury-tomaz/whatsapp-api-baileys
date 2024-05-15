@@ -19,7 +19,6 @@ export class InitInstanceUseCase {
       processSocketEvent: this.processSocketEvent,
     });
 
-    await baileys.init();
     await this.baileysManager.create(baileys);
 
     return {
