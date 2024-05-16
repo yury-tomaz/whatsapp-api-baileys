@@ -11,7 +11,7 @@ const token = jwt.sign(
       roles: ['admin'],
     },
   },
-  process.env.JWT_PRIVATE_KEY,
+  process.env.PRIVATE_KEY,
   { expiresIn: '24h', algorithm: 'RS256' },
 );
 

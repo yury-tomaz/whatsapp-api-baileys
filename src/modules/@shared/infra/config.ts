@@ -31,6 +31,12 @@ export class Config {
     };
   }
 
+  static jwtSecretKey(){
+    Config.readEnv();
+
+    return  Config.env.PRIVATE_KEY
+  }
+
   static readEnv() {
     if (Config.env) {
       return;
