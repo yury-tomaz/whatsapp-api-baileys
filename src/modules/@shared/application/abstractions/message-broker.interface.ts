@@ -1,5 +1,9 @@
-import EventInterface from '../../domain/events/event.interface';
+import { Message, Replies } from 'amqplib';
+export type exchangeType = "amq.direct" | "amq.fanout" | "amq.topic";
 
 export interface MessageBrokerInterface {
-  publishEvent(event: EventInterface, queueName: string): Promise<void>;
+  start(): Promise<void>;
+  publishInQueue(queue: string, message: string):  Promise<boolean>;
+  publishInExchange(exchange: exchangeType, routingKey: string, message: string): Promise<boolean>;
+  consume(queue: string, callback: (message: Message) => void): Promise<Replies.Consume>;
 }
