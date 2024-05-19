@@ -43,9 +43,8 @@ export class Baileys extends BaseEntity implements AggregateRoot {
   private _waSocket?: ReturnType<typeof makeWASocket>;
   private _qrRetry = 0;
   private _qr: string;
-  private _qrCode: string | undefined;
   private _isOn: boolean = false;
-  private coll: Collection;
+  private readonly coll: Collection;
 
   get name(): string {
     return this._name;
@@ -53,10 +52,6 @@ export class Baileys extends BaseEntity implements AggregateRoot {
 
   get belongsTo(): string | undefined {
     return this._belongsTo;
-  }
-
-  get qrCode() {
-    return this._qrCode;
   }
 
   get waSocket(): ReturnType<typeof makeWASocket> | undefined {
@@ -82,7 +77,7 @@ export class Baileys extends BaseEntity implements AggregateRoot {
 
     this.coll =  mongoDBManager.client.db('sessions').collection(`${this.id.id}-${this._name}`);
 
-    this.init().then((r) => {
+    this.init().then(() => {
       logger.info('Baileys instance initialized');
     });
   }
@@ -113,7 +108,7 @@ export class Baileys extends BaseEntity implements AggregateRoot {
         let reason = new Boom(lastDisconnect?.error).output.statusCode;
 
         if (reason === DisconnectReason.badSession) {
-          this.coll.drop()
+          await this.coll.drop()
         } else if (reason === DisconnectReason.connectionClosed) {
           await this.init();
         } else if (reason === DisconnectReason.connectionLost) {
