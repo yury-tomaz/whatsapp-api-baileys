@@ -3,6 +3,7 @@ import { HttpResponse } from '../../../http-types/http-response';
 import { WhatsappService } from '../../../../modules/baileys/facade/baileys.facade.interface';
 import { ControllerInterface } from '../../../interfaces/controller.interface';
 import { leaveGroupValidator } from '../../../validators/baileys/group/leave-group.validator';
+import { Config } from '../../../../modules/@shared/infra/config';
 
 export class LeaveGroupController implements ControllerInterface {
   constructor(private usecase: WhatsappService) {}
@@ -22,6 +23,7 @@ export class LeaveGroupController implements ControllerInterface {
       {
         message: 'Baileys leave group successfully',
         data: execute,
+        routingKey: Config.routingKey()
       },
       { 'Content-Type': 'application/json' },
       200,

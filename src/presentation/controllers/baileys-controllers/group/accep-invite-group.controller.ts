@@ -3,6 +3,7 @@ import { HttpResponse } from '../../../http-types/http-response';
 import { WhatsappService } from '../../../../modules/baileys/facade/baileys.facade.interface';
 import { ControllerInterface } from '../../../interfaces/controller.interface';
 import { accepInviteGroupValidator } from '../../../validators/baileys/group/accep-invite-group.validator';
+import { Config } from '../../../../modules/@shared/infra/config';
 
 export class AcceptInviteGroupController implements ControllerInterface {
   constructor(private usecase: WhatsappService) {}
@@ -24,6 +25,7 @@ export class AcceptInviteGroupController implements ControllerInterface {
         data: {
           groupId: execute,
         },
+        routingKey: Config.routingKey()
       },
       { 'Content-Type': 'application/json' },
       200,

@@ -3,6 +3,7 @@ import { HttpResponse } from '../../../http-types/http-response';
 import { WhatsappService } from '../../../../modules/baileys/facade/baileys.facade.interface';
 import { ControllerInterface } from '../../../interfaces/controller.interface';
 import { createGroupValidator } from '../../../validators/baileys/group/create-group.validator';
+import { Config } from '../../../../modules/@shared/infra/config';
 
 export class CreateGroupController implements ControllerInterface {
   constructor(private usecase: WhatsappService) {}
@@ -23,6 +24,7 @@ export class CreateGroupController implements ControllerInterface {
       {
         message: 'Baileys create group successfully',
         data: execute,
+        routingKey: Config.routingKey()
       },
       { 'Content-Type': 'application/json' },
       200,

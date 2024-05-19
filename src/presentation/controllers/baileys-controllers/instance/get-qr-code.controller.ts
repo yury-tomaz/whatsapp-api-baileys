@@ -3,6 +3,7 @@ import { HttpRequest } from '../../../http-types/http-request';
 import { HttpResponse } from '../../../http-types/http-response';
 import { WhatsappService } from '../../../../modules/baileys/facade/baileys.facade.interface';
 import { getQrCodeValidator } from '../../../validators/get-qr-code.validator';
+import { Config } from '../../../../modules/@shared/infra/config';
 
 export class GetQrCodeController implements ControllerInterface {
   constructor(private usecase: WhatsappService) {}
@@ -18,6 +19,7 @@ export class GetQrCodeController implements ControllerInterface {
       {
         message: 'Successfully obtained QR Code',
         data: execute,
+        routingKey: Config.routingKey()
       },
       { 'Content-Type': 'application/json' },
       200,

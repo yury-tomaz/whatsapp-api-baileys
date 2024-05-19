@@ -1,3 +1,4 @@
+import { Config } from '../../../../modules/@shared/infra/config';
 import { WhatsappService } from '../../../../modules/baileys/facade/baileys.facade.interface';
 import { HttpRequest } from '../../../http-types/http-request';
 import { HttpResponse } from '../../../http-types/http-response';
@@ -17,6 +18,7 @@ export class DeleteInstanceController {
     return new HttpResponse(
       {
         message: 'Instance successfully deleted.',
+        routingKey: Config.routingKey()
       },
       { 'Content-Type': 'application/json' },
       200,
