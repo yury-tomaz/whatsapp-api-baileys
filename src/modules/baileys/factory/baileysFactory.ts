@@ -1,6 +1,5 @@
 import { BaileysFacade } from '../facade/baileysFacade';
 import { InitInstanceUseCase } from '../usecase/instance/init/init-instance.usecase';
-import { ProcessSocketEvent } from '../domain/process-socket-event';
 import { BaileysInstanceRepositoryInMemory } from '../repository/baileys-instance-repository-in-memory';
 import { GetQrCodeUsecase } from '../usecase/instance/get-qr-code/get-qr-code.usecase';
 import { DeleteInstanceUseCase } from '../usecase/instance/delete/delete-instance.useCase';
@@ -23,27 +22,19 @@ import { IsOnWhatsappUseCase } from '../usecase/misc/is-on-whatsapp/is-on-whatsa
 import { MakeUserGroupUseCase } from '../usecase/group/make-user-group/make-user-group.useCase';
 import { UpdateSettingsGroupUseCase } from '../usecase/group/update-settings-group/update-settings-group.useCase';
 import { GetInviteInfoGroupUseCase } from '../usecase/group/get-invite-info-group/get-invite-info-group.useCase';
-import { AuthStateRepository } from '../repository/auth-state-repository';
+
 import EventDispatcher from '../../@shared/domain/events/event-dispatcher';
-import { BaileysEventHandler } from '../events/handler/baileys-event-handler';
+
 
 export class BaileysFactory {
   static create() {
-    const authStateRepository = new AuthStateRepository();
+
     const baileysManager = BaileysInstanceRepositoryInMemory.getInstance();
 
-    const eventDispatcher = new EventDispatcher();
-    eventDispatcher.register('BaileysEvent', new BaileysEventHandler());
-    const processSocketEvent = new ProcessSocketEvent(
-      baileysManager,
-      eventDispatcher,
-    );
-
     const initUseCase = new InitInstanceUseCase(
-      authStateRepository,
-      processSocketEvent,
       baileysManager,
     );
+    
     const infoUseCase = new GetInfoUseCase(baileysManager);
     const qrUseCase = new GetQrCodeUsecase(baileysManager);
     const logoutUseCase = new LogoutInstanceUseCase(baileysManager);

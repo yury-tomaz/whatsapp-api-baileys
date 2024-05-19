@@ -1,25 +1,23 @@
 import makeWASocket, {
   AuthenticationState,
-  BaileysEventMap,
   Browsers,
+  DisconnectReason,
   fetchLatestBaileysVersion,
-  makeInMemoryStore,
-  SocketConfig, useMultiFileAuthState,
+  SocketConfig,
   WABrowserDescription,
-  WAMessage,
 } from '@whiskeysockets/baileys';
+import QRCode from 'qrcode';
 import MAIN_LOGGER from '@whiskeysockets/baileys/lib/Utils/logger';
-import { Chat } from '@whiskeysockets/baileys/lib/Types/Chat';
-import { ProcessSocketEvent } from './process-socket-event';
 import BaseEntity from '../../@shared/domain/entities/base.entity';
 import Id from '../../@shared/domain/value-object/id.value-object';
 import AggregateRoot from '../../@shared/domain/entities/aggregate-root.interface';
 import { logger } from '../../@shared/infra/logger';
 import { AppError, HttpCode } from '../../@shared/domain/exceptions/app-error';
-import { AuthStateRepositoryInterface } from '../gateway/auth-state-repository.interface';
-import { Collection } from 'mongodb';
-import { mongoClient } from '../../@shared/infra/persistence/settings/connection';
+import { Store } from '../events/store';
+import { Boom } from '@hapi/boom';
+import { mongoDBManager } from '../../@shared/infra/persistence/settings/connection';
 import { useMultiFileAuthStateDb } from '../helpers/auth-state-db';
+import { Collection } from 'mongodb';
 
 const loggerBaileys = MAIN_LOGGER.child({});
 loggerBaileys.level = 'error';
@@ -33,8 +31,6 @@ interface Props {
   id?: Id;
   belongsTo?: string;
   name: string;
-  authStateRepository: AuthStateRepositoryInterface;
-  processSocketEvent: ProcessSocketEvent;
   createdAt?: Date;
   updatedAt?: Date;
 }
@@ -42,23 +38,17 @@ interface Props {
 export class Baileys extends BaseEntity implements AggregateRoot {
   private readonly _belongsTo: string | undefined;
   private readonly _name: string;
+  private _store: Store
   private _socketConfig: CustomSocketConfig | undefined;
-  private readonly _collection: Collection;
   private _waSocket?: ReturnType<typeof makeWASocket>;
   private _qrRetry = 0;
-  private _qr?: string;
+  private _qr: string;
   private _qrCode: string | undefined;
-  private _chats: Chat[] = [];
-  private _messages: WAMessage[] = [];
   private _isOn: boolean = false;
-  private eventProcessor: ProcessSocketEvent;
+  private coll: Collection;
 
   get name(): string {
     return this._name;
-  }
-
-  get collection(){
-    return this._collection
   }
 
   get belongsTo(): string | undefined {
@@ -69,7 +59,7 @@ export class Baileys extends BaseEntity implements AggregateRoot {
     return this._qrCode;
   }
 
-  get waSocket():  ReturnType<typeof makeWASocket> | undefined{
+  get waSocket(): ReturnType<typeof makeWASocket> | undefined {
     return this._waSocket;
   }
 
@@ -85,38 +75,12 @@ export class Baileys extends BaseEntity implements AggregateRoot {
     return this._qr;
   }
 
-  set qr(value: string) {
-    this._qr = value;
-  }
-
-  get qrRetry() {
-    return this._qrRetry;
-  }
-
-  get chats(): Chat[] {
-    return this._chats;
-  }
-
-  set chats(value: Chat[]) {
-    this._chats = value;
-  }
-
-  get messages() {
-    return this._messages;
-  }
-
-  set messages(value: any) {
-    this._messages = value;
-  }
-
   constructor(props: Props) {
     super(props.id);
-    this.eventProcessor = props.processSocketEvent;
     this._belongsTo = props.belongsTo;
     this._name = props.name;
-    this._collection = mongoClient
-      .db('whatsapp-api')
-      .collection(`session-${this.id.id}`);
+
+    this.coll =  mongoDBManager.client.db('sessions').collection(`${this.id.id}-${this._name}`);
 
     this.init().then((r) => {
       logger.info('Baileys instance initialized');
@@ -124,11 +88,8 @@ export class Baileys extends BaseEntity implements AggregateRoot {
   }
 
   async init() {
-    const store = makeInMemoryStore({
-      logger: loggerBaileys,
-    });
-    const { version, isLatest } = await fetchLatestBaileysVersion();
-    const { state, saveCreds } = await useMultiFileAuthStateDb(this._collection)
+    const { version } = await fetchLatestBaileysVersion();
+    const { state, saveCreds } = await useMultiFileAuthStateDb(this.coll);
 
     this._socketConfig = {
       version,
@@ -139,52 +100,66 @@ export class Baileys extends BaseEntity implements AggregateRoot {
     };
 
     this._waSocket = makeWASocket(this._socketConfig);
-    store.bind(this._waSocket.ev);
+    this._store = new Store(`${this.id.id}-${this._name}`, this._waSocket.ev)
 
     if (this._waSocket) {
       this._waSocket.ev.on('creds.update', saveCreds);
-      await this.eventProcessor.execute(this);
+
+      this._waSocket.ev.on('connection.update', async (update) =>{
+        const { connection, lastDisconnect, qr } = update || {};
+        if (connection === 'connecting') return;
+
+      if (connection === 'close') {
+        let reason = new Boom(lastDisconnect?.error).output.statusCode;
+
+        if (reason === DisconnectReason.badSession) {
+          this.coll.drop()
+        } else if (reason === DisconnectReason.connectionClosed) {
+          await this.init();
+        } else if (reason === DisconnectReason.connectionLost) {
+          await this.init();
+        } else if (reason === DisconnectReason.connectionReplaced) {
+          logger.info('connection Replaced');
+        } else if (reason === DisconnectReason.loggedOut) {
+          logger.info('Device Logged Out, Please Login Again');
+        } else if (reason === DisconnectReason.restartRequired) {
+          console.log('Restart Required, Restarting...');
+          await this.init();
+        } else if (reason === DisconnectReason.timedOut) {
+          console.log('Connection TimedOut, Reconnecting...');
+          await this.init();
+        } else {
+          this._waSocket?.end(
+            new Error(
+              `Unknown DisconnectReason: ${reason}|${lastDisconnect!.error}`,
+            ),
+          );
+        }
+
+        //  TODO: Notify event
+      } else if (connection === 'open') {
+        logger.info('Connection open');
+
+        // TODO: Implement Collection for the sessions
+
+        this._isOn = true;
+      }
+      if (qr) {
+        this._qr = await QRCode.toDataURL(qr);
+
+        if (this._qrRetry > 3) {
+          this.closeWebSocketConnection();
+          logger.info('QRCode expired');
+        }
+      }
+      })
     }
   }
 
   closeWebSocketConnection() {
     this._waSocket?.ws.close();
-    this.removeAllListeners();
-    this._qr = undefined;
-  }
-
-  public removeAllListeners() {
-    const sock = this._waSocket;
-    if (!sock) return;
-
-    const events: (keyof BaileysEventMap)[] = [
-      'connection.update',
-      'creds.update',
-      'messaging-history.set',
-      'chats.upsert',
-      'chats.update',
-      'chats.delete',
-      'presence.update',
-      'contacts.upsert',
-      'contacts.update',
-      'messages.delete',
-      'messages.update',
-      'messages.media-update',
-      'messages.upsert',
-      'messages.reaction',
-      'message-receipt.update',
-      'groups.upsert',
-      'groups.update',
-      'group-participants.update',
-      'blocklist.set',
-      'blocklist.update',
-      'call',
-      'labels.edit',
-      'labels.association',
-    ];
-    events.forEach((event) => {
-      sock.ev.removeAllListeners(event);
-    });
+    this._store.unlisten();
+    this._qr = '';
   }
 
   async verifyId(id: string) {

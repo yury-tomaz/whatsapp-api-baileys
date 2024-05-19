@@ -1,33 +1,37 @@
 import * as mongoDB from 'mongodb';
-import { MongoClient } from 'mongodb';
 import { Config } from '../../config';
 import { logger } from '../../logger';
 
-interface CollectionsInterface {
-  baileys?: mongoDB.Collection;
-}
-export const collections: CollectionsInterface = {};
-let mongoClient: MongoClient;
-export const dbConnect = async () => {
-  try {
-    mongoClient = new mongoDB.MongoClient(Config.db().uri);
-    await mongoClient.connect();
-    const db: mongoDB.Db = mongoClient.db(Config.db().dbName);
+class MongoDBManager {
+  private readonly _client: mongoDB.MongoClient;
+  private _db: mongoDB.Db;
 
-    collections.baileys = db.collection(Config.db().colection);
-
-    logger.info(`Successfully connected to database: ${db.databaseName}`);
-
-    return mongoClient;
-  } catch (err) {
-    logger.error('STATE: Connection to MongoDB failed!', err);
-    process.exit();
+  constructor(){
+    this._client = new mongoDB.MongoClient(Config.db().uri);
   }
-};
 
-export const dbDisconnect = async () => {
-  logger.info('Successfully disconnected to database');
-  await mongoClient.close();
-};
+  get db():mongoDB.Db {
+    return this._db
+  }
 
-export { mongoClient };
+  get client(){
+    return this._client
+  }
+
+  async connect(){
+    try {
+      await this._client.connect();
+      this._db = this._client.db(Config.db().dbName);
+      logger.info(`Successfully connected to database: ${this.db.databaseName}`);
+    }catch(err){
+      logger.error('STATE: Connection to MongoDB failed!', err);
+      process.exit();
+    }
+  }
+
+  async desconnect(){
+    this._client.close()
+  }
+}
+
+export const mongoDBManager = new MongoDBManager();

@@ -11,6 +11,7 @@
     ],
     "esModuleInterop": true,
     "forceConsistentCasingInFileNames": true,
+    "strictPropertyInitialization": false,
     "resolveJsonModule": true,
     "strict": true,
     "skipLibCheck": true,

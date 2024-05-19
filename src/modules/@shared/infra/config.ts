@@ -31,10 +31,10 @@ export class Config {
     };
   }
 
-  static jwtSecretKey(){
+  static jwtSecretKey() {
     Config.readEnv();
 
-    return  Config.env.PRIVATE_KEY
+    return Config.env.PRIVATE_KEY;
   }
 
   static readEnv() {

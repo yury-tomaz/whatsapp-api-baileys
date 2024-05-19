@@ -13,7 +13,6 @@ export class GetInfoUseCase {
     return {
       id: result.id,
       isOn: result.isOn,
-      qrRetry: result.qrRetry,
       user: result.isOn ? sock.user : {},
     };
   }
