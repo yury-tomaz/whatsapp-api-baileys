@@ -118,6 +118,7 @@ export class Baileys extends BaseEntity implements AggregateRoot {
           } else if (reason === DisconnectReason.connectionReplaced) {
             logger.info('connection Replaced');
           } else if (reason === DisconnectReason.loggedOut) {
+            await this.coll.drop()
             logger.info('Device Logged Out, Please Login Again');
           } else if (reason === DisconnectReason.restartRequired) {
             console.log('Restart Required, Restarting...');
@@ -126,6 +127,7 @@ export class Baileys extends BaseEntity implements AggregateRoot {
             console.log('Connection TimedOut, Reconnecting...');
             await this.init();
           } else {
+            await this.coll.drop()
             this._waSocket?.end(
               new Error(
                 `Unknown DisconnectReason: ${reason}|${lastDisconnect!.error}`,
