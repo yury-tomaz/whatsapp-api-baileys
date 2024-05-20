@@ -18,6 +18,9 @@ import { Boom } from '@hapi/boom';
 import { mongoDBManager } from '../../@shared/infra/persistence/settings/connection';
 import { useMultiFileAuthStateDb } from '../helpers/auth-state-db';
 import { Collection } from 'mongodb';
+import { eventDispatcher } from '../../../main/server/server';
+import { EventOccurredWhatsappEvent } from '../events/event-occurred-whatsapp.event';
+import { Config } from '../../@shared/infra/config';
 
 const loggerBaileys = MAIN_LOGGER.child({});
 loggerBaileys.level = 'error';
@@ -74,8 +77,7 @@ export class Baileys extends BaseEntity implements AggregateRoot {
     super(props.id);
     this._belongsTo = props.belongsTo;
     this._name = props.name;
-
-    this.coll =  mongoDBManager.client.db('sessions').collection(`${this.id.id}-${this._name}`);
+    this.coll =  mongoDBManager.client.db('sessions').collection(`${this.id.id}`);
 
     this.init().then(() => {
       logger.info('Baileys instance initialized');
@@ -95,7 +97,7 @@ export class Baileys extends BaseEntity implements AggregateRoot {
     };
 
     this._waSocket = makeWASocket(this._socketConfig);
-    this._store = new Store(`${this.id.id}-${this._name}`, this._waSocket.ev)
+    this._store = new Store(`${this.id.id}`, this._waSocket.ev)
 
     if (this._waSocket) {
       this._waSocket.ev.on('creds.update', saveCreds);
@@ -104,49 +106,78 @@ export class Baileys extends BaseEntity implements AggregateRoot {
         const { connection, lastDisconnect, qr } = update || {};
         if (connection === 'connecting') return;
 
-      if (connection === 'close') {
-        let reason = new Boom(lastDisconnect?.error).output.statusCode;
+        if (connection === 'close') {
+          let reason = new Boom(lastDisconnect?.error).output.statusCode;
 
-        if (reason === DisconnectReason.badSession) {
-          await this.coll.drop()
-        } else if (reason === DisconnectReason.connectionClosed) {
-          await this.init();
-        } else if (reason === DisconnectReason.connectionLost) {
-          await this.init();
-        } else if (reason === DisconnectReason.connectionReplaced) {
-          logger.info('connection Replaced');
-        } else if (reason === DisconnectReason.loggedOut) {
-          logger.info('Device Logged Out, Please Login Again');
-        } else if (reason === DisconnectReason.restartRequired) {
-          console.log('Restart Required, Restarting...');
-          await this.init();
-        } else if (reason === DisconnectReason.timedOut) {
-          console.log('Connection TimedOut, Reconnecting...');
-          await this.init();
-        } else {
-          this._waSocket?.end(
-            new Error(
-              `Unknown DisconnectReason: ${reason}|${lastDisconnect!.error}`,
-            ),
-          );
+          if (reason === DisconnectReason.badSession) {
+            await this.coll.drop()
+          } else if (reason === DisconnectReason.connectionClosed) {
+            await this.init();
+          } else if (reason === DisconnectReason.connectionLost) {
+            await this.init();
+          } else if (reason === DisconnectReason.connectionReplaced) {
+            logger.info('connection Replaced');
+          } else if (reason === DisconnectReason.loggedOut) {
+            logger.info('Device Logged Out, Please Login Again');
+          } else if (reason === DisconnectReason.restartRequired) {
+            console.log('Restart Required, Restarting...');
+            await this.init();
+          } else if (reason === DisconnectReason.timedOut) {
+            console.log('Connection TimedOut, Reconnecting...');
+            await this.init();
+          } else {
+            this._waSocket?.end(
+              new Error(
+                `Unknown DisconnectReason: ${reason}|${lastDisconnect!.error}`,
+              ),
+            );
+          }
+
+          eventDispatcher.notify(new EventOccurredWhatsappEvent({
+            routingKey: 'baileys.event.connection.close',
+            data: {
+              sessionId: this.id.id,
+              connection: connection,
+            },
+          }))
+
+        } else if (connection === 'open') {
+          logger.info('Connection open');
+          const coll = mongoDBManager.db.collection('instances')
+
+          const alreadyThere = await coll.findOne({
+            sessionId: this.id.id
+          })
+
+          if(!alreadyThere){
+            await coll.insertOne({
+              sessionId: this.id.id,
+              name: this._name,
+              belongsTo: this.belongsTo,
+              createdAt: this.createdAt,
+              updatedAt: this.updatedAt,
+              routingKey: Config.routingKey()
+            })
+          }
+
+          eventDispatcher.notify(new EventOccurredWhatsappEvent({
+            routingKey: 'baileys.event.connection.open',
+            data: {
+              sessionId: this.id.id,
+              connection: connection,
+            },
+          }))
+
+          this._isOn = true;
         }
+        if (qr) {
+          this._qr = await QRCode.toDataURL(qr);
 
-        //  TODO: Notify event
-      } else if (connection === 'open') {
-        logger.info('Connection open');
-
-        // TODO: Implement Collection for the sessions
-
-        this._isOn = true;
-      }
-      if (qr) {
-        this._qr = await QRCode.toDataURL(qr);
-
-        if (this._qrRetry > 3) {
-          this.closeWebSocketConnection();
-          logger.info('QRCode expired');
+          if (this._qrRetry > 3) {
+            this.closeWebSocketConnection();
+            logger.info('QRCode expired');
+          }
         }
-      }
       })
     }
   }

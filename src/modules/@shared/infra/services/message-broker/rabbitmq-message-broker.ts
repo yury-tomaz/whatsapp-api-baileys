@@ -17,7 +17,7 @@ export class RabbitmqMessageBroker implements MessageBrokerInterface {
   }
 
   async publishInExchange(
-    exchange: exchangeType,
+    exchange: string,
     routingKey: string,
     message: string
   ): Promise<boolean> {
@@ -31,5 +31,16 @@ export class RabbitmqMessageBroker implements MessageBrokerInterface {
       callback(message);
       this.channel.ack(message);
     });
+  }
+
+  async createExchange(exchange: string, type: exchangeType, options: object = {}): Promise<void> {
+    await this.channel.assertExchange(exchange, type, options);
+  }
+  async createQueue(queue: string, options: object = {}): Promise<void> {
+    await this.channel.assertQueue(queue, options);
+  }
+
+  async bindQueue(queue: string, exchange: string, routingKey: string): Promise<void> {
+    await this.channel.bindQueue(queue, exchange, routingKey);
   }
 }

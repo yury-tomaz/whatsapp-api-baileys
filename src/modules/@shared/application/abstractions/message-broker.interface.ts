@@ -1,5 +1,5 @@
 import { Message, Replies } from 'amqplib';
-export type exchangeType = "amq.direct" | "amq.fanout" | "amq.topic";
+export type exchangeType = "direct" | "fanout" | "topic";
 
 export interface MessageBrokerInterface {
   start(): Promise<void>;

@@ -30,7 +30,7 @@ class MongoDBManager {
   }
 
   async desconnect(){
-    this._client.close()
+    await this._client.close()
   }
 }
 
