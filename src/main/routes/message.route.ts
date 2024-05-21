@@ -10,6 +10,7 @@ const upload = multer({ storage: storage });
 messageRoute.post('/instance/:id/message/text', (req, res) =>
   requestAdapter(req, res, controller.sendTextMessage),
 );
+
 messageRoute.post(
   '/instance/:id/message/media-url',
   upload.none(),
@@ -28,6 +29,10 @@ messageRoute.get('/instance/:id/messages', (req, res) =>
 
 messageRoute.get('/instance/:id/message/contacts', (req, res) =>
   requestAdapter(req, res, controller.findAllContacts),
+);
+
+messageRoute.get('/instance/:id/message/chats', (req, res) =>
+  requestAdapter(req, res, controller.findAllChats),
 );
 
 export default messageRoute;
