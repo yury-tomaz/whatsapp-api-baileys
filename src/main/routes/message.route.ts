@@ -26,4 +26,8 @@ messageRoute.get('/instance/:id/messages', (req, res) =>
   requestAdapter(req, res, controller.findAllMessages),
 );
 
+messageRoute.get('/instance/:id/message/contacts', (req, res) =>
+  requestAdapter(req, res, controller.findAllContacts),
+);
+
 export default messageRoute;

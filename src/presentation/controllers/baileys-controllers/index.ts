@@ -26,6 +26,7 @@ export class BaileysControllerFacade {
       isOnWhatsap: ControllerInterface;
       updateProfilePicture: ControllerInterface;
       findAllMessages: ControllerInterface;
+      findAllContacts: ControllerInterface;
     },
   ) {}
 
@@ -97,5 +98,8 @@ export class BaileysControllerFacade {
   }
   get findAllMessages() {
     return this.props.findAllMessages;
+  }
+  get findAllContacts() {
+    return this.props.findAllContacts;
   }
 }

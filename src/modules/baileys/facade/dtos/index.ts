@@ -1,5 +1,5 @@
 export { default as GetInfoUseCaseDTO } from '../../usecase/instance/get-info/get-instance-info.dto';
-export {default as GetQrCodeUseCaseDTO} from '../../usecase/instance/get-qr-code/get-qr-code.usecase.dto'
+export { default as GetQrCodeUseCaseDTO } from '../../usecase/instance/get-qr-code/get-qr-code.usecase.dto';
 export { default as DeleteInstanceUseCaseDto } from '../../usecase/instance/delete/delete-instance.usecase.dto';
 export { default as SendTextMessageUseCaseDto } from '../../usecase/message/send-text-message/send-text-message.dto';
 export { default as SendUrlMediaFileUseCaseDto } from '../../usecase/message/send-url-media-file/send-url-media-file.usecase.dto';
@@ -20,4 +20,5 @@ export { default as GetInviteInGroupDto } from '../../usecase/group/get-invite-i
 export { default as InitInstanceInputDto } from '../../usecase/instance/init/init-instance.dto';
 export { default as SendMediaFileUseCaseDto } from '../../usecase/message/send-media-file/send-media-file.usecase.dto';
 export { default as LogoutInstanceUseCaseDto } from '../../usecase/instance/logout/logout-instance.usecase.dto';
-export {default as FindAllMessageUseCaseDto} from '../../usecase/message/find-all-message/find-all-message.dto';
+export { default as FindAllMessageUseCaseDto } from '../../usecase/message/find-all-message/find-all-message.dto';
+export { default as FindAllContactsUseCaseDto } from '../../usecase/message/find-all-contacts/find-all-contacts.dto';

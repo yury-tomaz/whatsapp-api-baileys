@@ -26,6 +26,8 @@ import { InstancesRepository } from '../repository/instances.repository';
 import { RestoreAllInstanceUsecase } from '../usecase/instance/restore-all/restore-all-instance.usecase';
 import { MessageRepository } from '../repository/message-repository';
 import { FindAllMessageUseCase } from '../usecase/message/find-all-message/find-all-messages.usecase';
+import { FindAllContactsUseCase } from '../usecase/message/find-all-contacts/find-all-contacts.usecase';
+import { ContactRepository } from '../repository/contact-repository';
 
 export class BaileysFactory {
   static create() {
@@ -37,6 +39,7 @@ export class BaileysFactory {
       baileysManager,
     );
     const messageRepository = new MessageRepository();
+    const contactRepository = new ContactRepository();
 
     const initUseCase = new InitInstanceUseCase(baileysManager);
 
@@ -74,6 +77,7 @@ export class BaileysFactory {
     const verifyIdUseCase = new IsOnWhatsappUseCase(baileysManager);
     const blockUnblockUseCase = new BlockUnblockUserUseCase(baileysManager);
     const findAllMessages = new FindAllMessageUseCase(messageRepository);
+    const findAllContacts = new FindAllContactsUseCase(contactRepository);
 
     return new BaileysFacade({
       initUseCase,
@@ -100,6 +104,7 @@ export class BaileysFactory {
       groupGetInviteInfo,
       restoreAllInstanceUsecase,
       findAllMessages,
+      findAllContacts,
     });
   }
 }
