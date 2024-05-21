@@ -1,7 +1,7 @@
 import { WhatsappService } from './baileys.facade.interface';
 import UseCaseInterface from '../../@shared/application/use-case/use-case.interface';
 import * as dto from './dtos';
-import { RestoreAllInstanceUsecase } from '../usecase/instance/restore-all/restore-all-instance.usecase';
+
 export interface UseCasesProps {
   initUseCase: UseCaseInterface;
   infoUseCase: UseCaseInterface;
@@ -76,7 +76,7 @@ export class BaileysFacade implements WhatsappService {
     this._makeUserGroupUseCase = props.makeUserGroupUseCase;
     this._groupSettingUpdate = props.groupSettingUpdate;
     this._groupGetInviteInfo = props.groupGetInviteInfo;
-    this._restoreAllInstanceUsecase = props.restoreAllInstanceUsecase
+    this._restoreAllInstanceUsecase = props.restoreAllInstanceUsecase;
   }
 
   init(input: dto.InitInstanceInputDto) {
@@ -90,7 +90,7 @@ export class BaileysFacade implements WhatsappService {
   info(input: dto.GetInfoUseCaseDTO) {
     return this._infoUseCase.execute(input);
   }
-  qr(input: dto.GetQrCodeUseCaseInputDTO) {
+  qr(input: dto.GetQrCodeUseCaseDTO['input']) {
     return this._qrUseCase.execute(input);
   }
   logout(input: dto.LogoutInstanceUseCaseDto) {

@@ -1,7 +1,7 @@
 import { BaileysInstanceRepositoryInMemory } from '../../../repository/baileys-instance-repository-in-memory';
 import { getWhatsAppId } from '../../../helpers/get-whats-app-Id';
 import { checkInstance } from '../../../helpers/check-Instance';
-import { SendTextMessageUseCaseDto } from './send-text-message.dto';
+import SendTextMessageUseCaseDto  from './send-text-message.dto';
 
 export class SendTextMessageUseCase {
   constructor(private baileysManager: BaileysInstanceRepositoryInMemory) {}

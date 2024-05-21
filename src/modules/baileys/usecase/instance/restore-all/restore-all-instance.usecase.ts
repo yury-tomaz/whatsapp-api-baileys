@@ -6,9 +6,8 @@ export class RestoreAllInstanceUsecase {
   constructor(
     private instanceRepository: BaileysInstanceRepositoryInterface,
     private baileysManager: BaileysInstanceRepositoryInMemory,
-  ) {
-  }
-  async  execute(){
+  ) {}
+  async execute() {
     const instances = await this.instanceRepository.findAll();
 
     for (const instance of instances) {
@@ -17,13 +16,13 @@ export class RestoreAllInstanceUsecase {
         name: instance.name,
         belongsTo: instance.belongsTo,
         createdAt: instance.createdAt,
-        updatedAt: instance.updatedAt
-      })
+        updatedAt: instance.updatedAt,
+      });
 
       try {
-        await this.baileysManager.create(start)
-      }catch (e) {
-        logger.error(`Error restoring Baileys section: ${instance.name} `)
+        await this.baileysManager.create(start);
+      } catch (e) {
+        logger.error(`Error restoring Baileys section: ${instance.name} `);
       }
     }
   }

@@ -28,7 +28,7 @@ export class UpdateProfilePictureController implements ControllerInterface {
       {
         message: 'Update profile picture successfully',
         data: execute,
-        routingKey: Config.routingKey()
+        routingKey: Config.routingKey(),
       },
       { 'Content-Type': 'application/json' },
       200,

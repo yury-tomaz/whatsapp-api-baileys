@@ -23,7 +23,7 @@ export class LeaveGroupController implements ControllerInterface {
       {
         message: 'Baileys leave group successfully',
         data: execute,
-        routingKey: Config.routingKey()
+        routingKey: Config.routingKey(),
       },
       { 'Content-Type': 'application/json' },
       200,

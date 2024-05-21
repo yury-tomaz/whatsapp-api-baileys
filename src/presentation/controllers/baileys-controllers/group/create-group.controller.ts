@@ -24,7 +24,7 @@ export class CreateGroupController implements ControllerInterface {
       {
         message: 'Baileys create group successfully',
         data: execute,
-        routingKey: Config.routingKey()
+        routingKey: Config.routingKey(),
       },
       { 'Content-Type': 'application/json' },
       200,

@@ -28,7 +28,7 @@ export class BlockUnblockUserController implements ControllerInterface {
       {
         message: 'Block and Unblock Successfully',
         data: execute,
-        routingKey: Config.routingKey()
+        routingKey: Config.routingKey(),
       },
       { 'Content-Type': 'application/json' },
       200,

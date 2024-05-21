@@ -1,7 +1,7 @@
 import { BaileysInstanceRepositoryInMemory } from '../../../repository/baileys-instance-repository-in-memory';
 import { getWhatsAppId } from '../../../helpers/get-whats-app-Id';
 import { checkInstance } from '../../../helpers/check-Instance';
-import { LeaveGroupDto } from './leave-group.dto';
+import LeaveGroupDto  from './leave-group.dto';
 
 export class LeaveGroupUseCase {
   constructor(private baileysManager: BaileysInstanceRepositoryInMemory) {}

@@ -2,7 +2,9 @@ import * as dto from './dtos';
 interface InstanceService {
   init(input: dto.InitInstanceInputDto): Promise<any>;
   info(input: dto.GetInfoUseCaseDTO): Promise<void>;
-  qr(input: dto.GetQrCodeUseCaseInputDTO): Promise<dto.GetQrCodeUseCaseOutPutDTO>;
+  qr(
+    input: dto.GetQrCodeUseCaseDTO['input'],
+  ): Promise<dto.GetQrCodeUseCaseDTO['output']>;
   logout(input: dto.LogoutInstanceUseCaseDto): Promise<void>;
   delete(input: dto.DeleteInstanceUseCaseDto): Promise<void>;
   restore(): Promise<void>;

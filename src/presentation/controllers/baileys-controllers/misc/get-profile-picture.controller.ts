@@ -28,7 +28,7 @@ export class GetProfilePictureController implements ControllerInterface {
         data: {
           url: execute,
         },
-        routingKey: Config.routingKey()
+        routingKey: Config.routingKey(),
       },
       { 'Content-Type': 'application/json' },
       200,

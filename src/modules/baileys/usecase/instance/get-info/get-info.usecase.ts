@@ -1,6 +1,6 @@
 import { BaileysInstanceRepositoryInMemory } from '../../../repository/baileys-instance-repository-in-memory';
 import { checkInstance } from '../../../helpers/check-Instance';
-import { GetInfoUseCaseDTO } from './get-instance-info.dto';
+import GetInfoUseCaseDTO from './get-instance-info.dto';
 
 export class GetInfoUseCase {
   constructor(private baileysManager: BaileysInstanceRepositoryInMemory) {}

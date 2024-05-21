@@ -1,5 +1,5 @@
 import { BaileysInstanceRepositoryInMemory } from '../../../repository/baileys-instance-repository-in-memory';
-import { DeleteInstanceUseCaseDto } from './delete-instance.usecase.dto';
+import DeleteInstanceUseCaseDto from './delete-instance.usecase.dto';
 export class DeleteInstanceUseCase {
   constructor(private baileysManager: BaileysInstanceRepositoryInMemory) {}
 

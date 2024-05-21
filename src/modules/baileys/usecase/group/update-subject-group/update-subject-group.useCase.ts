@@ -1,7 +1,7 @@
 import { BaileysInstanceRepositoryInMemory } from '../../../repository/baileys-instance-repository-in-memory';
 import { getWhatsAppId } from '../../../helpers/get-whats-app-Id';
 import { checkInstance } from '../../../helpers/check-Instance';
-import { UpdateSubjectGroupDto } from './update-subject-group.dto';
+import UpdateSubjectGroupDto from './update-subject-group.dto';
 
 export class UpdateSubjectGroupUseCase {
   constructor(private baileysManager: BaileysInstanceRepositoryInMemory) {}

@@ -24,7 +24,7 @@ export class UpdateSettingGroupController implements ControllerInterface {
       {
         message: 'Baileys update settings group successfully',
         data: execute,
-        routingKey: Config.routingKey()
+        routingKey: Config.routingKey(),
       },
       { 'Content-Type': 'application/json' },
       200,

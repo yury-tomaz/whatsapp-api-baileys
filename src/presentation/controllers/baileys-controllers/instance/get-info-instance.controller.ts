@@ -27,7 +27,7 @@ export class GetInfoInstanceController implements ControllerInterface {
       {
         message: 'Get Info Successful',
         data: execute,
-        routingKey: Config.routingKey()
+        routingKey: Config.routingKey(),
       },
       { 'Content-Type': 'application/json' },
       200,

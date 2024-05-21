@@ -19,7 +19,7 @@ export class InitBaileysController implements ControllerInterface {
       {
         message: 'Baileys instance initialized successfully',
         data: execute,
-        routingKey: Config.routingKey()
+        routingKey: Config.routingKey(),
       },
       { 'Content-Type': 'application/json' },
       200,

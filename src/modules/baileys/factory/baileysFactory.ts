@@ -25,16 +25,15 @@ import { GetInviteInfoGroupUseCase } from '../usecase/group/get-invite-info-grou
 import { InstancesRepository } from '../repository/instances.repository';
 import { RestoreAllInstanceUsecase } from '../usecase/instance/restore-all/restore-all-instance.usecase';
 
-
 export class BaileysFactory {
   static create() {
-
     const baileysManager = BaileysInstanceRepositoryInMemory.getInstance();
     const instanceRepository = new InstancesRepository();
-    const initUseCase = new InitInstanceUseCase(
+    const initUseCase = new InitInstanceUseCase(baileysManager);
+    const restoreAllInstanceUsecase = new RestoreAllInstanceUsecase(
+      instanceRepository,
       baileysManager,
     );
-    const restoreAllInstanceUsecase = new RestoreAllInstanceUsecase(instanceRepository, baileysManager);
     const infoUseCase = new GetInfoUseCase(baileysManager);
     const qrUseCase = new GetQrCodeUsecase(baileysManager);
     const logoutUseCase = new LogoutInstanceUseCase(baileysManager);
@@ -92,7 +91,7 @@ export class BaileysFactory {
       makeUserGroupUseCase,
       groupSettingUpdate,
       groupGetInviteInfo,
-      restoreAllInstanceUsecase
+      restoreAllInstanceUsecase,
     });
   }
 }

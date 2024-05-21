@@ -19,7 +19,7 @@ export class GetQrCodeController implements ControllerInterface {
       {
         message: 'Successfully obtained QR Code',
         data: execute,
-        routingKey: Config.routingKey()
+        routingKey: Config.routingKey(),
       },
       { 'Content-Type': 'application/json' },
       200,

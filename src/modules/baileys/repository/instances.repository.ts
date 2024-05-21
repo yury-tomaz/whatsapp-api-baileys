@@ -8,9 +8,9 @@ export class InstancesRepository implements BaileysInstanceRepositoryInterface {
   private instancesCollection: Collection;
 
   constructor() {
-    mongoDBManager.ensureConnection().then(()=> {
+    mongoDBManager.ensureConnection().then(() => {
       this.instancesCollection = mongoDBManager.db.collection('instances');
-    })
+    });
   }
 
   async create(entity: BaileysInstance) {
@@ -53,7 +53,7 @@ export class InstancesRepository implements BaileysInstanceRepositoryInterface {
     const cursor = this.instancesCollection.find();
     const instancesArray = await cursor.toArray();
 
-    return instancesArray.map(instance => {
+    return instancesArray.map((instance) => {
       return new BaileysInstance({
         id: new Id(instance._id.toHexString()),
         routingKey: instance.routingKey,
