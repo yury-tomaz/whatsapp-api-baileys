@@ -1,5 +1,5 @@
 import EventInterface from '../../@shared/domain/events/event.interface';
-export class EventOccurredWhatsappEvent implements EventInterface{
+export class EventOccurredWhatsappEvent implements EventInterface {
   dateTimeOccurred: Date;
   eventData: any;
 

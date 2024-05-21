@@ -2,31 +2,33 @@ import { ControllerInterface } from '../../../interfaces/controller.interface';
 import { WhatsappService } from '../../../../modules/baileys/facade/baileys.facade.interface';
 import { HttpRequest } from '../../../http-types/http-request';
 import { HttpResponse } from '../../../http-types/http-response';
-import { blockUnblockUserValidator } from '../../../validators/baileys/misc/block-unblock-user.validator';
 import { Config } from '../../../../modules/@shared/infra/config';
+import { findAllMessagesValidator } from '../../../validators/baileys/message/find-all-messages.validator';
 
-export class BlockUnblockUserController implements ControllerInterface {
+export class FindAllMessagesController implements ControllerInterface {
   constructor(private usecase: WhatsappService) {}
 
   async handle(request: HttpRequest): Promise<HttpResponse> {
     const { id } = request.params;
-    const { to, action } = request.body;
+    const { page, limit, to } = request.query;
 
-    blockUnblockUserValidator.validateSync({
+    findAllMessagesValidator.validateSync({
       id,
+      page,
+      limit,
       to,
-      action,
     });
 
-    const execute = await this.usecase.blockUnblock({
+    const execute = await this.usecase.findAllMessages({
       id,
+      page,
+      limit,
       to,
-      action,
     });
 
     return new HttpResponse(
       {
-        message: 'Block and Unblock Successfully',
+        message: 'Send Media File Successfully',
         data: execute,
         routingKey: Config.routingKey(),
       },

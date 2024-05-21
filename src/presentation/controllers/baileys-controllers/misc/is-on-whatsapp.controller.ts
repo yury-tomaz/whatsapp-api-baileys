@@ -26,7 +26,7 @@ export class IsOnWhatsappController implements ControllerInterface {
       {
         message: 'Is on whatsapp successfully',
         data: execute,
-        routingKey: Config.routingKey()
+        routingKey: Config.routingKey(),
       },
       { 'Content-Type': 'application/json' },
       200,

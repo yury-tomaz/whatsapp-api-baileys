@@ -28,7 +28,7 @@ export class LogoutInstanceController implements ControllerInterface {
     return new HttpResponse(
       {
         message: 'Successful logout',
-        routingKey: Config.routingKey()
+        routingKey: Config.routingKey(),
       },
       { 'Content-Type': 'application/json' },
       200,

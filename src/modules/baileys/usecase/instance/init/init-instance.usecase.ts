@@ -3,10 +3,7 @@ import { BaileysInstanceRepositoryInMemory } from '../../../repository/baileys-i
 import { InitInstanceInputDto } from './init-instance.dto';
 
 export class InitInstanceUseCase {
-  constructor(
-
-    private baileysManager: BaileysInstanceRepositoryInMemory,
-  ) {}
+  constructor(private baileysManager: BaileysInstanceRepositoryInMemory) {}
 
   async execute(input: InitInstanceInputDto) {
     const baileys = new Baileys({

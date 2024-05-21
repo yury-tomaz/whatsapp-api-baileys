@@ -22,4 +22,8 @@ messageRoute.post(
   (req, res) => requestAdapter(req, res, controller.sendMediaFile),
 );
 
+messageRoute.get('/instance/:id/messages', (req, res) =>
+  requestAdapter(req, res, controller.findAllMessages),
+);
+
 export default messageRoute;

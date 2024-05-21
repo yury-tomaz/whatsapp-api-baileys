@@ -23,7 +23,7 @@ export class InviteInfoGroupController implements ControllerInterface {
       {
         message: 'Baileys invite info group successfully',
         data: execute,
-        routingKey: Config.routingKey()
+        routingKey: Config.routingKey(),
       },
       { 'Content-Type': 'application/json' },
       200,

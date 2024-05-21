@@ -24,7 +24,7 @@ export class UpdateSubjectGroupController implements ControllerInterface {
       {
         message: 'Baileys update subject group successfully',
         data: execute,
-        routingKey: Config.routingKey()
+        routingKey: Config.routingKey(),
       },
       { 'Content-Type': 'application/json' },
       200,

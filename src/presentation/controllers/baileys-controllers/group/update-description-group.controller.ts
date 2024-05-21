@@ -24,7 +24,7 @@ export class UpdateDescriptionGroupController implements ControllerInterface {
       {
         message: 'Baileys update description group successfully',
         data: execute,
-        routingKey: Config.routingKey()
+        routingKey: Config.routingKey(),
       },
       { 'Content-Type': 'application/json' },
       200,

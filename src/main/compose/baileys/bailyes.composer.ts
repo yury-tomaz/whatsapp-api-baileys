@@ -22,6 +22,7 @@ import { GetProfilePictureController } from '../../../presentation/controllers/b
 import { GetStatusUserController } from '../../../presentation/controllers/baileys-controllers/misc/get-status-user.controller';
 import { IsOnWhatsappController } from '../../../presentation/controllers/baileys-controllers/misc/is-on-whatsapp.controller';
 import { UpdateProfilePictureController } from '../../../presentation/controllers/baileys-controllers/misc/update-profile-picture.controller';
+import { FindAllMessagesController } from '../../../presentation/controllers/baileys-controllers/message/find-all-messages.controller';
 
 export class BaileysComposer {
   private static baileysFactory = BaileysFactory.create();
@@ -62,6 +63,7 @@ export class BaileysComposer {
     const updateProfilePicture = new UpdateProfilePictureController(
       this.baileysFactory,
     );
+    const findAllMessages = new FindAllMessagesController(this.baileysFactory);
 
     return new BaileysControllerFacade({
       init,
@@ -86,6 +88,7 @@ export class BaileysComposer {
       getUserStatus,
       isOnWhatsap,
       updateProfilePicture,
+      findAllMessages,
     });
   }
 }

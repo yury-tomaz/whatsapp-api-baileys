@@ -22,6 +22,7 @@ import { UpdateSettingsGroupDto } from '../usecase/group/update-settings-group/u
 import { GetInviteInGroupDto } from '../usecase/group/get-invite-info-group/get-invite-info-group.dto';
 import { SendMediaFileUseCaseDto } from '../usecase/message/send-media-file/send-media-file.usecase.dto';
 import { LogoutInstanceUseCaseDto } from '../usecase/instance/logout/logout-instance.usecase.dto';
+import { FindAllMessageUseCaseDto } from '../usecase/message/find-all-message/find-all-message.dto';
 
 export interface UseCasesProps {
   initUseCase: UseCaseInterface;
@@ -49,6 +50,7 @@ export interface UseCasesProps {
   getUserStatusUseCase: UseCaseInterface;
   downloadProfileUseCase: UseCaseInterface;
   updateProfilePictureUseCase: UseCaseInterface;
+  findAllMessages: UseCaseInterface;
 }
 
 export class BaileysFacade implements WhatsappService {
@@ -74,6 +76,7 @@ export class BaileysFacade implements WhatsappService {
   _makeUserGroupUseCase: UseCaseInterface;
   _groupSettingUpdate: UseCaseInterface;
   _groupGetInviteInfo: UseCaseInterface;
+  _findAllMessages: UseCaseInterface;
 
   constructor(props: UseCasesProps) {
     this._initUseCase = props.initUseCase;
@@ -98,6 +101,7 @@ export class BaileysFacade implements WhatsappService {
     this._makeUserGroupUseCase = props.makeUserGroupUseCase;
     this._groupSettingUpdate = props.groupSettingUpdate;
     this._groupGetInviteInfo = props.groupGetInviteInfo;
+    this._findAllMessages = props.findAllMessages;
   }
 
   init(input: InitInstanceInputDto) {
@@ -178,5 +182,9 @@ export class BaileysFacade implements WhatsappService {
 
   updateProfilePicture(input: UpdateProfilePictureDto) {
     return this._updateProfilePicture.execute(input);
+  }
+
+  findAllMessages(input: FindAllMessageUseCaseDto) {
+    return this._findAllMessages.execute(input);
   }
 }

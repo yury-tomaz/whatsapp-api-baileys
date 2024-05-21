@@ -41,7 +41,7 @@ interface Props {
 export class Baileys extends BaseEntity implements AggregateRoot {
   private readonly _belongsTo: string | undefined;
   private readonly _name: string;
-  private _store: Store
+  private _store: Store;
   private _socketConfig: CustomSocketConfig | undefined;
   private _waSocket?: ReturnType<typeof makeWASocket>;
   private _qrRetry = 0;
@@ -77,7 +77,9 @@ export class Baileys extends BaseEntity implements AggregateRoot {
     super(props.id);
     this._belongsTo = props.belongsTo;
     this._name = props.name;
-    this.coll =  mongoDBManager.client.db('sessions').collection(`${this.id.id}`);
+    this.coll = mongoDBManager.client
+      .db('sessions')
+      .collection(`${this.id.id}`);
 
     this.init().then(() => {
       logger.info('Baileys instance initialized');
@@ -97,12 +99,12 @@ export class Baileys extends BaseEntity implements AggregateRoot {
     };
 
     this._waSocket = makeWASocket(this._socketConfig);
-    this._store = new Store(`${this.id.id}`, this._waSocket.ev)
+    this._store = new Store(`${this.id.id}`, this._waSocket.ev);
 
     if (this._waSocket) {
       this._waSocket.ev.on('creds.update', saveCreds);
 
-      this._waSocket.ev.on('connection.update', async (update) =>{
+      this._waSocket.ev.on('connection.update', async (update) => {
         const { connection, lastDisconnect, qr } = update || {};
         if (connection === 'connecting') return;
 
@@ -110,7 +112,7 @@ export class Baileys extends BaseEntity implements AggregateRoot {
           let reason = new Boom(lastDisconnect?.error).output.statusCode;
 
           if (reason === DisconnectReason.badSession) {
-            await this.coll.drop()
+            await this.coll.drop();
           } else if (reason === DisconnectReason.connectionClosed) {
             await this.init();
           } else if (reason === DisconnectReason.connectionLost) {
@@ -118,7 +120,7 @@ export class Baileys extends BaseEntity implements AggregateRoot {
           } else if (reason === DisconnectReason.connectionReplaced) {
             logger.info('connection Replaced');
           } else if (reason === DisconnectReason.loggedOut) {
-            await this.coll.drop()
+            await this.coll.drop();
             logger.info('Device Logged Out, Please Login Again');
           } else if (reason === DisconnectReason.restartRequired) {
             console.log('Restart Required, Restarting...');
@@ -127,7 +129,7 @@ export class Baileys extends BaseEntity implements AggregateRoot {
             console.log('Connection TimedOut, Reconnecting...');
             await this.init();
           } else {
-            await this.coll.drop()
+            await this.coll.drop();
             this._waSocket?.end(
               new Error(
                 `Unknown DisconnectReason: ${reason}|${lastDisconnect!.error}`,
@@ -135,40 +137,43 @@ export class Baileys extends BaseEntity implements AggregateRoot {
             );
           }
 
-          eventDispatcher.notify(new EventOccurredWhatsappEvent({
-            routingKey: 'baileys.event.connection.close',
-            data: {
-              sessionId: this.id.id,
-              connection: connection,
-            },
-          }))
-
+          eventDispatcher.notify(
+            new EventOccurredWhatsappEvent({
+              routingKey: 'baileys.event.connection.close',
+              data: {
+                sessionId: this.id.id,
+                connection: connection,
+              },
+            }),
+          );
         } else if (connection === 'open') {
           logger.info('Connection open');
-          const coll = mongoDBManager.db.collection('instances')
+          const coll = mongoDBManager.db.collection('instances');
 
           const alreadyThere = await coll.findOne({
-            sessionId: this.id.id
-          })
+            sessionId: this.id.id,
+          });
 
-          if(!alreadyThere){
+          if (!alreadyThere) {
             await coll.insertOne({
               sessionId: this.id.id,
               name: this._name,
               belongsTo: this.belongsTo,
               createdAt: this.createdAt,
               updatedAt: this.updatedAt,
-              routingKey: Config.routingKey()
-            })
+              routingKey: Config.routingKey(),
+            });
           }
 
-          eventDispatcher.notify(new EventOccurredWhatsappEvent({
-            routingKey: 'baileys.event.connection.open',
-            data: {
-              sessionId: this.id.id,
-              connection: connection,
-            },
-          }))
+          eventDispatcher.notify(
+            new EventOccurredWhatsappEvent({
+              routingKey: 'baileys.event.connection.open',
+              data: {
+                sessionId: this.id.id,
+                connection: connection,
+              },
+            }),
+          );
 
           this._isOn = true;
         }
@@ -180,7 +185,7 @@ export class Baileys extends BaseEntity implements AggregateRoot {
             logger.info('QRCode expired');
           }
         }
-      })
+      });
     }
   }
 
