@@ -14,6 +14,7 @@ interface MessageService {
   sendTextMessage(input: dto.SendTextMessageUseCaseDto): Promise<void>;
   sendUrlMediaFile(input: dto.SendUrlMediaFileUseCaseDto): Promise<void>;
   sendMediaFile(input: dto.SendMediaFileUseCaseDto): Promise<void>;
+  findAllMessages(input: dto.FindAllMessageUseCaseDto): Promise<any>;
 }
 
 interface GroupService {

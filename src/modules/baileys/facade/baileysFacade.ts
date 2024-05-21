@@ -26,6 +26,7 @@ export interface UseCasesProps {
   downloadProfileUseCase: UseCaseInterface;
   updateProfilePictureUseCase: UseCaseInterface;
   restoreAllInstanceUsecase: UseCaseInterface;
+  findAllMessages: UseCaseInterface;
 }
 
 export class BaileysFacade implements WhatsappService {
@@ -52,6 +53,7 @@ export class BaileysFacade implements WhatsappService {
   _groupSettingUpdate: UseCaseInterface;
   _groupGetInviteInfo: UseCaseInterface;
   _restoreAllInstanceUsecase: UseCaseInterface;
+  _findAllMessages: UseCaseInterface;
 
   constructor(props: UseCasesProps) {
     this._initUseCase = props.initUseCase;
@@ -77,6 +79,7 @@ export class BaileysFacade implements WhatsappService {
     this._groupSettingUpdate = props.groupSettingUpdate;
     this._groupGetInviteInfo = props.groupGetInviteInfo;
     this._restoreAllInstanceUsecase = props.restoreAllInstanceUsecase;
+    this._findAllMessages = props.findAllMessages;
   }
 
   init(input: dto.InitInstanceInputDto) {
@@ -162,5 +165,9 @@ export class BaileysFacade implements WhatsappService {
 
   updateProfilePicture(input: dto.UpdateProfilePictureDto) {
     return this._updateProfilePicture.execute(input);
+  }
+
+  findAllMessages(input: dto.FindAllMessageUseCaseDto) {
+    return this._findAllMessages.execute(input);
   }
 }

@@ -5,9 +5,6 @@ import { mongoDBManager } from '../../modules/@shared/infra/persistence/settings
 import { RabbitmqMessageBroker } from '../../modules/@shared/infra/services/message-broker/rabbitmq-message-broker';
 import EventDispatcher from '../../modules/@shared/domain/events/event-dispatcher';
 import { PublicMessageWhenWhatsappUpdatedHandler } from '../../modules/baileys/events/handlers/public-message-when-whatsapp-updated.handler';
-import {
-  RestoreAllInstanceUsecase
-} from '../../modules/baileys/usecase/instance/restore-all/restore-all-instance.usecase';
 
 const port = Config.port();
 const messageBroker = new RabbitmqMessageBroker(Config.rabbitmqUri());
