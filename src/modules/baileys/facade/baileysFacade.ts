@@ -1,6 +1,7 @@
 import { WhatsappService } from './baileys.facade.interface';
 import UseCaseInterface from '../../@shared/application/use-case/use-case.interface';
 import * as dto from './dtos';
+import { RestoreAllInstanceUsecase } from '../usecase/instance/restore-all/restore-all-instance.usecase';
 export interface UseCasesProps {
   initUseCase: UseCaseInterface;
   infoUseCase: UseCaseInterface;
@@ -24,6 +25,7 @@ export interface UseCasesProps {
   getUserStatusUseCase: UseCaseInterface;
   downloadProfileUseCase: UseCaseInterface;
   updateProfilePictureUseCase: UseCaseInterface;
+  restoreAllInstanceUsecase: UseCaseInterface;
 }
 
 export class BaileysFacade implements WhatsappService {
@@ -49,6 +51,7 @@ export class BaileysFacade implements WhatsappService {
   _makeUserGroupUseCase: UseCaseInterface;
   _groupSettingUpdate: UseCaseInterface;
   _groupGetInviteInfo: UseCaseInterface;
+  _restoreAllInstanceUsecase: UseCaseInterface;
 
   constructor(props: UseCasesProps) {
     this._initUseCase = props.initUseCase;
@@ -73,11 +76,17 @@ export class BaileysFacade implements WhatsappService {
     this._makeUserGroupUseCase = props.makeUserGroupUseCase;
     this._groupSettingUpdate = props.groupSettingUpdate;
     this._groupGetInviteInfo = props.groupGetInviteInfo;
+    this._restoreAllInstanceUsecase = props.restoreAllInstanceUsecase
   }
 
   init(input: dto.InitInstanceInputDto) {
     return this._initUseCase.execute(input);
   }
+
+  restore(): Promise<void> {
+    return this._restoreAllInstanceUsecase.execute(undefined);
+  }
+
   info(input: dto.GetInfoUseCaseDTO) {
     return this._infoUseCase.execute(input);
   }
