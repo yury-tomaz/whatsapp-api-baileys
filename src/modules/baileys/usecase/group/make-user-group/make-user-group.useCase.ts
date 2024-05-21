@@ -1,7 +1,7 @@
 import { BaileysInstanceRepositoryInMemory } from '../../../repository/baileys-instance-repository-in-memory';
 import { getWhatsAppId } from '../../../helpers/get-whats-app-Id';
 import { checkInstance } from '../../../helpers/check-Instance';
-import { MakeUserGroupDto } from './make-user-group.dto';
+import MakeUserGroupDto  from './make-user-group.dto';
 
 export class MakeUserGroupUseCase {
   constructor(private baileysManager: BaileysInstanceRepositoryInMemory) {}

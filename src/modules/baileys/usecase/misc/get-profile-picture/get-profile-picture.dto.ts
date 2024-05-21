@@ -1,4 +1,4 @@
-export interface GetProfilePictureDto {
+export default interface GetProfilePictureDto {
   id: string;
   to: string;
 }

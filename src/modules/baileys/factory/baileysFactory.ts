@@ -22,13 +22,20 @@ import { IsOnWhatsappUseCase } from '../usecase/misc/is-on-whatsapp/is-on-whatsa
 import { MakeUserGroupUseCase } from '../usecase/group/make-user-group/make-user-group.useCase';
 import { UpdateSettingsGroupUseCase } from '../usecase/group/update-settings-group/update-settings-group.useCase';
 import { GetInviteInfoGroupUseCase } from '../usecase/group/get-invite-info-group/get-invite-info-group.useCase';
-
+import { InstancesRepository } from '../repository/instances.repository';
+import { RestoreAllInstanceUsecase } from '../usecase/instance/restore-all/restore-all-instance.usecase';
 import { MessageRepository } from '../repository/message-repository';
 import { FindAllMessageUseCase } from '../usecase/message/find-all-message/find-all-messages.usecase';
 
 export class BaileysFactory {
   static create() {
     const baileysManager = BaileysInstanceRepositoryInMemory.getInstance();
+    const instanceRepository = new InstancesRepository();
+
+    const restoreAllInstanceUsecase = new RestoreAllInstanceUsecase(
+      instanceRepository,
+      baileysManager,
+    );
     const messageRepository = new MessageRepository();
 
     const initUseCase = new InitInstanceUseCase(baileysManager);
@@ -91,6 +98,7 @@ export class BaileysFactory {
       makeUserGroupUseCase,
       groupSettingUpdate,
       groupGetInviteInfo,
+      restoreAllInstanceUsecase,
       findAllMessages,
     });
   }

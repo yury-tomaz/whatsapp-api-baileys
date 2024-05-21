@@ -1,3 +1,3 @@
-export interface LogoutInstanceUseCaseDto {
+export default interface LogoutInstanceUseCaseDto {
   id: string;
 }

@@ -1,7 +1,7 @@
 import { BaileysInstanceRepositoryInMemory } from '../../../repository/baileys-instance-repository-in-memory';
 import { getWhatsAppId } from '../../../helpers/get-whats-app-Id';
 import { checkInstance } from '../../../helpers/check-Instance';
-import { GetUserStatusDto } from './get-status-user.dto';
+import GetUserStatusDto  from './get-status-user.dto';
 
 export class GetUserStatusUseCase {
   constructor(private baileysManager: BaileysInstanceRepositoryInMemory) {}

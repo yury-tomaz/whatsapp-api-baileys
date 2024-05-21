@@ -1,7 +1,12 @@
-export interface GetQrCodeUseCaseInputDTO {
+interface GetQrCodeUseCaseInputDTO {
   id: string;
 }
 
-export interface GetQrCodeUseCaseOutPutDTO {
+interface GetQrCodeUseCaseOutPutDTO {
   qr: string | undefined;
+}
+
+export default interface GetQrCodeUseCaseDTO{
+  input: GetQrCodeUseCaseInputDTO,
+  output: GetQrCodeUseCaseOutPutDTO
 }
