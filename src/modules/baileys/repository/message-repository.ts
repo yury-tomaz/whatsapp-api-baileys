@@ -23,7 +23,7 @@ export class MessageRepository {
 
     const messages = await this.messageCollection
       .find({ sessionId, remoteJid: to }, { limit, skip })
-      .sort({ 'messageTimestamp.low': -1 })
+      .sort({ 'messageTimestamp.low': -1, messageTimestamp: 1 })
       .toArray();
 
     console.log(messages);
