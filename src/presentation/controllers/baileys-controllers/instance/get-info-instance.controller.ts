@@ -6,6 +6,7 @@ import {
   AppError,
   HttpCode,
 } from '../../../../modules/@shared/domain/exceptions/app-error';
+import { Config } from '../../../../modules/@shared/infra/config';
 
 export class GetInfoInstanceController implements ControllerInterface {
   constructor(private usecase: WhatsappService) {}
@@ -26,6 +27,7 @@ export class GetInfoInstanceController implements ControllerInterface {
       {
         message: 'Get Info Successful',
         data: execute,
+        routingKey: Config.routingKey()
       },
       { 'Content-Type': 'application/json' },
       200,

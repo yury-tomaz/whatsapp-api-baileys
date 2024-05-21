@@ -3,6 +3,7 @@ import { HttpResponse } from '../../../http-types/http-response';
 import { WhatsappService } from '../../../../modules/baileys/facade/baileys.facade.interface';
 import { initBaileysValidator } from '../../../validators/init-baileys.validator';
 import { ControllerInterface } from '../../../interfaces/controller.interface';
+import { Config } from '../../../../modules/@shared/infra/config';
 
 export class InitBaileysController implements ControllerInterface {
   constructor(private usecase: WhatsappService) {}
@@ -18,6 +19,7 @@ export class InitBaileysController implements ControllerInterface {
       {
         message: 'Baileys instance initialized successfully',
         data: execute,
+        routingKey: Config.routingKey()
       },
       { 'Content-Type': 'application/json' },
       200,

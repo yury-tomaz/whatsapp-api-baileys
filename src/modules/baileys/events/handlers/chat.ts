@@ -48,9 +48,9 @@ export default function chatHandler(sessionId: string, event: BaileysEventEmitte
                 await chatCollection.deleteMany({ sessionId }, { session });
             }
 
-            const existingIdsCursor = await chatCollection.find(
-                { id: { $in: chats.map((c) => c.id) }, sessionId },
-                { projection: { id: 1 }, session }
+            const existingIdsCursor = chatCollection.find(
+              { id: { $in: chats.map((c) => c.id) }, sessionId },
+              { projection: { id: 1 }, session },
             );
 
             const existingIds = await existingIdsCursor.map((doc) => doc.id).toArray();

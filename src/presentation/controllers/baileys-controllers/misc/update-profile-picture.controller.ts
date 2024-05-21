@@ -3,6 +3,7 @@ import { WhatsappService } from '../../../../modules/baileys/facade/baileys.faca
 import { HttpRequest } from '../../../http-types/http-request';
 import { HttpResponse } from '../../../http-types/http-response';
 import { updateProfilePictureValidator } from '../../../validators/baileys/misc/update-profile-picture.validator';
+import { Config } from '../../../../modules/@shared/infra/config';
 
 export class UpdateProfilePictureController implements ControllerInterface {
   constructor(private usecase: WhatsappService) {}
@@ -27,6 +28,7 @@ export class UpdateProfilePictureController implements ControllerInterface {
       {
         message: 'Update profile picture successfully',
         data: execute,
+        routingKey: Config.routingKey()
       },
       { 'Content-Type': 'application/json' },
       200,

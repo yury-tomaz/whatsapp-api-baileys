@@ -3,6 +3,7 @@ import { HttpResponse } from '../../../http-types/http-response';
 import { WhatsappService } from '../../../../modules/baileys/facade/baileys.facade.interface';
 import { ControllerInterface } from '../../../interfaces/controller.interface';
 import { updateSubjectGroupValidator } from '../../../validators/baileys/group/update-subject-group.validator';
+import { Config } from '../../../../modules/@shared/infra/config';
 
 export class UpdateSubjectGroupController implements ControllerInterface {
   constructor(private usecase: WhatsappService) {}
@@ -23,6 +24,7 @@ export class UpdateSubjectGroupController implements ControllerInterface {
       {
         message: 'Baileys update subject group successfully',
         data: execute,
+        routingKey: Config.routingKey()
       },
       { 'Content-Type': 'application/json' },
       200,

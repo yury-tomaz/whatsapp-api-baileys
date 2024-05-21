@@ -3,6 +3,7 @@ import { WhatsappService } from '../../../../modules/baileys/facade/baileys.faca
 import { HttpRequest } from '../../../http-types/http-request';
 import { HttpResponse } from '../../../http-types/http-response';
 import { getProfilePictureValidator } from '../../../validators/baileys/misc/get-profile-picture.validator';
+import { Config } from '../../../../modules/@shared/infra/config';
 
 export class GetProfilePictureController implements ControllerInterface {
   constructor(private usecase: WhatsappService) {}
@@ -27,6 +28,7 @@ export class GetProfilePictureController implements ControllerInterface {
         data: {
           url: execute,
         },
+        routingKey: Config.routingKey()
       },
       { 'Content-Type': 'application/json' },
       200,

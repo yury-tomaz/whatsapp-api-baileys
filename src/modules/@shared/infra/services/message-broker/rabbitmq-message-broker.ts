@@ -1,50 +1,46 @@
-import * as amqp from 'amqplib';
-import { AppError, HttpCode } from '../../../domain/exceptions/app-error';
-import { logger } from '../../logger';
-import { Config } from '../../config';
-import { MessageBrokerInterface } from '../../../application/abstractions/message-broker.interface';
-import EventInterface from '../../../domain/events/event.interface';
+import { Connection, Channel, connect, Message } from "amqplib";
+import { MessageBrokerInterface, exchangeType } from "../../../application/abstractions/message-broker.interface";
 
 export class RabbitmqMessageBroker implements MessageBrokerInterface {
-  private channel: amqp.Channel | null = null;
-  private exchangeName: string = 'baileys-api';
+  private conn: Connection;
+  private channel: Channel;
 
-  constructor() {
-    this.connect()
-      .then((r) => logger.info('AMQP initialized'))
-      .catch((error) =>
-        logger.error('Erro ao inicializar AMQP:', error.message),
-      );
+  constructor(private uri: string) {}
+
+  async start(): Promise<void> {
+    this.conn = await connect(this.uri);
+    this.channel = await this.conn.createChannel();
   }
 
-  private async connect() {
-    logger.info('RabbitmqMessageBroker connecting...');
-    const connection = await amqp.connect(Config.rabbitmqUri());
-    this.channel = await connection.createChannel();
+  async publishInQueue(queue: string, message: string): Promise<boolean> {
+    return this.channel.sendToQueue(queue, Buffer.from(message));
+  }
 
-    await this.channel.assertExchange(this.exchangeName, 'topic', {
-      durable: true,
-      autoDelete: false,
+  async publishInExchange(
+    exchange: string,
+    routingKey: string,
+    message: string
+  ): Promise<boolean> {
+    return this.channel.publish(exchange, routingKey, Buffer.from(message));
+  }
+
+  async consume(queue: string, callback: (message: Message) => void) {
+    return this.channel.consume(queue, (message) => {
+      if(!message) return;
+
+      callback(message);
+      this.channel.ack(message);
     });
   }
 
-  async publishEvent(event: EventInterface, routingKey: string): Promise<void> {
-    if (!this.channel) {
-      throw new AppError({
-        message:
-          'The connection has not been established. Call connect() before sending messages.',
-        isOperational: true,
-        statusCode: HttpCode['NOT_FOUND'],
-      });
-    }
+  async createExchange(exchange: string, type: exchangeType, options: object = {}): Promise<void> {
+    await this.channel.assertExchange(exchange, type, options);
+  }
+  async createQueue(queue: string, options: object = {}): Promise<void> {
+    await this.channel.assertQueue(queue, options);
+  }
 
-    this.channel.publish(
-      this.exchangeName,
-      routingKey,
-      Buffer.from(JSON.stringify(event)),
-    );
-    logger.info(
-      `Message sent to exchange ${this.exchangeName} with routing key ${routingKey}: ${JSON.stringify(event)}`,
-    );
+  async bindQueue(queue: string, exchange: string, routingKey: string): Promise<void> {
+    await this.channel.bindQueue(queue, exchange, routingKey);
   }
 }

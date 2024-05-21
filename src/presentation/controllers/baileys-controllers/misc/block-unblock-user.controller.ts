@@ -3,6 +3,7 @@ import { WhatsappService } from '../../../../modules/baileys/facade/baileys.faca
 import { HttpRequest } from '../../../http-types/http-request';
 import { HttpResponse } from '../../../http-types/http-response';
 import { blockUnblockUserValidator } from '../../../validators/baileys/misc/block-unblock-user.validator';
+import { Config } from '../../../../modules/@shared/infra/config';
 
 export class BlockUnblockUserController implements ControllerInterface {
   constructor(private usecase: WhatsappService) {}
@@ -27,6 +28,7 @@ export class BlockUnblockUserController implements ControllerInterface {
       {
         message: 'Block and Unblock Successfully',
         data: execute,
+        routingKey: Config.routingKey()
       },
       { 'Content-Type': 'application/json' },
       200,

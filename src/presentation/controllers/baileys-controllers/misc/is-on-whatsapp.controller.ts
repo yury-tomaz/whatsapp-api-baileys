@@ -3,6 +3,7 @@ import { WhatsappService } from '../../../../modules/baileys/facade/baileys.faca
 import { HttpRequest } from '../../../http-types/http-request';
 import { HttpResponse } from '../../../http-types/http-response';
 import { isOnWhatsappValidator } from '../../../validators/baileys/misc/is-on-whatsapp.validator';
+import { Config } from '../../../../modules/@shared/infra/config';
 
 export class IsOnWhatsappController implements ControllerInterface {
   constructor(private usecase: WhatsappService) {}
@@ -25,6 +26,7 @@ export class IsOnWhatsappController implements ControllerInterface {
       {
         message: 'Is on whatsapp successfully',
         data: execute,
+        routingKey: Config.routingKey()
       },
       { 'Content-Type': 'application/json' },
       200,

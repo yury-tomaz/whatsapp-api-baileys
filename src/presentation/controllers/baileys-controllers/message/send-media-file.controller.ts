@@ -3,6 +3,7 @@ import { WhatsappService } from '../../../../modules/baileys/facade/baileys.faca
 import { HttpRequest } from '../../../http-types/http-request';
 import { HttpResponse } from '../../../http-types/http-response';
 import { sendMediaFileValidator } from '../../../validators/baileys/message/send-media-file.validator';
+import { Config } from '../../../../modules/@shared/infra/config';
 
 export class SendMediaFileController implements ControllerInterface {
   constructor(private usecase: WhatsappService) {}
@@ -32,6 +33,7 @@ export class SendMediaFileController implements ControllerInterface {
       {
         message: 'Send Media File Successfully',
         data: execute,
+        routingKey: Config.routingKey()
       },
       { 'Content-Type': 'application/json' },
       200,

@@ -12,6 +12,7 @@ import { router } from '../routes';
 import path from 'path';
 import { config } from 'dotenv';
 import { RabbitmqMessageBroker } from '../../modules/@shared/infra/services/message-broker/rabbitmq-message-broker';
+import { Config } from '../../modules/@shared/infra/config';
 
 config();
 
@@ -23,7 +24,7 @@ app.use(pinoHttp({ logger }));
 app.use(compression());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-const messageBroker = new RabbitmqMessageBroker();
+
 
 app.use(express.static(path.join(__dirname, '..', '..', 'public')));
 app.set('view engine', 'ejs');
@@ -35,4 +36,4 @@ app.use((err: AppError, req: Request, res: Response, next: NextFunction) => {
   errorHandler.handleError(err, res);
 });
 
-export { app, messageBroker };
+export { app };

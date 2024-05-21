@@ -6,6 +6,7 @@ import {
   AppError,
   HttpCode,
 } from '../../../../modules/@shared/domain/exceptions/app-error';
+import { Config } from '../../../../modules/@shared/infra/config';
 
 export class LogoutInstanceController implements ControllerInterface {
   constructor(private usecase: WhatsappService) {}
@@ -27,6 +28,7 @@ export class LogoutInstanceController implements ControllerInterface {
     return new HttpResponse(
       {
         message: 'Successful logout',
+        routingKey: Config.routingKey()
       },
       { 'Content-Type': 'application/json' },
       200,

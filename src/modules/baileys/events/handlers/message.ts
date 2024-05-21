@@ -3,6 +3,8 @@ import { BaileysEventHandler, transformMongo } from "./chat";
 import { mongoDBManager } from "../../../@shared/infra/persistence/settings/connection";
 import { logger } from "../../../@shared/infra/logger";
 import { downloadMessage } from "../../helpers/download-message.helper";
+import { eventDispatcher } from '../../../../main/server/server';
+import { EventOccurredWhatsappEvent } from '../event-occurred-whatsapp.event';
 
 const getKeyAuthor = (key: WAMessageKey | undefined | null) =>
     (key?.fromMe ? 'me' : key?.participant || key?.remoteJid) || '';
@@ -112,8 +114,13 @@ export default function messageHandler(sessionId: string, event: BaileysEventEmi
                       break;
                 }
 
-                // TODO: send event to Message Brocker
-                logger.info('message broker => mensagem')
+                eventDispatcher.notify(new EventOccurredWhatsappEvent({
+                  routingKey: 'baileys.event.message',
+                  data: {
+                    ...notifyData,
+                    sessionId: sessionId,
+                  },
+                }))
           
             }
             }catch(err){

@@ -3,6 +3,7 @@ import { WhatsappService } from '../../../../modules/baileys/facade/baileys.faca
 import { HttpRequest } from '../../../http-types/http-request';
 import { HttpResponse } from '../../../http-types/http-response';
 import { sendTextMessageValidator } from '../../../validators/baileys/message/send-text-message.validator';
+import { Config } from '../../../../modules/@shared/infra/config';
 
 export class SendTextMessageController implements ControllerInterface {
   constructor(private usecase: WhatsappService) {}
@@ -23,6 +24,7 @@ export class SendTextMessageController implements ControllerInterface {
       {
         message: 'Text Message Sent Successfully',
         data: execute,
+        routingKey: Config.routingKey()
       },
       { 'Content-Type': 'application/json' },
       200,
