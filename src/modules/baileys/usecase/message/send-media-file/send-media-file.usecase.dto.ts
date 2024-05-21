@@ -1,4 +1,4 @@
-export interface SendMediaFileUseCaseDto {
+export default interface SendMediaFileUseCaseDto {
   id: string;
   to: string;
   type: 'image' | 'video' | 'audio' | 'document';

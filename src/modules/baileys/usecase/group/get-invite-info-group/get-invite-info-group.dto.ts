@@ -1,4 +1,4 @@
-export interface GetInviteInGroupDto {
+export default interface GetInviteInGroupDto {
   id: string;
   code: string;
 }

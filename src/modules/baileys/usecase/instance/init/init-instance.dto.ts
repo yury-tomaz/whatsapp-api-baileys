@@ -1,4 +1,4 @@
-export interface InitInstanceInputDto {
+export default interface InitInstanceInputDto {
   name: string;
   belongsTo?: string;
 }

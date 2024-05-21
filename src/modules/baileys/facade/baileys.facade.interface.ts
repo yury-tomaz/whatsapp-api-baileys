@@ -1,64 +1,39 @@
-import { GetInfoUseCaseDTO } from '../usecase/instance/get-info/get-instance-info.dto';
-import {
-  GetQrCodeUseCaseInputDTO,
-  GetQrCodeUseCaseOutPutDTO,
-} from '../usecase/instance/get-qr-code/get-qr-code.usecase.dto';
-import { DeleteInstanceUseCaseDto } from '../usecase/instance/delete/delete-instance.usecase.dto';
-import { SendTextMessageUseCaseDto } from '../usecase/message/send-text-message/send-text-message.dto';
-import { SendUrlMediaFileUseCaseDto } from '../usecase/message/send-url-media-file/send-url-media-file.usecase.dto';
-import { CreateGroupDto } from '../usecase/group/create-group/create-group.dto';
-import { LeaveGroupDto } from '../usecase/group/leave-group/leave-group.dto';
-import { InviteCodeGroupDto } from '../usecase/group/invite-code-group/invite-code-group.dto';
-import { UpdateSubjectGroupDto } from '../usecase/group/update-subject-group/update-subject-group.dto';
-import { UpdateDescriptionGroupDto } from '../usecase/group/update-description-group/update-description-group.dto';
-import { AcceptInviteGroupDto } from '../usecase/group/accept-invite-group/accept-invite-group.dto';
-import { IsOnWhatsappDto } from '../usecase/misc/is-on-whatsapp/is-on-whatsapp.dto';
-import { BlockUnblockUserDto } from '../usecase/misc/block-unblock-user/block-unblock-user.dto';
-import { GetUserStatusDto } from '../usecase/misc/get-status-user/get-status-user.dto';
-import { GetProfilePictureDto } from '../usecase/misc/get-profile-picture/get-profile-picture.dto';
-import { UpdateProfilePictureDto } from '../usecase/misc/update-profile-picture/update-profile-picture.dto';
-import { MakeUserGroupDto } from '../usecase/group/make-user-group/make-user-group.dto';
-import { UpdateSettingsGroupDto } from '../usecase/group/update-settings-group/update-settings-group.dto';
-import { GetInviteInGroupDto } from '../usecase/group/get-invite-info-group/get-invite-info-group.dto';
-import { InitInstanceInputDto } from '../usecase/instance/init/init-instance.dto';
-import { SendMediaFileUseCaseDto } from '../usecase/message/send-media-file/send-media-file.usecase.dto';
-import { LogoutInstanceUseCaseDto } from '../usecase/instance/logout/logout-instance.usecase.dto';
-
+import * as dto from './dtos';
 interface InstanceService {
-  init(input: InitInstanceInputDto): Promise<any>;
-  info(input: GetInfoUseCaseDTO): Promise<void>;
-  qr(input: GetQrCodeUseCaseInputDTO): Promise<GetQrCodeUseCaseOutPutDTO>;
-  logout(input: LogoutInstanceUseCaseDto): Promise<void>;
-  delete(input: DeleteInstanceUseCaseDto): Promise<void>;
+  init(input: dto.InitInstanceInputDto): Promise<any>;
+  info(input: dto.GetInfoUseCaseDTO): Promise<void>;
+  qr(input: dto.GetQrCodeUseCaseInputDTO): Promise<dto.GetQrCodeUseCaseOutPutDTO>;
+  logout(input: dto.LogoutInstanceUseCaseDto): Promise<void>;
+  delete(input: dto.DeleteInstanceUseCaseDto): Promise<void>;
 }
 
 interface MessageService {
-  sendTextMessage(input: SendTextMessageUseCaseDto): Promise<void>;
-  sendUrlMediaFile(input: SendUrlMediaFileUseCaseDto): Promise<void>;
-  sendMediaFile(input: SendMediaFileUseCaseDto): Promise<void>;
+  sendTextMessage(input: dto.SendTextMessageUseCaseDto): Promise<void>;
+  sendUrlMediaFile(input: dto.SendUrlMediaFileUseCaseDto): Promise<void>;
+  sendMediaFile(input: dto.SendMediaFileUseCaseDto): Promise<void>;
 }
 
 interface GroupService {
-  createNewGroup(input: CreateGroupDto): Promise<any>;
+  createNewGroup(input: dto.CreateGroupDto): Promise<any>;
   //getAllGroups(): Promise<void>;
-  leaveGroup(input: LeaveGroupDto): Promise<any>;
-  getInviteCodeGroup(input: InviteCodeGroupDto): Promise<any>;
-  makeUserGroup(input: MakeUserGroupDto): Promise<any>;
+  leaveGroup(input: dto.LeaveGroupDto): Promise<any>;
+  getInviteCodeGroup(input: dto.InviteCodeGroupDto): Promise<any>;
+  makeUserGroup(input: dto.MakeUserGroupDto): Promise<any>;
   //getInstanceInviteCodeGroup(): Promise<void>;
   //groupFetchAllParticipating(): Promise<void>;
-  groupSettingUpdate(input: UpdateSettingsGroupDto): Promise<void>;
-  groupUpdateSubject(input: UpdateSubjectGroupDto): Promise<any>;
-  groupUpdateDescription(input: UpdateDescriptionGroupDto): Promise<any>;
-  groupGetInviteInfo(input: GetInviteInGroupDto): Promise<void>;
-  groupAcceptInvite(input: AcceptInviteGroupDto): Promise<any>;
+  groupSettingUpdate(input: dto.UpdateSettingsGroupDto): Promise<void>;
+  groupUpdateSubject(input: dto.UpdateSubjectGroupDto): Promise<any>;
+  groupUpdateDescription(input: dto.UpdateDescriptionGroupDto): Promise<any>;
+  groupGetInviteInfo(input: dto.GetInviteInGroupDto): Promise<void>;
+  groupAcceptInvite(input: dto.AcceptInviteGroupDto): Promise<any>;
 }
 
 interface MiscService {
-  verifyId(input: IsOnWhatsappDto): Promise<any>;
-  downloadProfile(input: GetProfilePictureDto): Promise<any>;
-  getUserStatus(input: GetUserStatusDto): Promise<any>;
-  blockUnblock(input: BlockUnblockUserDto): Promise<any>;
-  updateProfilePicture(input: UpdateProfilePictureDto): Promise<any>;
+  verifyId(input: dto.IsOnWhatsappDto): Promise<any>;
+  downloadProfile(input: dto.GetProfilePictureDto): Promise<any>;
+  getUserStatus(input: dto.GetUserStatusDto): Promise<any>;
+  blockUnblock(input: dto.BlockUnblockUserDto): Promise<any>;
+  updateProfilePicture(input: dto.UpdateProfilePictureDto): Promise<any>;
   // getUserOrGroupById(): Promise<void>;
 }
 

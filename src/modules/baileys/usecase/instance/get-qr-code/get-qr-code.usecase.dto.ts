@@ -1,4 +1,4 @@
-export interface GetQrCodeUseCaseInputDTO {
+export default interface GetQrCodeUseCaseInputDTO {
   id: string;
 }
 

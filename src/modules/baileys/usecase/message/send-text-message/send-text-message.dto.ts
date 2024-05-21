@@ -1,4 +1,4 @@
-export interface SendTextMessageUseCaseDto {
+export default interface SendTextMessageUseCaseDto {
   id: string;
   to: string;
   message: string;

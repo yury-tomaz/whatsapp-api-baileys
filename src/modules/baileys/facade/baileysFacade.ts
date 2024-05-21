@@ -1,28 +1,6 @@
 import { WhatsappService } from './baileys.facade.interface';
 import UseCaseInterface from '../../@shared/application/use-case/use-case.interface';
-import { GetInfoUseCaseDTO } from '../usecase/instance/get-info/get-instance-info.dto';
-import { GetQrCodeUseCaseInputDTO } from '../usecase/instance/get-qr-code/get-qr-code.usecase.dto';
-import { DeleteInstanceUseCaseDto } from '../usecase/instance/delete/delete-instance.usecase.dto';
-import { SendTextMessageUseCaseDto } from '../usecase/message/send-text-message/send-text-message.dto';
-import { SendUrlMediaFileUseCaseDto } from '../usecase/message/send-url-media-file/send-url-media-file.usecase.dto';
-import { InitInstanceInputDto } from '../usecase/instance/init/init-instance.dto';
-import { CreateGroupDto } from '../usecase/group/create-group/create-group.dto';
-import { LeaveGroupDto } from '../usecase/group/leave-group/leave-group.dto';
-import { InviteCodeGroupDto } from '../usecase/group/invite-code-group/invite-code-group.dto';
-import { AcceptInviteGroupDto } from '../usecase/group/accept-invite-group/accept-invite-group.dto';
-import { UpdateDescriptionGroupDto } from '../usecase/group/update-description-group/update-description-group.dto';
-import { UpdateSubjectGroupDto } from '../usecase/group/update-subject-group/update-subject-group.dto';
-import { BlockUnblockUserDto } from '../usecase/misc/block-unblock-user/block-unblock-user.dto';
-import { IsOnWhatsappDto } from '../usecase/misc/is-on-whatsapp/is-on-whatsapp.dto';
-import { GetUserStatusDto } from '../usecase/misc/get-status-user/get-status-user.dto';
-import { GetProfilePictureDto } from '../usecase/misc/get-profile-picture/get-profile-picture.dto';
-import { UpdateProfilePictureDto } from '../usecase/misc/update-profile-picture/update-profile-picture.dto';
-import { MakeUserGroupDto } from '../usecase/group/make-user-group/make-user-group.dto';
-import { UpdateSettingsGroupDto } from '../usecase/group/update-settings-group/update-settings-group.dto';
-import { GetInviteInGroupDto } from '../usecase/group/get-invite-info-group/get-invite-info-group.dto';
-import { SendMediaFileUseCaseDto } from '../usecase/message/send-media-file/send-media-file.usecase.dto';
-import { LogoutInstanceUseCaseDto } from '../usecase/instance/logout/logout-instance.usecase.dto';
-
+import * as dto from './dtos';
 export interface UseCasesProps {
   initUseCase: UseCaseInterface;
   infoUseCase: UseCaseInterface;
@@ -34,11 +12,8 @@ export interface UseCasesProps {
   sendMediaFileUseCase: UseCaseInterface;
   createGroupUseCase: UseCaseInterface;
   makeUserGroupUseCase: UseCaseInterface;
-  //getAllGroups: UseCaseInterface;
   leaveGroupUseCase: UseCaseInterface;
   getInviteCodeGroupUseCase: UseCaseInterface;
-  //groupFetchAllParticipating: UseCaseInterface;
-  //groupParticipantsUpdate: UseCaseInterface;
   groupSettingUpdate: UseCaseInterface;
   groupUpdateSubjectUseCase: UseCaseInterface;
   groupUpdateDescriptionUseCase: UseCaseInterface;
@@ -100,83 +75,83 @@ export class BaileysFacade implements WhatsappService {
     this._groupGetInviteInfo = props.groupGetInviteInfo;
   }
 
-  init(input: InitInstanceInputDto) {
+  init(input: dto.InitInstanceInputDto) {
     return this._initUseCase.execute(input);
   }
-  info(input: GetInfoUseCaseDTO) {
+  info(input: dto.GetInfoUseCaseDTO) {
     return this._infoUseCase.execute(input);
   }
-  qr(input: GetQrCodeUseCaseInputDTO) {
+  qr(input: dto.GetQrCodeUseCaseInputDTO) {
     return this._qrUseCase.execute(input);
   }
-  logout(input: LogoutInstanceUseCaseDto) {
+  logout(input: dto.LogoutInstanceUseCaseDto) {
     return this._logoutUseCase.execute(input);
   }
-  delete(input: DeleteInstanceUseCaseDto) {
+  delete(input: dto.DeleteInstanceUseCaseDto) {
     return this._deleteUseCase.execute(input);
   }
-  sendTextMessage(input: SendTextMessageUseCaseDto) {
+  sendTextMessage(input: dto.SendTextMessageUseCaseDto) {
     return this._sendTextMessageUseCase.execute(input);
   }
-  sendUrlMediaFile(input: SendUrlMediaFileUseCaseDto) {
+  sendUrlMediaFile(input: dto.SendUrlMediaFileUseCaseDto) {
     return this._sendUrlMediaFileUseCase.execute(input);
   }
-  sendMediaFile(input: SendMediaFileUseCaseDto) {
+  sendMediaFile(input: dto.SendMediaFileUseCaseDto) {
     return this._sendMediaFileUseCase.execute(input);
   }
-  createNewGroup(input: CreateGroupDto) {
+  createNewGroup(input: dto.CreateGroupDto) {
     return this._createNewGroup.execute(input);
   }
 
-  leaveGroup(input: LeaveGroupDto) {
+  leaveGroup(input: dto.LeaveGroupDto) {
     return this._leaveGroup.execute(input);
   }
 
-  getInviteCodeGroup(input: InviteCodeGroupDto) {
+  getInviteCodeGroup(input: dto.InviteCodeGroupDto) {
     return this._getInviteCodeGroup.execute(input);
   }
 
-  groupAcceptInvite(input: AcceptInviteGroupDto) {
+  groupAcceptInvite(input: dto.AcceptInviteGroupDto) {
     return this._groupAcceptInvite.execute(input);
   }
 
-  groupUpdateDescription(input: UpdateDescriptionGroupDto) {
+  groupUpdateDescription(input: dto.UpdateDescriptionGroupDto) {
     return this._groupUpdateDescription.execute(input);
   }
 
-  groupUpdateSubject(input: UpdateSubjectGroupDto) {
+  groupUpdateSubject(input: dto.UpdateSubjectGroupDto) {
     return this._groupUpdateSubject.execute(input);
   }
 
-  makeUserGroup(input: MakeUserGroupDto) {
+  makeUserGroup(input: dto.MakeUserGroupDto) {
     return this._makeUserGroupUseCase.execute(input);
   }
 
-  groupSettingUpdate(input: UpdateSettingsGroupDto) {
+  groupSettingUpdate(input: dto.UpdateSettingsGroupDto) {
     return this._groupSettingUpdate.execute(input);
   }
 
-  groupGetInviteInfo(input: GetInviteInGroupDto) {
+  groupGetInviteInfo(input: dto.GetInviteInGroupDto) {
     return this._groupGetInviteInfo.execute(input);
   }
 
-  blockUnblock(input: BlockUnblockUserDto) {
+  blockUnblock(input: dto.BlockUnblockUserDto) {
     return this._blockUnblock.execute(input);
   }
 
-  verifyId(input: IsOnWhatsappDto) {
+  verifyId(input: dto.IsOnWhatsappDto) {
     return this._verifyId.execute(input);
   }
 
-  getUserStatus(input: GetUserStatusDto) {
+  getUserStatus(input: dto.GetUserStatusDto) {
     return this._getUserStatus.execute(input);
   }
 
-  downloadProfile(input: GetProfilePictureDto) {
+  downloadProfile(input: dto.GetProfilePictureDto) {
     return this._downloadProfile.execute(input);
   }
 
-  updateProfilePicture(input: UpdateProfilePictureDto) {
+  updateProfilePicture(input: dto.UpdateProfilePictureDto) {
     return this._updateProfilePicture.execute(input);
   }
 }

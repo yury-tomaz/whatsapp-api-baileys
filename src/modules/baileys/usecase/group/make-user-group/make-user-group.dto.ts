@@ -1,4 +1,4 @@
-export interface MakeUserGroupDto {
+export default interface MakeUserGroupDto {
   id: string;
   groupId: string;
   users: string[];

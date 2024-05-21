@@ -1,3 +1,3 @@
-export interface GetInfoUseCaseDTO {
+export default interface GetInfoUseCaseDTO {
   id: string;
 }
