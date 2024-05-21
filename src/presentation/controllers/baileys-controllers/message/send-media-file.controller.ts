@@ -33,7 +33,7 @@ export class SendMediaFileController implements ControllerInterface {
       {
         message: 'Send Media File Successfully',
         data: execute,
-        routingKey: Config.routingKey()
+        routingKey: Config.routingKey(),
       },
       { 'Content-Type': 'application/json' },
       200,

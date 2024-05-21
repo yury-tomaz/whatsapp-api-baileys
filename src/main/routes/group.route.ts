@@ -1,6 +1,5 @@
 import { Router, Request, Response } from 'express';
 import { requestAdapter } from '../adapters/request-adapter';
-import { BaileysComposer } from '../compose/baileys/bailyes.composer';
 import { controller } from './index';
 
 const groupRoute = Router();

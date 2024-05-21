@@ -23,6 +23,7 @@ import { GetInviteInGroupDto } from '../usecase/group/get-invite-info-group/get-
 import { InitInstanceInputDto } from '../usecase/instance/init/init-instance.dto';
 import { SendMediaFileUseCaseDto } from '../usecase/message/send-media-file/send-media-file.usecase.dto';
 import { LogoutInstanceUseCaseDto } from '../usecase/instance/logout/logout-instance.usecase.dto';
+import { FindAllMessageUseCaseDto } from '../usecase/message/find-all-message/find-all-message.dto';
 
 interface InstanceService {
   init(input: InitInstanceInputDto): Promise<any>;
@@ -36,6 +37,7 @@ interface MessageService {
   sendTextMessage(input: SendTextMessageUseCaseDto): Promise<void>;
   sendUrlMediaFile(input: SendUrlMediaFileUseCaseDto): Promise<void>;
   sendMediaFile(input: SendMediaFileUseCaseDto): Promise<void>;
+  findAllMessages(input: FindAllMessageUseCaseDto): Promise<any>;
 }
 
 interface GroupService {

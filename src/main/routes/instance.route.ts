@@ -1,5 +1,4 @@
 import { Router, Request, Response } from 'express';
-import { BaileysComposer } from '../compose/baileys/bailyes.composer';
 import { requestAdapter } from '../adapters/request-adapter';
 import { controller } from './index';
 

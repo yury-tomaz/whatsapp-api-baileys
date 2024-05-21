@@ -26,7 +26,7 @@ export class GetStatusUserController implements ControllerInterface {
       {
         message: 'Get status user successfully',
         data: execute,
-        routingKey: Config.routingKey()
+        routingKey: Config.routingKey(),
       },
       { 'Content-Type': 'application/json' },
       200,

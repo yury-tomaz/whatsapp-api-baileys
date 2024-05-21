@@ -23,18 +23,16 @@ import { MakeUserGroupUseCase } from '../usecase/group/make-user-group/make-user
 import { UpdateSettingsGroupUseCase } from '../usecase/group/update-settings-group/update-settings-group.useCase';
 import { GetInviteInfoGroupUseCase } from '../usecase/group/get-invite-info-group/get-invite-info-group.useCase';
 
-import EventDispatcher from '../../@shared/domain/events/event-dispatcher';
-
+import { MessageRepository } from '../repository/message-repository';
+import { FindAllMessageUseCase } from '../usecase/message/find-all-message/find-all-messages.usecase';
 
 export class BaileysFactory {
   static create() {
-
     const baileysManager = BaileysInstanceRepositoryInMemory.getInstance();
+    const messageRepository = new MessageRepository();
 
-    const initUseCase = new InitInstanceUseCase(
-      baileysManager,
-    );
-    
+    const initUseCase = new InitInstanceUseCase(baileysManager);
+
     const infoUseCase = new GetInfoUseCase(baileysManager);
     const qrUseCase = new GetQrCodeUsecase(baileysManager);
     const logoutUseCase = new LogoutInstanceUseCase(baileysManager);
@@ -68,6 +66,7 @@ export class BaileysFactory {
     );
     const verifyIdUseCase = new IsOnWhatsappUseCase(baileysManager);
     const blockUnblockUseCase = new BlockUnblockUserUseCase(baileysManager);
+    const findAllMessages = new FindAllMessageUseCase(messageRepository);
 
     return new BaileysFacade({
       initUseCase,
@@ -92,6 +91,7 @@ export class BaileysFactory {
       makeUserGroupUseCase,
       groupSettingUpdate,
       groupGetInviteInfo,
+      findAllMessages,
     });
   }
 }

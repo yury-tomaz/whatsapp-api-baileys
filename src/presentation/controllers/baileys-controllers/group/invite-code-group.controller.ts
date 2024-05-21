@@ -25,7 +25,7 @@ export class InviteCodeGroupController implements ControllerInterface {
         data: {
           code: execute,
         },
-        routingKey: Config.routingKey()
+        routingKey: Config.routingKey(),
       },
       { 'Content-Type': 'application/json' },
       200,

@@ -18,7 +18,7 @@ export class DeleteInstanceController {
     return new HttpResponse(
       {
         message: 'Instance successfully deleted.',
-        routingKey: Config.routingKey()
+        routingKey: Config.routingKey(),
       },
       { 'Content-Type': 'application/json' },
       200,

@@ -21,9 +21,9 @@ export class Config {
     return Config.env.RABBITMQ_URI;
   }
 
-  static routingKey(){
+  static routingKey() {
     Config.readEnv();
-    return Config.env.ROUTING_KEY
+    return Config.env.ROUTING_KEY;
   }
 
   static db() {
