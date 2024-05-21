@@ -30,6 +30,33 @@ run the project
 npm run dev
 ```
 
+## Authentication
+
+1. Generate RSA Keys
+Run the following command to create RSA keys:
+
+```bash
+node create-rsa.js
+```
+
+2. Generate Token
+Execute the command below to generate a token:
+
+```bash
+node generate-token.js
+```
+
+3. Copy the generated token from the console and use it in your requests.
+
+Example:
+```bash
+curl -X GET \
+  https://api.example.com/data \
+  -H 'Authorization: Bearer <token>'
+```
+
+
+
 ## Docker
 This project uses a Dockerized development environment. Below are the details about the configured development environment:
 
@@ -50,7 +77,7 @@ docker exec -it container-name  /bin/bash
 You can now run commands as if you were in the local environment. For instance:
 ```
 npm install
-npm start
+npm run dev
 ```
 
 ## API Documentation
