@@ -5,6 +5,7 @@ interface InstanceService {
   qr(input: dto.GetQrCodeUseCaseInputDTO): Promise<dto.GetQrCodeUseCaseOutPutDTO>;
   logout(input: dto.LogoutInstanceUseCaseDto): Promise<void>;
   delete(input: dto.DeleteInstanceUseCaseDto): Promise<void>;
+  restore(): Promise<void>;
 }
 
 interface MessageService {
