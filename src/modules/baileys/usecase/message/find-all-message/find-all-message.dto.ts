@@ -1,4 +1,4 @@
-export interface FindAllMessageUseCaseDto {
+export default interface FindAllMessageUseCaseDto {
   id: string;
   page: number;
   limit: number;

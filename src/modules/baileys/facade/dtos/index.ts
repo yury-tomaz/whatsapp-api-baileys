@@ -20,3 +20,4 @@ export { default as GetInviteInGroupDto } from '../../usecase/group/get-invite-i
 export { default as InitInstanceInputDto } from '../../usecase/instance/init/init-instance.dto';
 export { default as SendMediaFileUseCaseDto } from '../../usecase/message/send-media-file/send-media-file.usecase.dto';
 export { default as LogoutInstanceUseCaseDto } from '../../usecase/instance/logout/logout-instance.usecase.dto';
+export {default as FindAllMessageUseCaseDto} from '../../usecase/message/find-all-message/find-all-message.dto';

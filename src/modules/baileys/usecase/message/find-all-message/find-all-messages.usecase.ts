@@ -1,4 +1,4 @@
-import { FindAllMessageUseCaseDto } from './find-all-message.dto';
+import FindAllMessageUseCaseDto from './find-all-message.dto';
 import { MessageRepository } from '../../../repository/message-repository';
 import { getWhatsAppId } from '../../../helpers/get-whats-app-Id';
 
