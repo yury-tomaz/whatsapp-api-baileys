@@ -3,32 +3,30 @@ import { WhatsappService } from '../../../../modules/baileys/facade/baileys.faca
 import { HttpRequest } from '../../../http-types/http-request';
 import { HttpResponse } from '../../../http-types/http-response';
 import { Config } from '../../../../modules/@shared/infra/config';
-import { findAllMessagesValidator } from '../../../validators/baileys/message/find-all-messages.validator';
+import { findAllContactsValidator } from '../../../validators/baileys/message/find-all-contacts.validator';
 
-export class FindAllMessagesController implements ControllerInterface {
+export class FindAllContactsController implements ControllerInterface {
   constructor(private usecase: WhatsappService) {}
 
   async handle(request: HttpRequest): Promise<HttpResponse> {
     const { id } = request.params;
-    const { page, limit, to } = request.query;
+    const { page, limit } = request.query;
 
-    findAllMessagesValidator.validateSync({
+    findAllContactsValidator.validateSync({
       id,
       page,
       limit,
-      to,
     });
 
-    const execute = await this.usecase.findAllMessages({
+    const execute = await this.usecase.findAllContacts({
       id,
       page,
       limit,
-      to,
     });
 
     return new HttpResponse(
       {
-        message: 'Messages Successfully',
+        message: 'Contacts Successfully',
         data: execute,
         routingKey: Config.routingKey(),
       },
