@@ -16,12 +16,11 @@ export class ContactRepository {
   }
 
   async find({ limit, page, sessionId }: ContactParams) {
-    const offset = page === 1 ? page - 1 : (page - 1) * limit;
+    const skip = page === 1 ? page - 1 : (page - 1) * limit;
 
-    const contacts = this.contactCollection.find(
-      { sessionId },
-      { limit, skip: offset },
-    );
+    const contacts = this.contactCollection
+      .find({ sessionId }, { limit, skip })
+      .toArray();
 
     return contacts;
   }
