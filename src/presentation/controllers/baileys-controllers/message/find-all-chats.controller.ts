@@ -18,7 +18,7 @@ export class FindAllChatsController implements ControllerInterface {
       limit,
     });
 
-    const execute = await this.usecase.findAllContacts({
+    const execute = await this.usecase.findAllChats({
       id,
       page,
       limit,
