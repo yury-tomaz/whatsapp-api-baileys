@@ -2,6 +2,7 @@ import { BaileysEventEmitter, BaileysEventMap } from '@whiskeysockets/baileys';
 import { mongoDBManager } from '../../../@shared/infra/persistence/settings/connection';
 import { transformMongo } from './chat';
 import { logger } from '../../../@shared/infra/logger';
+import { Config } from '../../../@shared/infra/config';
 
 export type BaileysEventHandler<T extends keyof BaileysEventMap> = (
   args: BaileysEventMap[T],
@@ -11,7 +12,9 @@ export default function contactHandler(
   sessionId: string,
   event: BaileysEventEmitter,
 ) {
-  const contactCollection = mongoDBManager.db.collection('contact');
+  const contactCollection = mongoDBManager
+    .db(Config.db().dbName)
+    .collection('contact');
   let listening = false;
 
   const set: BaileysEventHandler<'messaging-history.set'> = async ({

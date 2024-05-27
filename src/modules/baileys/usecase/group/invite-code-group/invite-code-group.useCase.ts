@@ -1,7 +1,7 @@
 import { BaileysInstanceRepositoryInMemory } from '../../../repository/baileys-instance-repository-in-memory';
 import { getWhatsAppId } from '../../../helpers/get-whats-app-Id';
 import { checkInstance } from '../../../helpers/check-Instance';
-import InviteCodeGroupDto  from './invite-code-group.dto';
+import InviteCodeGroupDto from './invite-code-group.dto';
 
 export class InviteCodeGroupUseCase {
   constructor(private baileysManager: BaileysInstanceRepositoryInMemory) {}

@@ -11,6 +11,7 @@ import { logger } from '../../../@shared/infra/logger';
 import { downloadMessage } from '../../helpers/download-message.helper';
 import { eventDispatcher } from '../../../../main/server/server';
 import { EventOccurredWhatsappEvent } from '../event-occurred-whatsapp.event';
+import { Config } from '../../../@shared/infra/config';
 
 const getKeyAuthor = (key: WAMessageKey | undefined | null) =>
   (key?.fromMe ? 'me' : key?.participant || key?.remoteJid) || '';
@@ -25,9 +26,11 @@ export default function messageHandler(
   sessionId: string,
   event: BaileysEventEmitter,
 ) {
-  const client = mongoDBManager.client;
-  const messageCollection = mongoDBManager.db.collection('message');
-  const chatCollection = mongoDBManager.db.collection('chat');
+  const client = mongoDBManager;
+  const messageCollection = mongoDBManager
+    .db(Config.db().dbName)
+    .collection('message');
+  const chatCollection = mongoDBManager.db().collection('chat');
   const session = client.startSession();
   let listening = false;
 

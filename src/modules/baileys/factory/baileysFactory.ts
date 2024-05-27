@@ -30,26 +30,30 @@ import { FindAllContactsUseCase } from '../usecase/message/find-all-contacts/fin
 import { ContactRepository } from '../repository/contact-repository';
 import { ChatRepository } from '../repository/chat-repository';
 import { FindAllChatsUseCase } from '../usecase/message/find-all-chats/find-all-chats.usecase';
+import { logger } from '../../@shared/infra/logger';
+import { ListInstancesUsecase } from '../usecase/instance/list/list-instances.usecase';
 
 export class BaileysFactory {
   static create() {
     const baileysManager = BaileysInstanceRepositoryInMemory.getInstance();
     const instanceRepository = new InstancesRepository();
-
-    const restoreAllInstanceUsecase = new RestoreAllInstanceUsecase(
-      instanceRepository,
-      baileysManager,
-    );
     const messageRepository = new MessageRepository();
     const contactRepository = new ContactRepository();
     const chatRepository = new ChatRepository();
 
     const initUseCase = new InitInstanceUseCase(baileysManager);
+    const restoreAllInstanceUsecase = new RestoreAllInstanceUsecase(
+      instanceRepository,
+      baileysManager,
+    );
 
     const infoUseCase = new GetInfoUseCase(baileysManager);
     const qrUseCase = new GetQrCodeUsecase(baileysManager);
     const logoutUseCase = new LogoutInstanceUseCase(baileysManager);
-    const deleteUseCase = new DeleteInstanceUseCase(baileysManager);
+    const deleteUseCase = new DeleteInstanceUseCase(
+      instanceRepository,
+      baileysManager,
+    );
     const sendTextMessageUseCase = new SendTextMessageUseCase(baileysManager);
     const sendUrlMediaFileUseCase = new SendUrlMediaFileUseCase(baileysManager);
     const sendMediaFileUseCase = new SendMediaFileUseCase(baileysManager);
@@ -81,6 +85,11 @@ export class BaileysFactory {
     const blockUnblockUseCase = new BlockUnblockUserUseCase(baileysManager);
     const findAllMessages = new FindAllMessageUseCase(messageRepository);
     const findAllContacts = new FindAllContactsUseCase(contactRepository);
+    const listInstances = new ListInstancesUsecase(baileysManager);
+
+    restoreAllInstanceUsecase.execute().then(() => {
+      logger.info('Sessions Restored Successfully');
+    });
     const findAllChats = new FindAllChatsUseCase(chatRepository);
 
     return new BaileysFacade({
@@ -110,6 +119,7 @@ export class BaileysFactory {
       findAllMessages,
       findAllContacts,
       findAllChats,
+      listInstances,
     });
   }
 }

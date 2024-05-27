@@ -23,3 +23,4 @@ export { default as LogoutInstanceUseCaseDto } from '../../usecase/instance/logo
 export { default as FindAllMessageUseCaseDto } from '../../usecase/message/find-all-message/find-all-message.dto';
 export { default as FindAllContactsUseCaseDto } from '../../usecase/message/find-all-contacts/find-all-contacts.dto';
 export { default as FindAllChatsUseCaseDto } from '../../usecase/message/find-all-chats/find-all-chats.dto';
+export { default as ListInstancesUsecaseOutpuDto } from '../../usecase/instance/list/list-instances.dto';

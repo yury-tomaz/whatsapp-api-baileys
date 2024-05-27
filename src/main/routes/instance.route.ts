@@ -23,4 +23,12 @@ instanceRoute.get('/instance/:id/info', (req: Request, res: Response) =>
   requestAdapter(req, res, controller.info),
 );
 
+instanceRoute.post('/instance/restore', (req: Request, res: Response) =>
+  requestAdapter(req, res, controller.restore),
+);
+
+instanceRoute.get('/instances', (req: Request, res: Response) =>
+  requestAdapter(req, res, controller.listInstances),
+);
+
 export default instanceRoute;

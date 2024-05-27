@@ -1,7 +1,7 @@
 import { BaileysInstanceRepositoryInMemory } from '../../../repository/baileys-instance-repository-in-memory';
 import { getWhatsAppId } from '../../../helpers/get-whats-app-Id';
 import { checkInstance } from '../../../helpers/check-Instance';
-import UpdateProfilePictureDto  from './update-profile-picture.dto';
+import UpdateProfilePictureDto from './update-profile-picture.dto';
 
 export class UpdateProfilePictureUseCase {
   constructor(private baileysManager: BaileysInstanceRepositoryInMemory) {}

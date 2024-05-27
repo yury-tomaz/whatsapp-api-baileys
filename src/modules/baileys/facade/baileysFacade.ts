@@ -1,6 +1,7 @@
 import { WhatsappService } from './baileys.facade.interface';
 import UseCaseInterface from '../../@shared/application/use-case/use-case.interface';
 import * as dto from './dtos';
+import { ListInstancesUsecaseOutpuDto } from './dtos';
 
 export interface UseCasesProps {
   initUseCase: UseCaseInterface;
@@ -29,6 +30,7 @@ export interface UseCasesProps {
   findAllMessages: UseCaseInterface;
   findAllContacts: UseCaseInterface;
   findAllChats: UseCaseInterface;
+  listInstances: UseCaseInterface;
 }
 
 export class BaileysFacade implements WhatsappService {
@@ -58,6 +60,7 @@ export class BaileysFacade implements WhatsappService {
   _findAllMessages: UseCaseInterface;
   _findAllContacts: UseCaseInterface;
   _findAllChats: UseCaseInterface;
+  _listInstances: UseCaseInterface;
 
   constructor(props: UseCasesProps) {
     this._initUseCase = props.initUseCase;
@@ -86,6 +89,7 @@ export class BaileysFacade implements WhatsappService {
     this._findAllMessages = props.findAllMessages;
     this._findAllContacts = props.findAllContacts;
     this._findAllChats = props.findAllChats;
+    this._listInstances = props.listInstances;
   }
 
   init(input: dto.InitInstanceInputDto) {
@@ -179,6 +183,9 @@ export class BaileysFacade implements WhatsappService {
 
   findAllContacts(input: dto.FindAllContactsUseCaseDto) {
     return this._findAllContacts.execute(input);
+  }
+  list(): Promise<dto.ListInstancesUsecaseOutpuDto[]> {
+    return this._listInstances.execute(undefined);
   }
 
   findAllChats(input: dto.FindAllChatsUseCaseDto) {

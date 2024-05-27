@@ -1,6 +1,6 @@
 import { BaileysInstanceRepositoryInMemory } from '../../../repository/baileys-instance-repository-in-memory';
 import { checkInstance } from '../../../helpers/check-Instance';
-import AcceptInviteGroupDto  from './accept-invite-group.dto';
+import AcceptInviteGroupDto from './accept-invite-group.dto';
 
 export class AcceptInviteGroupUseCase {
   constructor(private baileysManager: BaileysInstanceRepositoryInMemory) {}
