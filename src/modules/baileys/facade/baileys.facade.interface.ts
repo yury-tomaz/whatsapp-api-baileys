@@ -17,6 +17,7 @@ interface MessageService {
   sendMediaFile(input: dto.SendMediaFileUseCaseDto): Promise<void>;
   findAllMessages(input: dto.FindAllMessageUseCaseDto): Promise<any>;
   findAllContacts(input: dto.FindAllContactsUseCaseDto): Promise<any>;
+  findAllChats(input: dto.FindAllChatsUseCaseDto): Promise<any>;
 }
 
 interface GroupService {

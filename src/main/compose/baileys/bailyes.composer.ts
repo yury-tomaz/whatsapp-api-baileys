@@ -26,6 +26,7 @@ import { FindAllMessagesController } from '../../../presentation/controllers/bai
 import { FindAllContactsController } from '../../../presentation/controllers/baileys-controllers/message/find-all-contacts.controller';
 import { RestoreInstancesController } from '../../../presentation/controllers/baileys-controllers/instance/restore-instances.controller';
 import { ListInstancesController } from '../../../presentation/controllers/baileys-controllers/instance/list-instances.controller';
+import { FindAllChatsController } from '../../../presentation/controllers/baileys-controllers/message/find-all-chats.controller';
 
 export class BaileysComposer {
   private static baileysFactory = BaileysFactory.create();
@@ -68,6 +69,7 @@ export class BaileysComposer {
     );
     const findAllMessages = new FindAllMessagesController(this.baileysFactory);
     const findAllContacts = new FindAllContactsController(this.baileysFactory);
+    const findAllChats = new FindAllChatsController(this.baileysFactory);
     const restore = new RestoreInstancesController(this.baileysFactory);
     const listInstances = new ListInstancesController(this.baileysFactory);
 
@@ -98,6 +100,7 @@ export class BaileysComposer {
       findAllContacts,
       restore,
       listInstances,
+      findAllChats,
     });
   }
 }

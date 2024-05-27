@@ -17,12 +17,12 @@ export class ChatRepository {
   }
 
   async find({ limit, page, sessionId }: ChatParams) {
-    const offset = page === 1 ? page - 1 : (page - 1) * limit;
+    const skip = page === 1 ? page - 1 : (page - 1) * limit;
 
-    const chat = this.chatCollection.find(
-      { sessionId },
-      { limit, skip: offset },
-    );
+    const chat = this.chatCollection
+      .find({ sessionId }, { limit, skip })
+      .sort({ 'conversationTimestamp.low': -1 })
+      .toArray();
 
     return chat;
   }
