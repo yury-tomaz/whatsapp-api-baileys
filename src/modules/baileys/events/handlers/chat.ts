@@ -11,6 +11,7 @@ export type BaileysEventHandler<T extends keyof BaileysEventMap> = (
 
 import { Binary, Long } from 'mongodb';
 import { logger } from '../../../@shared/infra/logger';
+import { Config } from '../../../@shared/infra/config';
 
 type MakeTransformedMongo<T> = {
   [K in keyof T]: T[K] extends Uint8Array
@@ -43,8 +44,8 @@ export default function chatHandler(
   sessionId: string,
   event: BaileysEventEmitter,
 ) {
-  const client = mongoDBManager.client;
-  const chatCollection = mongoDBManager.db.collection('chat');
+  const client = mongoDBManager;
+  const chatCollection = mongoDBManager.db(Config.db().dbName).collection('chat');
   const session = client.startSession();
   let listening = false;
 

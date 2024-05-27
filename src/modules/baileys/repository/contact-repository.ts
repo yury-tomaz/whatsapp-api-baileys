@@ -1,5 +1,6 @@
 import { mongoDBManager } from '../../@shared/infra/persistence/settings/connection';
 import { Collection } from 'mongodb';
+import { Config } from '../../@shared/infra/config';
 
 interface ContactParams {
   sessionId: string;
@@ -10,9 +11,7 @@ interface ContactParams {
 export class ContactRepository {
   private contactCollection: Collection;
   constructor() {
-    mongoDBManager.ensureConnection().then(() => {
-      this.contactCollection = mongoDBManager.db.collection('contact');
-    });
+      this.contactCollection =mongoDBManager.db(Config.db().dbName).collection('contact');
   }
 
   async find({ limit, page, sessionId }: ContactParams) {

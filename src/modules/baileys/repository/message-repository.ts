@@ -1,5 +1,6 @@
 import { mongoDBManager } from '../../@shared/infra/persistence/settings/connection';
 import { Collection } from 'mongodb';
+import { Config } from '../../@shared/infra/config';
 
 interface MessageParams {
   sessionId: string;
@@ -11,9 +12,8 @@ interface MessageParams {
 export class MessageRepository {
   private messageCollection: Collection;
   constructor() {
-    mongoDBManager.ensureConnection().then(() => {
-      this.messageCollection = mongoDBManager.db.collection('message');
-    });
+      this.messageCollection = mongoDBManager.db(Config.db().dbName).collection('message');
+
   }
 
   async find({ limit, page, sessionId, to }: MessageParams) {

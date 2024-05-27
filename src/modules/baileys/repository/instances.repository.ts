@@ -3,14 +3,13 @@ import { mongoDBManager } from '../../@shared/infra/persistence/settings/connect
 import { BaileysInstance } from '../domain/baileys-instance.entity';
 import Id from '../../@shared/domain/value-object/id.value-object';
 import { BaileysInstanceRepositoryInterface } from '../domain/repository/baileys-instance.repository.interface';
+import { Config } from '../../@shared/infra/config';
 
 export class InstancesRepository implements BaileysInstanceRepositoryInterface {
   private instancesCollection: Collection;
 
   constructor() {
-    mongoDBManager.ensureConnection().then(() => {
-      this.instancesCollection = mongoDBManager.db.collection('instances');
-    });
+      this.instancesCollection = mongoDBManager.db(Config.db().dbName).collection('instances');
   }
 
   async create(entity: BaileysInstance) {
