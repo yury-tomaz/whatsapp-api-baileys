@@ -9,7 +9,9 @@ export class InstancesRepository implements BaileysInstanceRepositoryInterface {
   private instancesCollection: Collection;
 
   constructor() {
-      this.instancesCollection = mongoDBManager.db(Config.db().dbName).collection('instances');
+    this.instancesCollection = mongoDBManager
+      .db(Config.db().dbName)
+      .collection('instances');
   }
 
   async create(entity: BaileysInstance) {

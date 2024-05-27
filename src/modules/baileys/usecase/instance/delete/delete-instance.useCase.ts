@@ -4,11 +4,11 @@ import { BaileysInstanceRepositoryInterface } from '../../../domain/repository/b
 export class DeleteInstanceUseCase {
   constructor(
     private instanceRepository: BaileysInstanceRepositoryInterface,
-    private baileysManager: BaileysInstanceRepositoryInMemory
+    private baileysManager: BaileysInstanceRepositoryInMemory,
   ) {}
 
   async execute(input: DeleteInstanceUseCaseDto) {
-     await this.instanceRepository.delete(input.id)
-     await this.baileysManager.delete(input.id);
+    await this.instanceRepository.delete(input.id);
+    await this.baileysManager.delete(input.id);
   }
 }

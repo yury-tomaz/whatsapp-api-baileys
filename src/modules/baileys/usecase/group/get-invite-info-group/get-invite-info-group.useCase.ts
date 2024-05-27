@@ -1,6 +1,6 @@
 import { BaileysInstanceRepositoryInMemory } from '../../../repository/baileys-instance-repository-in-memory';
 import { checkInstance } from '../../../helpers/check-Instance';
-import GetInviteInGroupDto  from './get-invite-info-group.dto';
+import GetInviteInGroupDto from './get-invite-info-group.dto';
 
 export class GetInviteInfoGroupUseCase {
   constructor(private baileysManager: BaileysInstanceRepositoryInMemory) {}

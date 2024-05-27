@@ -58,7 +58,7 @@ export class BaileysFacade implements WhatsappService {
   _restoreAllInstanceUsecase: UseCaseInterface;
   _findAllMessages: UseCaseInterface;
   _findAllContacts: UseCaseInterface;
-  _listInstances: UseCaseInterface
+  _listInstances: UseCaseInterface;
 
   constructor(props: UseCasesProps) {
     this._initUseCase = props.initUseCase;
@@ -182,6 +182,6 @@ export class BaileysFacade implements WhatsappService {
     return this._findAllContacts.execute(input);
   }
   list(): Promise<ListInstancesUsecaseOutpuDto[]> {
-    return this._listInstances.execute(undefined)
+    return this._listInstances.execute(undefined);
   }
 }

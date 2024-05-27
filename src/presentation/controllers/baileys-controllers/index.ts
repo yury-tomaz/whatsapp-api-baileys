@@ -28,7 +28,7 @@ export class BaileysControllerFacade {
       findAllMessages: ControllerInterface;
       findAllContacts: ControllerInterface;
       restore: ControllerInterface;
-      listInstances: ControllerInterface
+      listInstances: ControllerInterface;
     },
   ) {}
 
@@ -105,11 +105,11 @@ export class BaileysControllerFacade {
     return this.props.findAllContacts;
   }
 
-  get restore(){
+  get restore() {
     return this.props.restore;
   }
 
-  get listInstances(){
-    return this.props.listInstances
+  get listInstances() {
+    return this.props.listInstances;
   }
 }

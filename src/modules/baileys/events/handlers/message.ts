@@ -27,7 +27,9 @@ export default function messageHandler(
   event: BaileysEventEmitter,
 ) {
   const client = mongoDBManager;
-  const messageCollection = mongoDBManager.db(Config.db().dbName).collection('message');
+  const messageCollection = mongoDBManager
+    .db(Config.db().dbName)
+    .collection('message');
   const chatCollection = mongoDBManager.db().collection('chat');
   const session = client.startSession();
   let listening = false;

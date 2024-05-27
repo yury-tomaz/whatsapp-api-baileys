@@ -11,7 +11,9 @@ interface ContactParams {
 export class ContactRepository {
   private contactCollection: Collection;
   constructor() {
-      this.contactCollection =mongoDBManager.db(Config.db().dbName).collection('contact');
+    this.contactCollection = mongoDBManager
+      .db(Config.db().dbName)
+      .collection('contact');
   }
 
   async find({ limit, page, sessionId }: ContactParams) {

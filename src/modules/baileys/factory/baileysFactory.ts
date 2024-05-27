@@ -49,7 +49,7 @@ export class BaileysFactory {
     const logoutUseCase = new LogoutInstanceUseCase(baileysManager);
     const deleteUseCase = new DeleteInstanceUseCase(
       instanceRepository,
-      baileysManager
+      baileysManager,
     );
     const sendTextMessageUseCase = new SendTextMessageUseCase(baileysManager);
     const sendUrlMediaFileUseCase = new SendUrlMediaFileUseCase(baileysManager);
@@ -82,13 +82,11 @@ export class BaileysFactory {
     const blockUnblockUseCase = new BlockUnblockUserUseCase(baileysManager);
     const findAllMessages = new FindAllMessageUseCase(messageRepository);
     const findAllContacts = new FindAllContactsUseCase(contactRepository);
-    const listInstances = new ListInstancesUsecase(
-      baileysManager
-    )
+    const listInstances = new ListInstancesUsecase(baileysManager);
 
-    restoreAllInstanceUsecase.execute().then(()=> {
-      logger.info('Sessions Restored Successfully')
-    })
+    restoreAllInstanceUsecase.execute().then(() => {
+      logger.info('Sessions Restored Successfully');
+    });
 
     return new BaileysFacade({
       initUseCase,
@@ -116,7 +114,7 @@ export class BaileysFactory {
       restoreAllInstanceUsecase,
       findAllMessages,
       findAllContacts,
-      listInstances
+      listInstances,
     });
   }
 }

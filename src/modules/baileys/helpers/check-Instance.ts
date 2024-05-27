@@ -23,6 +23,5 @@ export const checkInstance = async (
     });
   }
 
-
   return instance;
 };

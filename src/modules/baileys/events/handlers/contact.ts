@@ -12,7 +12,9 @@ export default function contactHandler(
   sessionId: string,
   event: BaileysEventEmitter,
 ) {
-  const contactCollection = mongoDBManager.db(Config.db().dbName).collection('contact');
+  const contactCollection = mongoDBManager
+    .db(Config.db().dbName)
+    .collection('contact');
   let listening = false;
 
   const set: BaileysEventHandler<'messaging-history.set'> = async ({

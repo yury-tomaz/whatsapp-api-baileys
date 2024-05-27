@@ -55,8 +55,8 @@ export class Baileys extends BaseEntity implements AggregateRoot {
     return this._name;
   }
 
-  get sessionId():string{
-    return this._sessionId
+  get sessionId(): string {
+    return this._sessionId;
   }
 
   get belongsTo(): string | undefined {
@@ -84,9 +84,7 @@ export class Baileys extends BaseEntity implements AggregateRoot {
     this._belongsTo = props.belongsTo;
     this._name = props.name;
     this._sessionId = props.sessionId;
-    this.coll = mongoDBManager
-      .db('sessions')
-      .collection(`${this.sessionId}`);
+    this.coll = mongoDBManager.db('sessions').collection(`${this.sessionId}`);
 
     this.init().then(() => {
       logger.info('Baileys instance initialized');
@@ -119,7 +117,7 @@ export class Baileys extends BaseEntity implements AggregateRoot {
           let reason = new Boom(lastDisconnect?.error).output.statusCode;
 
           if (reason === DisconnectReason.badSession) {
-            this._isOn = false
+            this._isOn = false;
             await this.coll.drop();
           } else if (reason === DisconnectReason.connectionClosed) {
             await this.init();
@@ -128,7 +126,7 @@ export class Baileys extends BaseEntity implements AggregateRoot {
           } else if (reason === DisconnectReason.connectionReplaced) {
             logger.info('connection Replaced');
           } else if (reason === DisconnectReason.loggedOut) {
-            this._isOn = false
+            this._isOn = false;
             await this.coll.drop();
             logger.info('Device Logged Out, Please Login Again');
           } else if (reason === DisconnectReason.restartRequired) {
@@ -138,7 +136,7 @@ export class Baileys extends BaseEntity implements AggregateRoot {
             console.log('Connection TimedOut, Reconnecting...');
             await this.init();
           } else {
-            this._isOn = false
+            this._isOn = false;
             await this.coll.drop();
             this._waSocket?.end(
               new Error(
@@ -158,10 +156,12 @@ export class Baileys extends BaseEntity implements AggregateRoot {
           );
         } else if (connection === 'open') {
           logger.info('Connection open');
-          const coll = mongoDBManager.db(Config.db().dbName).collection('instances');
+          const coll = mongoDBManager
+            .db(Config.db().dbName)
+            .collection('instances');
 
           const alreadyThere = await coll.findOne({
-            sessionId: this._sessionId
+            sessionId: this._sessionId,
           });
 
           if (!alreadyThere) {

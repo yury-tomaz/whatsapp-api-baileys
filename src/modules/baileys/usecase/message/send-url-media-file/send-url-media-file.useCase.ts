@@ -1,8 +1,11 @@
 import { BaileysInstanceRepositoryInMemory } from '../../../repository/baileys-instance-repository-in-memory';
 import { getWhatsAppId } from '../../../helpers/get-whats-app-Id';
 import { checkInstance } from '../../../helpers/check-Instance';
-import SendUrlMediaFileUseCaseDto  from './send-url-media-file.usecase.dto';
-import { AppError, HttpCode } from '../../../../@shared/domain/exceptions/app-error';
+import SendUrlMediaFileUseCaseDto from './send-url-media-file.usecase.dto';
+import {
+  AppError,
+  HttpCode,
+} from '../../../../@shared/domain/exceptions/app-error';
 
 export class SendUrlMediaFileUseCase {
   constructor(private baileysManager: BaileysInstanceRepositoryInMemory) {}
@@ -10,7 +13,7 @@ export class SendUrlMediaFileUseCase {
   async execute(input: SendUrlMediaFileUseCaseDto) {
     const result = await checkInstance(input.id, this.baileysManager);
 
-    if (!result.isOn){
+    if (!result.isOn) {
       throw new AppError({
         message: 'Baileys instance offline, please start the instance again',
         statusCode: HttpCode['NOT_FOUND'],

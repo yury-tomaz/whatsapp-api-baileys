@@ -4,12 +4,10 @@ import { HttpResponse } from '../../../http-types/http-response';
 import { WhatsappService } from '../../../../modules/baileys/facade/baileys.facade.interface';
 import { Config } from '../../../../modules/@shared/infra/config';
 
-
-export class RestoreInstancesController implements ControllerInterface{
+export class RestoreInstancesController implements ControllerInterface {
   constructor(private usecase: WhatsappService) {}
 
   async handle(request: HttpRequest): Promise<HttpResponse> {
-
     await this.usecase.restore();
 
     return new HttpResponse(

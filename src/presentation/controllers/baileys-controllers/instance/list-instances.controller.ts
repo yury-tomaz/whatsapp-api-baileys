@@ -3,10 +3,9 @@ import { HttpResponse } from '../../../http-types/http-response';
 import { WhatsappService } from '../../../../modules/baileys/facade/baileys.facade.interface';
 import { Config } from '../../../../modules/@shared/infra/config';
 
-export class ListInstancesController{
+export class ListInstancesController {
   constructor(private usecase: WhatsappService) {}
-  async handle(request: HttpRequest): Promise<HttpResponse>{
-
+  async handle(request: HttpRequest): Promise<HttpResponse> {
     const execute = await this.usecase.list();
 
     return new HttpResponse(

@@ -13,7 +13,7 @@ export class InitBaileysController implements ControllerInterface {
 
     initBaileysValidator.validateSync({ name, belongsTo, sessionId });
 
-    const execute = await this.usecase.init({ name, belongsTo,sessionId });
+    const execute = await this.usecase.init({ name, belongsTo, sessionId });
 
     return new HttpResponse(
       {

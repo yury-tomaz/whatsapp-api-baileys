@@ -9,7 +9,7 @@ export class InitInstanceUseCase {
     const baileys = new Baileys({
       belongsTo: input.belongsTo,
       name: input.name,
-      sessionId: input.sessionId
+      sessionId: input.sessionId,
     });
 
     await this.baileysManager.create(baileys);
