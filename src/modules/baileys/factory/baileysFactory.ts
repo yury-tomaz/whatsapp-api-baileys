@@ -28,25 +28,29 @@ import { MessageRepository } from '../repository/message-repository';
 import { FindAllMessageUseCase } from '../usecase/message/find-all-message/find-all-messages.usecase';
 import { FindAllContactsUseCase } from '../usecase/message/find-all-contacts/find-all-contacts.usecase';
 import { ContactRepository } from '../repository/contact-repository';
+import { logger } from '../../@shared/infra/logger';
+import { ListInstancesUsecase } from '../usecase/instance/list/list-instances.usecase';
 
 export class BaileysFactory {
   static create() {
     const baileysManager = BaileysInstanceRepositoryInMemory.getInstance();
     const instanceRepository = new InstancesRepository();
-
-    const restoreAllInstanceUsecase = new RestoreAllInstanceUsecase(
-      instanceRepository,
-      baileysManager,
-    );
     const messageRepository = new MessageRepository();
     const contactRepository = new ContactRepository();
 
     const initUseCase = new InitInstanceUseCase(baileysManager);
+    const restoreAllInstanceUsecase = new RestoreAllInstanceUsecase(
+      instanceRepository,
+      baileysManager,
+    );
 
     const infoUseCase = new GetInfoUseCase(baileysManager);
     const qrUseCase = new GetQrCodeUsecase(baileysManager);
     const logoutUseCase = new LogoutInstanceUseCase(baileysManager);
-    const deleteUseCase = new DeleteInstanceUseCase(baileysManager);
+    const deleteUseCase = new DeleteInstanceUseCase(
+      instanceRepository,
+      baileysManager
+    );
     const sendTextMessageUseCase = new SendTextMessageUseCase(baileysManager);
     const sendUrlMediaFileUseCase = new SendUrlMediaFileUseCase(baileysManager);
     const sendMediaFileUseCase = new SendMediaFileUseCase(baileysManager);
@@ -78,6 +82,13 @@ export class BaileysFactory {
     const blockUnblockUseCase = new BlockUnblockUserUseCase(baileysManager);
     const findAllMessages = new FindAllMessageUseCase(messageRepository);
     const findAllContacts = new FindAllContactsUseCase(contactRepository);
+    const listInstances = new ListInstancesUsecase(
+      baileysManager
+    )
+
+    restoreAllInstanceUsecase.execute().then(()=> {
+      logger.info('Sessions Restored Successfully')
+    })
 
     return new BaileysFacade({
       initUseCase,
@@ -105,6 +116,7 @@ export class BaileysFactory {
       restoreAllInstanceUsecase,
       findAllMessages,
       findAllContacts,
+      listInstances
     });
   }
 }

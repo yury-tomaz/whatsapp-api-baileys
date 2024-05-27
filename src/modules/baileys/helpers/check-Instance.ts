@@ -18,10 +18,11 @@ export const checkInstance = async (
   if (!instance.waSocket) {
     throw new AppError({
       message: 'Baileys instance not initialized',
-      statusCode: HttpCode['NO_CONTENT'],
+      statusCode: HttpCode['NOT_FOUND'],
       isOperational: true,
     });
   }
+
 
   return instance;
 };

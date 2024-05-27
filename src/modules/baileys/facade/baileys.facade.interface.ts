@@ -8,6 +8,7 @@ interface InstanceService {
   logout(input: dto.LogoutInstanceUseCaseDto): Promise<void>;
   delete(input: dto.DeleteInstanceUseCaseDto): Promise<void>;
   restore(): Promise<void>;
+  list(): Promise<dto.ListInstancesUsecaseOutpuDto[]>;
 }
 
 interface MessageService {
