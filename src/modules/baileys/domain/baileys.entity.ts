@@ -32,8 +32,9 @@ interface CustomSocketConfig extends Partial<SocketConfig> {
 
 interface Props {
   id?: Id;
-  belongsTo?: string;
+  sessionId: string;
   name: string;
+  belongsTo?: string;
   createdAt?: Date;
   updatedAt?: Date;
 }
@@ -41,6 +42,7 @@ interface Props {
 export class Baileys extends BaseEntity implements AggregateRoot {
   private readonly _belongsTo: string | undefined;
   private readonly _name: string;
+  private readonly _sessionId: string;
   private _store: Store;
   private _socketConfig: CustomSocketConfig | undefined;
   private _waSocket?: ReturnType<typeof makeWASocket>;
@@ -51,6 +53,10 @@ export class Baileys extends BaseEntity implements AggregateRoot {
 
   get name(): string {
     return this._name;
+  }
+
+  get sessionId():string{
+    return this._sessionId
   }
 
   get belongsTo(): string | undefined {
@@ -77,9 +83,10 @@ export class Baileys extends BaseEntity implements AggregateRoot {
     super(props.id);
     this._belongsTo = props.belongsTo;
     this._name = props.name;
-    this.coll = mongoDBManager.client
+    this._sessionId = props.sessionId;
+    this.coll = mongoDBManager
       .db('sessions')
-      .collection(`${this.id.id}`);
+      .collection(`${this.sessionId}`);
 
     this.init().then(() => {
       logger.info('Baileys instance initialized');
@@ -93,7 +100,7 @@ export class Baileys extends BaseEntity implements AggregateRoot {
     this._socketConfig = {
       version,
       logger: loggerBaileys,
-      printQRInTerminal: true,
+      printQRInTerminal: false,
       browser: Browsers.ubuntu('Chrome'),
       auth: state,
     };
@@ -112,6 +119,7 @@ export class Baileys extends BaseEntity implements AggregateRoot {
           let reason = new Boom(lastDisconnect?.error).output.statusCode;
 
           if (reason === DisconnectReason.badSession) {
+            this._isOn = false
             await this.coll.drop();
           } else if (reason === DisconnectReason.connectionClosed) {
             await this.init();
@@ -120,6 +128,7 @@ export class Baileys extends BaseEntity implements AggregateRoot {
           } else if (reason === DisconnectReason.connectionReplaced) {
             logger.info('connection Replaced');
           } else if (reason === DisconnectReason.loggedOut) {
+            this._isOn = false
             await this.coll.drop();
             logger.info('Device Logged Out, Please Login Again');
           } else if (reason === DisconnectReason.restartRequired) {
@@ -129,6 +138,7 @@ export class Baileys extends BaseEntity implements AggregateRoot {
             console.log('Connection TimedOut, Reconnecting...');
             await this.init();
           } else {
+            this._isOn = false
             await this.coll.drop();
             this._waSocket?.end(
               new Error(
@@ -141,22 +151,22 @@ export class Baileys extends BaseEntity implements AggregateRoot {
             new EventOccurredWhatsappEvent({
               routingKey: 'baileys.event.connection.close',
               data: {
-                sessionId: this.id.id,
+                sessionId: this._sessionId,
                 connection: connection,
               },
             }),
           );
         } else if (connection === 'open') {
           logger.info('Connection open');
-          const coll = mongoDBManager.db.collection('instances');
+          const coll = mongoDBManager.db(Config.db().dbName).collection('instances');
 
           const alreadyThere = await coll.findOne({
-            sessionId: this.id.id,
+            sessionId: this._sessionId
           });
 
           if (!alreadyThere) {
             await coll.insertOne({
-              sessionId: this.id.id,
+              sessionId: this._sessionId,
               name: this._name,
               belongsTo: this.belongsTo,
               createdAt: this.createdAt,
@@ -169,7 +179,7 @@ export class Baileys extends BaseEntity implements AggregateRoot {
             new EventOccurredWhatsappEvent({
               routingKey: 'baileys.event.connection.open',
               data: {
-                sessionId: this.id.id,
+                sessionId: this._sessionId,
                 connection: connection,
               },
             }),
