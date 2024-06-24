@@ -61,7 +61,7 @@
     "jsonwebtoken": "^9.0.2",
     "mongodb": "^6.6.2",
     "multer": "^1.4.5-lts.1",
-    "pino": "^9.1.0",
+    "pino": "^9.2.0",
     "pino-http": "^10.1.0",
     "pino-pretty": "^11.2.0",
     "qrcode": "^1.5.3",
