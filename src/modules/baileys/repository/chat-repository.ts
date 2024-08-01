@@ -1,5 +1,6 @@
 import { mongoDBManager } from '../../@shared/infra/persistence/settings/connection';
 import { Collection } from 'mongodb';
+import { Config } from '../../@shared/infra/config';
 
 interface ChatParams {
   sessionId: string;
@@ -10,9 +11,9 @@ interface ChatParams {
 export class ChatRepository {
   private chatCollection: Collection;
   constructor() {
-    mongoDBManager.ensureConnection().then(() => {
-      this.chatCollection = mongoDBManager.db.collection('chat');
-    });
+    this.chatCollection = mongoDBManager
+      .db(Config.db().dbName)
+      .collection('chat');
   }
 
   async find({ limit, page, sessionId }: ChatParams) {

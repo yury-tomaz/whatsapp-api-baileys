@@ -20,34 +20,34 @@ export class BaileysInstanceRepositoryInMemory {
 
   async create(entity: Baileys): Promise<void> {
     this.semaphore.take(async () => {
-      if (this.repository.has(entity.id.id)) {
-        logger.warn(`Baileys with key ${entity.id} already exists`);
+      if (this.repository.has(entity.sessionId)) {
+        logger.warn(`Baileys with key ${entity.sessionId} already exists`);
         await this.update(entity);
         this.semaphore.leave();
         return;
       }
 
-      this.repository.set(entity.id.id, entity);
+      this.repository.set(entity.sessionId, entity);
       this.semaphore.leave();
     });
   }
 
-  async find(id: string): Promise<Baileys | undefined> {
-    return this.repository.get(id);
+  async find(sessionId: string): Promise<Baileys | undefined> {
+    return this.repository.get(sessionId);
   }
 
   async update(entity: Baileys): Promise<void> {
     this.semaphore.take(async () => {
-      if (!this.repository.has(entity.id.id)) {
-        logger.warn(`Baileys with key ${entity.id.id} does not exist`);
+      if (!this.repository.has(entity.sessionId)) {
+        logger.warn(`Baileys with key ${entity.sessionId} does not exist`);
         throw new AppError({
-          message: `Baileys with key ${entity.id.id} does not exist`,
+          message: `Baileys with key ${entity.sessionId} does not exist`,
           statusCode: HttpCode['NOT_FOUND'],
           isOperational: true,
         });
       }
 
-      this.repository.set(entity.id.id, entity);
+      this.repository.set(entity.sessionId, entity);
       this.semaphore.leave();
     });
   }

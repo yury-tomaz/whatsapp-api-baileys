@@ -13,6 +13,7 @@ export class RestoreAllInstanceUsecase {
     for (const instance of instances) {
       const start = new Baileys({
         id: instance.id,
+        sessionId: instance.sessionId,
         name: instance.name,
         belongsTo: instance.belongsTo,
         createdAt: instance.createdAt,

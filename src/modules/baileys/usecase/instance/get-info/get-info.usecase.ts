@@ -11,7 +11,7 @@ export class GetInfoUseCase {
     const sock = result.waSocket!;
 
     return {
-      id: result.id,
+      sessionId: result.sessionId,
       isOn: result.isOn,
       user: result.isOn ? sock.user : {},
     };

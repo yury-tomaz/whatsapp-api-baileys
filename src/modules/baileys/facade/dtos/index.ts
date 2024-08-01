@@ -26,3 +26,4 @@ export { default as FindAllChatsUseCaseDto } from '../../usecase/message/find-al
 export { default as DeleteTextMessageUseCaseDto } from '../../usecase/message/delete-message/delete-message.usecase.dto';
 export { default as UpdateTextMessageUseCaseDto } from '../../usecase/message/update-message/update-message.usecase.dto';
 
+export { default as ListInstancesUsecaseOutpuDto } from '../../usecase/instance/list/list-instances.dto';
