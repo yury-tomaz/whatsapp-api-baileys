@@ -30,6 +30,8 @@ import { FindAllContactsUseCase } from '../usecase/message/find-all-contacts/fin
 import { ContactRepository } from '../repository/contact-repository';
 import { ChatRepository } from '../repository/chat-repository';
 import { FindAllChatsUseCase } from '../usecase/message/find-all-chats/find-all-chats.usecase';
+import { UpdateTextMessageUseCase } from '../usecase/message/update-message/update-message.useCase';
+import { DeleteTextMessageUseCase } from '../usecase/message/delete-message/delete-message.useCase';
 import { logger } from '../../@shared/infra/logger';
 import { ListInstancesUsecase } from '../usecase/instance/list/list-instances.usecase';
 
@@ -91,6 +93,8 @@ export class BaileysFactory {
       logger.info('Sessions Restored Successfully');
     });
     const findAllChats = new FindAllChatsUseCase(chatRepository);
+    const updateMessage = new UpdateTextMessageUseCase(baileysManager);
+    const deleteMessage = new DeleteTextMessageUseCase(baileysManager);
 
     return new BaileysFacade({
       initUseCase,
@@ -119,7 +123,9 @@ export class BaileysFactory {
       findAllMessages,
       findAllContacts,
       findAllChats,
-      listInstances,
+      deleteMessage,
+      updateMessage,
+      listInstances
     });
   }
 }

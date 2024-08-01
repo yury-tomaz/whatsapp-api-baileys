@@ -27,6 +27,8 @@ import { FindAllContactsController } from '../../../presentation/controllers/bai
 import { RestoreInstancesController } from '../../../presentation/controllers/baileys-controllers/instance/restore-instances.controller';
 import { ListInstancesController } from '../../../presentation/controllers/baileys-controllers/instance/list-instances.controller';
 import { FindAllChatsController } from '../../../presentation/controllers/baileys-controllers/message/find-all-chats.controller';
+import { DeleteTextMessageController } from '../../../presentation/controllers/baileys-controllers/message/delete-text-message.controller';
+import { UpdateTextMessageController } from '../../../presentation/controllers/baileys-controllers/message/update-text-message.controller';
 
 export class BaileysComposer {
   private static baileysFactory = BaileysFactory.create();
@@ -70,6 +72,8 @@ export class BaileysComposer {
     const findAllMessages = new FindAllMessagesController(this.baileysFactory);
     const findAllContacts = new FindAllContactsController(this.baileysFactory);
     const findAllChats = new FindAllChatsController(this.baileysFactory);
+    const deleteMessage = new DeleteTextMessageController(this.baileysFactory);
+    const updateMessage = new UpdateTextMessageController(this.baileysFactory);
     const restore = new RestoreInstancesController(this.baileysFactory);
     const listInstances = new ListInstancesController(this.baileysFactory);
 
@@ -101,6 +105,8 @@ export class BaileysComposer {
       restore,
       listInstances,
       findAllChats,
+      deleteMessage,
+      updateMessage
     });
   }
 }

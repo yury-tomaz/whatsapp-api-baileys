@@ -11,6 +11,14 @@ messageRoute.post('/instance/:id/message/text', (req, res) =>
   requestAdapter(req, res, controller.sendTextMessage),
 );
 
+messageRoute.put('/instance/:id/message/text', (req, res) =>
+  requestAdapter(req, res, controller.updateMessage),
+);
+
+messageRoute.patch('/instance/:id/message/text', (req, res) =>
+  requestAdapter(req, res, controller.deleteMessage),
+);
+
 messageRoute.post(
   '/instance/:id/message/media-url',
   upload.none(),

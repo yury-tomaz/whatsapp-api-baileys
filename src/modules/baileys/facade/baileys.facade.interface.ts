@@ -18,6 +18,8 @@ interface MessageService {
   findAllMessages(input: dto.FindAllMessageUseCaseDto): Promise<any>;
   findAllContacts(input: dto.FindAllContactsUseCaseDto): Promise<any>;
   findAllChats(input: dto.FindAllChatsUseCaseDto): Promise<any>;
+  updateMessage(input: dto.UpdateTextMessageUseCaseDto): Promise<any>;
+  deleteMessage(input: dto.DeleteTextMessageUseCaseDto): Promise<any>;
 }
 
 interface GroupService {
@@ -47,6 +49,6 @@ interface MiscService {
 // TODO: implement 'MiscService' and GroupService
 export interface WhatsappService
   extends MessageService,
-    InstanceService,
-    GroupService,
-    MiscService {}
+  InstanceService,
+  GroupService,
+  MiscService { }
