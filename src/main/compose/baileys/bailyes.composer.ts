@@ -25,6 +25,8 @@ import { UpdateProfilePictureController } from '../../../presentation/controller
 import { FindAllMessagesController } from '../../../presentation/controllers/baileys-controllers/message/find-all-messages.controller';
 import { FindAllContactsController } from '../../../presentation/controllers/baileys-controllers/message/find-all-contacts.controller';
 import { FindAllChatsController } from '../../../presentation/controllers/baileys-controllers/message/find-all-chats.controller';
+import { DeleteTextMessageController } from '../../../presentation/controllers/baileys-controllers/message/delete-text-message.controller';
+import { UpdateTextMessageController } from '../../../presentation/controllers/baileys-controllers/message/update-text-message.controller';
 
 export class BaileysComposer {
   private static baileysFactory = BaileysFactory.create();
@@ -68,6 +70,8 @@ export class BaileysComposer {
     const findAllMessages = new FindAllMessagesController(this.baileysFactory);
     const findAllContacts = new FindAllContactsController(this.baileysFactory);
     const findAllChats = new FindAllChatsController(this.baileysFactory);
+    const deleteMessage = new DeleteTextMessageController(this.baileysFactory);
+    const updateMessage = new UpdateTextMessageController(this.baileysFactory);
 
     return new BaileysControllerFacade({
       init,
@@ -95,6 +99,8 @@ export class BaileysComposer {
       findAllMessages,
       findAllContacts,
       findAllChats,
+      deleteMessage,
+      updateMessage
     });
   }
 }

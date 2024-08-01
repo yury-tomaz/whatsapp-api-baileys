@@ -29,6 +29,8 @@ export interface UseCasesProps {
   findAllMessages: UseCaseInterface;
   findAllContacts: UseCaseInterface;
   findAllChats: UseCaseInterface;
+  updateMessage: UseCaseInterface;
+  deleteMessage: UseCaseInterface;
 }
 
 export class BaileysFacade implements WhatsappService {
@@ -58,6 +60,8 @@ export class BaileysFacade implements WhatsappService {
   _findAllMessages: UseCaseInterface;
   _findAllContacts: UseCaseInterface;
   _findAllChats: UseCaseInterface;
+  _deleteMessage: UseCaseInterface;
+  _updateMessage: UseCaseInterface;
 
   constructor(props: UseCasesProps) {
     this._initUseCase = props.initUseCase;
@@ -86,6 +90,8 @@ export class BaileysFacade implements WhatsappService {
     this._findAllMessages = props.findAllMessages;
     this._findAllContacts = props.findAllContacts;
     this._findAllChats = props.findAllChats;
+    this._updateMessage = props.updateMessage;
+    this._deleteMessage = props.deleteMessage;
   }
 
   init(input: dto.InitInstanceInputDto) {
@@ -183,5 +189,13 @@ export class BaileysFacade implements WhatsappService {
 
   findAllChats(input: dto.FindAllChatsUseCaseDto) {
     return this._findAllChats.execute(input);
+  }
+
+  deleteMessage(input: dto.DeleteTextMessageUseCaseDto): Promise<any> {
+    return this._deleteMessage.execute(input);
+  }
+
+  updateMessage(input: dto.UpdateTextMessageUseCaseDto): Promise<any> {
+    return this._updateMessage.execute(input);
   }
 }

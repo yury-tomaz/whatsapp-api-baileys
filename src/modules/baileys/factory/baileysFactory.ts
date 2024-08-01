@@ -30,6 +30,8 @@ import { FindAllContactsUseCase } from '../usecase/message/find-all-contacts/fin
 import { ContactRepository } from '../repository/contact-repository';
 import { ChatRepository } from '../repository/chat-repository';
 import { FindAllChatsUseCase } from '../usecase/message/find-all-chats/find-all-chats.usecase';
+import { UpdateTextMessageUseCase } from '../usecase/message/update-message/update-message.useCase';
+import { DeleteTextMessageUseCase } from '../usecase/message/delete-message/delete-message.useCase';
 
 export class BaileysFactory {
   static create() {
@@ -82,6 +84,8 @@ export class BaileysFactory {
     const findAllMessages = new FindAllMessageUseCase(messageRepository);
     const findAllContacts = new FindAllContactsUseCase(contactRepository);
     const findAllChats = new FindAllChatsUseCase(chatRepository);
+    const updateMessage = new UpdateTextMessageUseCase(baileysManager);
+    const deleteMessage = new DeleteTextMessageUseCase(baileysManager);
 
     return new BaileysFacade({
       initUseCase,
@@ -110,6 +114,8 @@ export class BaileysFactory {
       findAllMessages,
       findAllContacts,
       findAllChats,
+      deleteMessage,
+      updateMessage
     });
   }
 }

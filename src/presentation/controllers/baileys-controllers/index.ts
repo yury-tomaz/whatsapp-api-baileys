@@ -28,8 +28,10 @@ export class BaileysControllerFacade {
       findAllMessages: ControllerInterface;
       findAllContacts: ControllerInterface;
       findAllChats: ControllerInterface;
+      updateMessage: ControllerInterface;
+      deleteMessage: ControllerInterface;
     },
-  ) {}
+  ) { }
 
   get init() {
     return this.props.init;
@@ -105,5 +107,11 @@ export class BaileysControllerFacade {
   }
   get findAllChats() {
     return this.props.findAllChats;
+  }
+  get updateMessage() {
+    return this.props.updateMessage;
+  }
+  get deleteMessage() {
+    return this.props.deleteMessage;
   }
 }
