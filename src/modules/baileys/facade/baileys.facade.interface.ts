@@ -49,6 +49,6 @@ interface MiscService {
 // TODO: implement 'MiscService' and GroupService
 export interface WhatsappService
   extends MessageService,
-  InstanceService,
-  GroupService,
-  MiscService { }
+    InstanceService,
+    GroupService,
+    MiscService {}

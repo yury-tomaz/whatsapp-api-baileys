@@ -5,6 +5,6 @@ export const deleteTextMessageValidator = yup.object().shape({
   to: yup.string().required(),
   key: yup.object().shape({
     fromMe: yup.boolean(),
-    messageId: yup.string()
-  })
+    messageId: yup.string(),
+  }),
 });

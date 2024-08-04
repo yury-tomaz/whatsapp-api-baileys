@@ -6,7 +6,7 @@ import { Config } from '../../../../modules/@shared/infra/config';
 import { deleteTextMessageValidator } from '../../../validators/baileys/message/delete-text-message.validator';
 
 export class DeleteTextMessageController implements ControllerInterface {
-  constructor(private usecase: WhatsappService) { }
+  constructor(private usecase: WhatsappService) {}
 
   async handle(request: HttpRequest): Promise<HttpResponse> {
     const { to, key } = request.body;
@@ -17,7 +17,7 @@ export class DeleteTextMessageController implements ControllerInterface {
     const execute = await this.usecase.deleteMessage({
       id,
       to,
-      key
+      key,
     });
 
     return new HttpResponse(

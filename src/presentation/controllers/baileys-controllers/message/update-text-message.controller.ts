@@ -6,7 +6,7 @@ import { Config } from '../../../../modules/@shared/infra/config';
 import { updateTextMessageValidator } from '../../../validators/baileys/message/update-text-message.validator';
 
 export class UpdateTextMessageController implements ControllerInterface {
-  constructor(private usecase: WhatsappService) { }
+  constructor(private usecase: WhatsappService) {}
 
   async handle(request: HttpRequest): Promise<HttpResponse> {
     const { message, to, key } = request.body;
@@ -18,7 +18,7 @@ export class UpdateTextMessageController implements ControllerInterface {
       id,
       message,
       to,
-      key
+      key,
     });
 
     return new HttpResponse(
