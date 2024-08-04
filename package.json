@@ -47,7 +47,7 @@
   },
   "dependencies": {
     "@hapi/boom": "^10.0.1",
-    "@whiskeysockets/baileys": "^6.6.0",
+    "@whiskeysockets/baileys": "^6.7.5",
     "amqplib": "^0.10.4",
     "axios": "^1.7.2",
     "compression": "^1.7.4",
