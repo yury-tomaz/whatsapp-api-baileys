@@ -4,7 +4,7 @@ import { checkInstance } from '../../../helpers/check-Instance';
 import UpdateTextMessageUseCaseDto from './update-message.usecase.dto';
 
 export class UpdateTextMessageUseCase {
-  constructor(private baileysManager: BaileysInstanceRepositoryInMemory) { }
+  constructor(private baileysManager: BaileysInstanceRepositoryInMemory) {}
 
   async execute(input: UpdateTextMessageUseCaseDto) {
     const result = await checkInstance(input.id, this.baileysManager);
@@ -17,12 +17,12 @@ export class UpdateTextMessageUseCase {
     const key = {
       remoteJid: whatsappId,
       fromMe: input.key.fromMe,
-      id: input.key.messageId
-    }
+      id: input.key.messageId,
+    };
 
     await sock.sendMessage(whatsappId, {
       text: input.message,
-      edit: key
+      edit: key,
     });
   }
 }

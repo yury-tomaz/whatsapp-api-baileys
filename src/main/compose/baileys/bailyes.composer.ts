@@ -106,7 +106,7 @@ export class BaileysComposer {
       listInstances,
       findAllChats,
       deleteMessage,
-      updateMessage
+      updateMessage,
     });
   }
 }

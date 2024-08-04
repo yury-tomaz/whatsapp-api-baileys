@@ -5,5 +5,5 @@ export default interface UpdateTextMessageUseCaseDto {
   key: {
     messageId: string;
     fromMe: boolean;
-  }
+  };
 }

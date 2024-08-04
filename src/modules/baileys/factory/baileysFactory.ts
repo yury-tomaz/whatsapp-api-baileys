@@ -125,7 +125,7 @@ export class BaileysFactory {
       findAllChats,
       deleteMessage,
       updateMessage,
-      listInstances
+      listInstances,
     });
   }
 }

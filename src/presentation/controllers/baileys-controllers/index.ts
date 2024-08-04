@@ -33,7 +33,7 @@ export class BaileysControllerFacade {
       updateMessage: ControllerInterface;
       deleteMessage: ControllerInterface;
     },
-  ) { }
+  ) {}
 
   get init() {
     return this.props.init;
