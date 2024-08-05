@@ -30,7 +30,7 @@
     "@types/semaphore": "^1.1.4",
     "@types/supertest": "^6.0.2",
     "@types/uuid": "^9.0.8",
-    "@typescript-eslint/eslint-plugin": "^7.13.1",
+    "@typescript-eslint/eslint-plugin": "^8.0.1",
     "@typescript-eslint/parser": "^7.18.0",
     "conventional-changelog-cli": "^5.0.0",
     "eslint": "^8.57.0",
