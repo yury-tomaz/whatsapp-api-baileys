@@ -25,7 +25,7 @@
     "@types/jsonwebtoken": "^9.0.6",
     "@types/mongodb": "^4.0.7",
     "@types/multer": "^1.4.11",
-    "@types/node": "^20.14.3",
+    "@types/node": "^22.5.0",
     "@types/qrcode": "^1.5.5",
     "@types/semaphore": "^1.1.4",
     "@types/supertest": "^6.0.2",
